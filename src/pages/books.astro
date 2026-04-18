@@ -1,224 +1,265 @@
 ---
 import PageLayout from "@layouts/PageLayout.astro";
 import Container from "@components/Container.astro";
+
+const books: { year: string; items: { title: string; author: string; href: string; recommended?: boolean; favorite?: boolean }[] }[] = [
+  {
+    year: "2024",
+    items: [
+      { title: "Foundation and Earth", author: "Isaac Asimov", href: "https://www.amazon.com/gp/product/B003EY7IHM/", recommended: true },
+      { title: "Foundation's Edge", author: "Isaac Asimov", href: "https://www.amazon.com/gp/product/B003EY7JC6/", recommended: true },
+      { title: "Second Foundation", author: "Isaac Asimov", href: "https://www.amazon.com/gp/product/B000FC1PWU/" },
+      { title: "Invitation to a Banquet: The Story of Chinese Food", author: "Fuchsia Dunlop", href: "https://www.amazon.com/gp/product/B0BWGKNK7G/", recommended: true },
+      { title: "The Hitchhiker's Guide to the Galaxy", author: "Douglas Adams", href: "https://www.amazon.com/gp/product/B0009JKV9W/" },
+    ],
+  },
+  {
+    year: "2023",
+    items: [
+      { title: "Klara and the Sun", author: "Kazuo Ishiguro", href: "https://www.amazon.com/Klara-Sun-novel-Kazuo-Ishiguro-ebook/dp/B08B7V6CQ8/", favorite: true },
+      { title: "I, Robot", author: "Isaac Asimov", href: "https://www.amazon.com/gp/product/B000FC1PW0/", recommended: true },
+      { title: "Foundation and Empire", author: "Isaac Asimov", href: "https://www.amazon.com/gp/product/B000FC1PWK/" },
+      { title: "Seven Brief Lessons on Physics", author: "Carlo Rovelli", href: "https://www.amazon.com/gp/product/B00Z8VTMYG/", recommended: true },
+      { title: "Foundation", author: "Isaac Asimov", href: "https://www.amazon.com/gp/product/B000FC1PWA/", recommended: true },
+      { title: "Why We Sleep", author: "Matthew Walker", href: "https://www.amazon.com/gp/product/B06ZZ1YGJ5/" },
+      { title: "The Thrawn Trilogy 3-Book Bundle", author: "Timothy Zahn", href: "https://www.amazon.com/gp/product/B09F5NLH1Z/" },
+      { title: "MCU: The Reign of Marvel Studios", author: "Joanna Robinson, Dave Gonzales, Gavin Edwards", href: "https://www.amazon.com/gp/product/B0BWKR3H4F/" },
+      { title: "American Prometheus", author: "Kai Bird, Martin J. Sherwin", href: "https://www.amazon.com/gp/product/B000XUBEYS/", recommended: true },
+      { title: "When We Cease to Understand the World", author: "Benjamín Labatut", href: "https://www.amazon.com/gp/product/B08QM8VHRT/" },
+      { title: "Tomorrow, and Tomorrow, and Tomorrow", author: "Gabrielle Zevin", href: "https://www.amazon.com/gp/product/B09JBCGQB8/", favorite: true },
+      { title: "Genghis Khan and the Making of the Modern World", author: "Jack Weatherford", href: "https://www.amazon.com/Genghis-Khan-Making-Modern-World-ebook/dp/B000FCK206/", recommended: true },
+      { title: "What's Our Problem?: A Self-Help Book for Societies", author: "Tim Urban", href: "https://www.amazon.com/gp/product/B0BTJCTR58/", recommended: true },
+      { title: "The Stress Prescription", author: "Dr. Elissa Epel", href: "https://www.amazon.com/gp/product/B09WMBSPLT/" },
+      { title: "Dynasty of Evil: A Novel of the Old Republic", author: "Drew Karpyshyn", href: "https://www.amazon.com/gp/product/B009YQ78AQ/" },
+      { title: "Rule of Two: Star Wars Legends (Darth Bane)", author: "Drew Karpyshyn", href: "https://www.amazon.com/gp/product/B009WTTPCY/" },
+      { title: "Star Wars: Thrawn Ascendancy (Book III: Lesser Evil)", author: "Timothy Zahn", href: "https://www.amazon.com/gp/product/B08ZCP1Z2W/" },
+      { title: "Star Wars: Thrawn Ascendancy (Book I: Chaos Rising)", author: "Timothy Zahn", href: "https://www.amazon.com/gp/product/B07YK1JM4S/" },
+      { title: "Star Wars: Thrawn Ascendancy (Book II: Greater Good)", author: "Timothy Zahn", href: "https://www.amazon.com/gp/product/B08KPJW7L9/" },
+      { title: "Revan: Star Wars Legends (The Old Republic)", author: "Drew Karpyshyn", href: "https://www.amazon.com/gp/product/B0051AMYTO/" },
+      { title: "Chip War", author: "Chris Miller", href: "https://www.amazon.com/gp/product/B09RX5F238/" },
+      { title: "Thrawn: Treason", author: "Timothy Zahn", href: "https://www.amazon.com/gp/product/B07L7SSJ5K/" },
+      { title: "Star Wars: Darth Plagueis", author: "James Luceno", href: "https://www.amazon.com/gp/product/B006VPAUYE/" },
+      { title: "Scaling People", author: "Claire Hughes Johnson", href: "https://www.amazon.com/gp/product/B0BRYQJ49K/" },
+      { title: "Thrawn: Alliances", author: "Timothy Zahn", href: "https://www.amazon.com/gp/product/B07692QXW3/" },
+      { title: "Path of Destruction: A Novel of the Old Republic", author: "Drew Karpyshyn", href: "https://www.amazon.com/gp/product/B009YQ791Y/" },
+      { title: "Star Wars: Dark Force Rising", author: "Timothy Zahn", href: "https://www.amazon.com/gp/product/B008EPMER0/" },
+      { title: "Star Wars: Heir to the Empire", author: "Timothy Zahn", href: "https://www.amazon.com/gp/product/B005LEV2V6/" },
+      { title: "Star Wars: The Old Republic: Fatal Alliance", author: "Sean Williams", href: "https://www.amazon.com/gp/product/B003X4PKZ0/" },
+      { title: "Children of Dune", author: "Frank Herbert", href: "https://www.amazon.com/gp/product/B0013O8X60/" },
+      { title: "The Creative Act: A Way of Being", author: "Rick Rubin", href: "https://www.amazon.com/Creative-Act-Way-Being-ebook/dp/B09Z7MH5C3/", favorite: true },
+      { title: '"Surely You\'re Joking, Mr. Feynman!"', author: "Richard P. Feynman", href: "https://www.amazon.com/gp/product/B003V1WXKU/" },
+    ],
+  },
+  {
+    year: "2022",
+    items: [
+      { title: "The Silk Roads: A New History of the World", author: "Peter Frankopan", href: "https://www.amazon.com/Silk-Roads-New-History-World-ebook/dp/B00XST7IX2/", recommended: true },
+      { title: "Norse Mythology", author: "Neil Gaiman", href: "https://www.amazon.com/gp/product/B01HQA6EOC/", recommended: true },
+      { title: "Sphere", author: "Michael Crichton", href: "https://www.amazon.com/gp/product/B007UH4G9C/" },
+      { title: "Star Wars: Thrawn", author: "Timothy Zahn", href: "https://www.amazon.com/gp/product/B01ILZO30S/" },
+      { title: "Outlive: The Science and Art of Longevity", author: "Peter Attia MD", href: "https://www.amazon.com/gp/product/B0B1BTJLJN/" },
+      { title: "Four Thousand Weeks", author: "Oliver Burkeman", href: "https://www.amazon.com/gp/product/B08FGV64B1/" },
+      { title: "The Silmarillion", author: "J.R.R. Tolkien", href: "https://www.amazon.com/gp/product/B007978PGI/" },
+      { title: "Food Rules: An Eater's Manual", author: "Michael Pollan", href: "https://www.amazon.com/gp/product/B085FV622C/" },
+      { title: "The Metaverse", author: "Matthew Ball", href: "https://www.amazon.com/gp/product/B09KMWYHX8/" },
+      { title: "Principles for Dealing with the Changing World Order", author: "Ray Dalio", href: "https://www.amazon.com/gp/product/B0881Y73YG/" },
+      { title: "The Network State", author: "Balaji Srinivasan", href: "https://www.amazon.com/gp/product/B09VPKZR3G/" },
+      { title: "Gödel, Escher, Bach: An Eternal Golden Braid", author: "Douglas R Hofstadter", href: "https://www.amazon.com/gp/product/0465026567/" },
+      { title: "The Midnight Library", author: "Matt Haig", href: "https://www.amazon.com/Midnight-Library-Novel-Matt-Haig/dp/0525559477", recommended: true },
+      { title: "Founders at Work: Stories of Startups' Early Days", author: "Jessica Livingston", href: "https://www.amazon.com/gp/product/B009IXMK4O/", favorite: true },
+      { title: "Dune", author: "Frank Herbert", href: "https://www.amazon.com/gp/product/B00B7NPRY8/", favorite: true },
+      { title: "Children of Dune", author: "Frank Herbert", href: "https://www.amazon.com/gp/product/B0015DTW50/" },
+      { title: "Heretics of Dune", author: "Frank Herbert", href: "https://www.amazon.com/gp/product/B001L10ZIO/" },
+      { title: "Chapterhouse: Dune", author: "Frank Herbert", href: "https://www.amazon.com/gp/product/B001O1O6IQ/" },
+    ],
+  },
+  {
+    year: "2021",
+    items: [
+      { title: "The Daily Stoic", author: "Ryan Holiday", href: "https://www.amazon.com/gp/product/B01HNJIJB2/" },
+      { title: "Hackers & Painters", author: "Paul Graham", href: "https://www.amazon.com/gp/product/B0026OR2NQ/" },
+      { title: "This Is How You Lose the Time War", author: "Amal El-Mohtar, Max Gladstone", href: "https://www.amazon.com/gp/product/B07MNG496J/" },
+      { title: "Crying in H Mart", author: "Michelle Zauner", href: "https://www.amazon.com/gp/product/B08FMVVQGF/" },
+      { title: "Project Hail Mary", author: "Andy Weir", href: "https://www.amazon.com/gp/product/B08FHBV4ZX/", recommended: true },
+      { title: "Fundamentals: Ten Keys to Reality", author: "Frank Wilczek", href: "https://www.amazon.com/gp/product/B088173GMN/", recommended: true },
+      { title: "A Beautiful Question: Finding Nature's Deep Design", author: "Frank Wilczek", href: "https://www.amazon.com/gp/product/B00OZ0TOZI/", recommended: true },
+      { title: "A Monk's Guide to a Clean House and Mind", author: "Shoukei Matsumoto", href: "https://www.amazon.com/gp/product/B07C6H6FNN/" },
+      { title: "How to Avoid a Climate Disaster", author: "Bill Gates", href: "https://www.amazon.com/gp/product/B07YRY461Y/" },
+      { title: "The Cold Start Problem", author: "Andrew Chen", href: "https://www.amazon.com/gp/product/B08HZ5XY7X/" },
+    ],
+  },
+  {
+    year: "2020",
+    items: [
+      { title: "Pachinko", author: "Min Jin Lee", href: "https://www.amazon.com/Pachinko-National-Book-Award-Finalist-ebook/dp/B01GZY28JA", favorite: true },
+      { title: "The Mamba Mentality: How I Play", author: "Kobe Bryant", href: "https://www.amazon.com/gp/product/B07DC3WRKT/" },
+      { title: "The Conquest of Happiness", author: "Bertrand Russell", href: "https://www.amazon.com/Conquest-Happiness-Bertrand-Russell/dp/087140673X", favorite: true },
+      { title: "The Hitchhiker's Guide to the Galaxy", author: "Douglas Adams", href: "https://www.amazon.com/gp/product/B000XUBC2C/" },
+      { title: "The Inner Game of Tennis", author: "W. Timothy Gallwey", href: "https://www.amazon.com/gp/product/B003T0G9E4/" },
+      { title: "Zen: The Authentic Gate", author: "Kōun Yamada", href: "https://www.amazon.com/gp/product/B00TLYG24O/" },
+      { title: "The Artist's Way", author: "Julia Cameron", href: "https://www.amazon.com/gp/product/B006H19H3M/" },
+      { title: "Talking to Strangers", author: "Malcolm Gladwell", href: "https://www.amazon.com/gp/product/B07NJCG1XS/" },
+      { title: "Very Important People", author: "Ashley Mears", href: "https://www.amazon.com/gp/product/B0824B49LS/", recommended: true },
+      { title: "Stories of Your Life and Others", author: "Ted Chiang", href: "https://www.amazon.com/gp/product/B0048EKOP0/", favorite: true },
+      { title: "Breasts and Eggs", author: "Mieko Kawakami", href: "https://www.amazon.com/gp/product/B085HJQKS8/", recommended: true },
+      { title: "The Order of Time", author: "Carlo Rovelli", href: "https://www.amazon.com/gp/product/B07638M8JL/", recommended: true },
+      { title: "The Ride of a Lifetime", author: "Robert Iger", href: "https://www.amazon.com/gp/product/B07PF6XTD8/" },
+    ],
+  },
+  {
+    year: "2019",
+    items: [
+      { title: "Exhalation: Stories", author: "Ted Chiang", href: "https://www.amazon.com/gp/product/B07GD46PQZ/", favorite: true },
+      { title: "Atomic Habits", author: "James Clear", href: "https://www.amazon.com/gp/product/B07D23CFGR/" },
+      { title: "The Mind-Body Problem", author: "Rebecca Goldstein", href: "https://www.amazon.com/gp/product/B0B1BTJLJN/", recommended: true },
+      { title: "The Making of a Manager", author: "Julie Zhuo", href: "https://www.amazon.com/gp/product/B079WNPRL2/" },
+      { title: "Cult of the Dead Cow", author: "Joseph Menn", href: "https://www.amazon.com/gp/product/B07J54F9KR/" },
+      { title: "How to Change Your Mind", author: "Michael Pollan", href: "https://www.amazon.com/gp/product/B076GPJXWZ/" },
+      { title: "Kafka on the Shore", author: "Haruki Murakami", href: "https://www.amazon.com/gp/product/B000FC2ROU/" },
+      { title: "1Q84", author: "Haruki Murakami", href: "https://www.amazon.com/gp/product/B004LROUW2/", favorite: true },
+      { title: "The Paper Menagerie and Other Stories", author: "Ken Liu", href: "https://www.amazon.com/gp/product/B00TBKYK60/", favorite: true },
+      { title: "Bad Blood", author: "John Carreyrou", href: "https://www.amazon.com/gp/product/B078VW3VM7/" },
+      { title: "Red Notice", author: "Bill Browder", href: "https://www.amazon.com/gp/product/B00LD1ORX6/", recommended: true },
+      { title: "Masters of Doom", author: "David Kushner", href: "https://www.amazon.com/gp/product/B000FBFNL0/", recommended: true },
+    ],
+  },
+  {
+    year: "2018",
+    items: [
+      { title: "AI Superpowers", author: "Kai-Fu Lee", href: "https://www.amazon.com/gp/product/B0795DNWCF/" },
+      { title: "Born a Crime", author: "Trevor Noah", href: "https://www.amazon.com/gp/product/B01DHWACVY/" },
+      { title: "Billion Dollar Whale", author: "Bradley Hope, Tom Wright", href: "https://www.amazon.com/gp/product/B079WVJZCH/" },
+      { title: "Crazy Rich Asians", author: "Kevin Kwan", href: "https://www.amazon.com/gp/product/B00AP2VQEM/" },
+      { title: "The Singapore Story", author: "Lee Kuan Yew", href: "https://www.amazon.com/gp/product/B00MVFRUZA/" },
+      { title: "The Sympathizer", author: "Viet Thanh Nguyen", href: "https://www.amazon.com/gp/product/B00PS5G4MM/" },
+      { title: "Essentialism", author: "Greg Mckeown", href: "https://www.amazon.com/gp/product/B00G1J1D28/" },
+      { title: "High Growth Handbook", author: "Elad Gil", href: "https://www.amazon.com/gp/product/B07DRPGGQ7/" },
+      { title: "Death's End (The Three-Body Problem Series Book 3)", author: "Cixin Liu", href: "https://www.amazon.com/gp/product/B00WDVKZY0/", favorite: true },
+      { title: "The Dark Forest (The Three-Body Problem Series Book 2)", author: "Cixin Liu", href: "https://www.amazon.com/gp/product/B00R13OYU6/", recommended: true },
+      { title: "The Three-Body Problem", author: "Cixin Liu", href: "https://www.amazon.com/gp/product/B00S8FCJCQ/", recommended: true },
+      { title: "Skin in the Game", author: "Nassim Nicholas Taleb", href: "https://www.amazon.com/gp/product/B075HYVP7C/" },
+    ],
+  },
+  {
+    year: "2017",
+    items: [
+      { title: "Shoe Dog", author: "Phil Knight", href: "https://www.amazon.com/gp/product/B0176M1A44/", recommended: true },
+      { title: "Principles: Life and Work", author: "Ray Dalio", href: "https://www.amazon.com/gp/product/B071CTK28D/", recommended: true },
+      { title: "Norwegian Wood", author: "Haruki Murakami", href: "https://www.amazon.com/gp/product/B003XT603Q/", favorite: true },
+      { title: "Cryptonomicon", author: "Neal Stephenson", href: "https://www.amazon.com/gp/product/B000FC11A6/" },
+    ],
+  },
+  {
+    year: "2016",
+    items: [
+      { title: "High Output Management", author: "Andrew S. Grove", href: "https://www.amazon.com/gp/product/0679762884/", favorite: true },
+    ],
+  },
+  {
+    year: "2015",
+    items: [
+      { title: "Zen and the Art of Motorcycle Maintenance", author: "Robert M. Pirsig", href: "https://www.amazon.com/gp/product/0060589469/" },
+      { title: "The Martian", author: "Andy Weir", href: "https://www.amazon.com/gp/product/0553418025/", recommended: true },
+      { title: "Thinking, Fast and Slow", author: "Daniel Kahneman", href: "https://www.amazon.com/gp/product/0374533555/" },
+      { title: "Becoming Steve Jobs", author: "Brent Schlender, Rick Tetzeli", href: "https://www.amazon.com/gp/product/0385347405/" },
+      { title: "Batman: The Killing Joke", author: "Alan Moore", href: "https://www.amazon.com/gp/product/1401216676/", recommended: true },
+      { title: "Batman: Year One", author: "Frank Miller", href: "https://www.amazon.com/gp/product/1401207529/" },
+      { title: "Batman: The Dark Knight Returns", author: "Frank Miller", href: "https://www.amazon.com/gp/product/1563893428/" },
+    ],
+  },
+  {
+    year: "2014",
+    items: [
+      { title: "The Hard Thing About Hard Things", author: "Ben Horowitz", href: "https://www.amazon.com/gp/product/0062273205/" },
+    ],
+  },
+  {
+    year: "2013",
+    items: [
+      { title: "Hatching Twitter", author: "Nick Bilton", href: "https://www.amazon.com/gp/product/B00CDUVSQ0/" },
+      { title: "The Everything Store", author: "Brad Stone", href: "https://www.amazon.com/gp/product/B00BWQW73E/" },
+      { title: "Lean In", author: "Sheryl Sandberg", href: "https://www.amazon.com/gp/product/0385349947/" },
+      { title: "World War Z", author: "Max Brooks", href: "https://www.amazon.com/gp/product/B000JMKQX0/", recommended: true },
+      { title: "The Design of Everyday Things", author: "Donald A. Norman", href: "https://www.amazon.com/gp/product/0465067107/", recommended: true },
+    ],
+  },
+  {
+    year: "2012",
+    items: [
+      { title: "The Better Angels of Our Nature", author: "Steven Pinker", href: "https://www.amazon.com/gp/product/B0052REUW0/" },
+      { title: "Deng Xiaoping and the Transformation of China", author: "Ezra F. Vogel", href: "https://www.amazon.com/gp/product/B0064EHZY0/" },
+      { title: "Moonwalking with Einstein", author: "Joshua Foer", href: "https://www.amazon.com/gp/product/B004H4XI5O/" },
+      { title: "Behind the Beautiful Forevers", author: "Katherine Boo", href: "https://www.amazon.com/gp/product/B006GHXB2A/" },
+      { title: "This Time Is Different", author: "Carmen M. Reinhart, Kenneth Rogoff", href: "https://www.amazon.com/gp/product/B004EYT932/" },
+      { title: "Gödel, Escher, Bach", author: "Douglas R Hofstadter", href: "https://www.amazon.com/gp/product/0465026567/", favorite: true },
+      { title: "Guns, Germs, and Steel", author: "Jared Diamond", href: "https://www.amazon.com/gp/product/0881792063/", favorite: true },
+    ],
+  },
+  {
+    year: "2011",
+    items: [
+      { title: "The Lean Startup", author: "Eric Ries", href: "https://www.amazon.com/gp/product/0307887898/" },
+      { title: "Einstein: His Life and Universe", author: "Walter Isaacson", href: "https://www.amazon.com/gp/product/0743264746/", recommended: true },
+      { title: "Steve Jobs", author: "Walter Isaacson", href: "https://www.amazon.com/gp/product/1451648537/", recommended: true },
+      { title: "In The Plex", author: "Steven Levy", href: "https://www.amazon.com/gp/product/1416596585/" },
+    ],
+  },
+  {
+    year: "2010",
+    items: [
+      { title: "Decoded", author: "Jay-Z", href: "https://www.amazon.com/gp/product/1400068924/" },
+      { title: "Rework", author: "Jason Fried, David Heinemeier Hansson", href: "https://www.amazon.com/gp/product/0307463745/" },
+      { title: "Talent Is Overrated", author: "Geoff Colvin", href: "https://www.amazon.com/gp/product/1591842247/", recommended: true },
+    ],
+  },
+  {
+    year: "2009",
+    items: [
+      { title: "Fooled by Randomness", author: "Nassim Nicholas Taleb", href: "https://www.amazon.com/gp/product/1400067936/" },
+      { title: "They Call Me Coach", author: "John Wooden", href: "https://www.amazon.com/gp/product/0071424911/" },
+      { title: "Predictably Irrational", author: "Dan Ariely", href: "https://www.amazon.com/gp/product/006135323X/" },
+    ],
+  },
+  {
+    year: "2008",
+    items: [
+      { title: "The Last Lecture", author: "Randy Pausch", href: "https://www.amazon.com/gp/product/1401323251/" },
+      { title: "The World Without Us", author: "Alan Weisman", href: "https://www.amazon.com/gp/product/0312347294/" },
+    ],
+  },
+];
 ---
 
 <PageLayout title="Books" description="Books I've read, with recommendations highlighted.">
   <Container>
     <div class="space-y-10">
-      <div class="animate font-semibold text-black dark:text-white">
+      <div class="animate text-2xl font-semibold text-black dark:text-white">
         Books
       </div>
-      <article class="animate prose dark:prose-invert max-w-none">
-        <p>People often ask for book recommendations and I like seeing what other people are reading so here is a list of books I own. I've probably read 70% of them. I wouldn't recommend all of them but those I liked are in <em>italics</em> and those I'd recommend are in <em>italics</em> and <strong>bold</strong>.</p>
-
-        <h2>2024</h2>
-        <ul>
-          <li><a href="https://www.amazon.com/gp/product/B003EY7IHM/"><em>Foundation and Earth</em></a> — Isaac Asimov</li>
-          <li><a href="https://www.amazon.com/gp/product/B003EY7JC6/"><em>Foundation's Edge</em></a> — Isaac Asimov</li>
-          <li><a href="https://www.amazon.com/gp/product/B000FC1PWU/">Second Foundation</a> — Isaac Asimov</li>
-          <li><a href="https://www.amazon.com/gp/product/B0BWGKNK7G/"><em>Invitation to a Banquet: The Story of Chinese Food</em></a> — Fuchsia Dunlop</li>
-          <li><a href="https://www.amazon.com/gp/product/B0009JKV9W/">The Hitchhiker's Guide to the Galaxy</a> — Douglas Adams</li>
-        </ul>
-
-        <h2>2023</h2>
-        <ul>
-          <li><a href="https://www.amazon.com/Klara-Sun-novel-Kazuo-Ishiguro-ebook/dp/B08B7V6CQ8/"><strong><em>Klara and the Sun</em></strong></a> — Kazuo Ishiguro</li>
-          <li><a href="https://www.amazon.com/gp/product/B000FC1PW0/"><em>I, Robot (The Robot Series)</em></a> — Isaac Asimov</li>
-          <li><a href="https://www.amazon.com/gp/product/B000FC1PWK/">Foundation and Empire</a> — Isaac Asimov</li>
-          <li><a href="https://www.amazon.com/gp/product/B00Z8VTMYG/"><em>Seven Brief Lessons on Physics</em></a> — Carlo Rovelli</li>
-          <li><a href="https://www.amazon.com/gp/product/B000FC1PWA/"><em>Foundation</em></a> — Isaac Asimov</li>
-          <li><a href="https://www.amazon.com/gp/product/B06ZZ1YGJ5/">Why We Sleep</a> — Matthew Walker</li>
-          <li><a href="https://www.amazon.com/gp/product/B09F5NLH1Z/">The Thrawn Trilogy 3-Book Bundle</a> — Timothy Zahn</li>
-          <li><a href="https://www.amazon.com/gp/product/B0BWKR3H4F/">MCU: The Reign of Marvel Studios</a> — Joanna Robinson, Dave Gonzales, Gavin Edwards</li>
-          <li><a href="https://www.amazon.com/gp/product/B000XUBEYS/"><em>American Prometheus</em></a> — Kai Bird, Martin J. Sherwin</li>
-          <li><a href="https://www.amazon.com/gp/product/B08QM8VHRT/">When We Cease to Understand the World</a> — Benjamín Labatut</li>
-          <li><a href="https://www.amazon.com/gp/product/B09JBCGQB8/"><strong>Tomorrow, and Tomorrow, and Tomorrow</strong></a> — Gabrielle Zevin</li>
-          <li><a href="https://www.amazon.com/Genghis-Khan-Making-Modern-World-ebook/dp/B000FCK206/"><em>Genghis Khan and the Making of the Modern World</em></a> — Jack Weatherford</li>
-          <li><a href="https://www.amazon.com/gp/product/B0BTJCTR58/"><em>What's Our Problem?: A Self-Help Book for Societies</em></a> — Tim Urban</li>
-          <li><a href="https://www.amazon.com/gp/product/B09WMBSPLT/">The Stress Prescription</a> — Dr. Elissa Epel</li>
-          <li><a href="https://www.amazon.com/gp/product/B009YQ78AQ/">Dynasty of Evil: A Novel of the Old Republic</a> — Drew Karpyshyn</li>
-          <li><a href="https://www.amazon.com/gp/product/B009WTTPCY/">Rule of Two: Star Wars Legends (Darth Bane)</a> — Drew Karpyshyn</li>
-          <li><a href="https://www.amazon.com/gp/product/B08ZCP1Z2W/">Star Wars: Thrawn Ascendancy (Book III: Lesser Evil)</a> — Timothy Zahn</li>
-          <li><a href="https://www.amazon.com/gp/product/B07YK1JM4S/">Star Wars: Thrawn Ascendancy (Book I: Chaos Rising)</a> — Timothy Zahn</li>
-          <li><a href="https://www.amazon.com/gp/product/B08KPJW7L9/">Star Wars: Thrawn Ascendancy (Book II: Greater Good)</a> — Timothy Zahn</li>
-          <li><a href="https://www.amazon.com/gp/product/B0051AMYTO/">Revan: Star Wars Legends (The Old Republic)</a> — Drew Karpyshyn</li>
-          <li><a href="https://www.amazon.com/gp/product/B09RX5F238/">Chip War</a> — Chris Miller</li>
-          <li><a href="https://www.amazon.com/gp/product/B07L7SSJ5K/">Thrawn: Treason</a> — Timothy Zahn</li>
-          <li><a href="https://www.amazon.com/gp/product/B006VPAUYE/">Star Wars: Darth Plagueis</a> — James Luceno</li>
-          <li><a href="https://www.amazon.com/gp/product/B0BRYQJ49K/">Scaling People</a> — Claire Hughes Johnson</li>
-          <li><a href="https://www.amazon.com/gp/product/B07692QXW3/">Thrawn: Alliances</a> — Timothy Zahn</li>
-          <li><a href="https://www.amazon.com/gp/product/B009YQ791Y/">Path of Destruction: A Novel of the Old Republic</a> — Drew Karpyshyn</li>
-          <li><a href="https://www.amazon.com/gp/product/B008EPMER0/">Star Wars: Dark Force Rising</a> — Timothy Zahn</li>
-          <li><a href="https://www.amazon.com/gp/product/B005LEV2V6/">Star Wars: Heir to the Empire</a> — Timothy Zahn</li>
-          <li><a href="https://www.amazon.com/gp/product/B003X4PKZ0/">Star Wars: The Old Republic: Fatal Alliance</a> — Sean Williams</li>
-          <li><a href="https://www.amazon.com/gp/product/B0013O8X60/">Children of Dune</a> — Frank Herbert</li>
-          <li><a href="https://www.amazon.com/Creative-Act-Way-Being-ebook/dp/B09Z7MH5C3/"><strong><em>The Creative Act: A Way of Being</em></strong></a> — Rick Rubin</li>
-          <li><a href="https://www.amazon.com/gp/product/B003V1WXKU/">"Surely You're Joking, Mr. Feynman!"</a> — Richard P. Feynman</li>
-        </ul>
-
-        <h2>2022</h2>
-        <ul>
-          <li><a href="https://www.amazon.com/Silk-Roads-New-History-World-ebook/dp/B00XST7IX2/"><em>The Silk Roads: A New History of the World</em></a> — Peter Frankopan</li>
-          <li><a href="https://www.amazon.com/gp/product/B01HQA6EOC/"><em>Norse Mythology</em></a> — Neil Gaiman</li>
-          <li><a href="https://www.amazon.com/gp/product/B007UH4G9C/">Sphere</a> — Michael Crichton</li>
-          <li><a href="https://www.amazon.com/gp/product/B01ILZO30S/">Star Wars: Thrawn</a> — Timothy Zahn</li>
-          <li><a href="https://www.amazon.com/gp/product/B0B1BTJLJN/">Outlive: The Science and Art of Longevity</a> — Peter Attia MD</li>
-          <li><a href="https://www.amazon.com/gp/product/B08FGV64B1/">Four Thousand Weeks</a> — Oliver Burkeman</li>
-          <li><a href="https://www.amazon.com/gp/product/B007978PGI/">The Silmarillion</a> — J.R.R. Tolkien</li>
-          <li><a href="https://www.amazon.com/gp/product/B085FV622C/">Food Rules: An Eater's Manual</a> — Michael Pollan</li>
-          <li><a href="https://www.amazon.com/gp/product/B09KMWYHX8/">The Metaverse</a> — Matthew Ball</li>
-          <li><a href="https://www.amazon.com/gp/product/B0881Y73YG/">Principles for Dealing with the Changing World Order</a> — Ray Dalio</li>
-          <li><a href="https://www.amazon.com/gp/product/B09VPKZR3G/">The Network State</a> — Balaji Srinivasan</li>
-          <li><a href="https://www.amazon.com/gp/product/0465026567/">Gödel, Escher, Bach: An Eternal Golden Braid</a> — Douglas R Hofstadter</li>
-          <li><a href="https://www.amazon.com/Midnight-Library-Novel-Matt-Haig/dp/0525559477"><em>The Midnight Library</em></a> — Matt Haig</li>
-          <li><a href="https://www.amazon.com/gp/product/B009IXMK4O/"><strong>Founders at Work: Stories of Startups' Early Days</strong></a> — Jessica Livingston</li>
-          <li><a href="https://www.amazon.com/gp/product/B00B7NPRY8/"><strong><em>Dune</em></strong></a> — Frank Herbert</li>
-          <li><a href="https://www.amazon.com/gp/product/B0015DTW50/">Children of Dune</a> — Frank Herbert</li>
-          <li><a href="https://www.amazon.com/gp/product/B001L10ZIO/">Heretics of Dune</a> — Frank Herbert</li>
-          <li><a href="https://www.amazon.com/gp/product/B001O1O6IQ/">Chapterhouse: Dune</a> — Frank Herbert</li>
-        </ul>
-
-        <h2>2021</h2>
-        <ul>
-          <li><a href="https://www.amazon.com/gp/product/B01HNJIJB2/">The Daily Stoic</a> — Ryan Holiday</li>
-          <li><a href="https://www.amazon.com/gp/product/B0026OR2NQ/">Hackers &amp; Painters</a> — Paul Graham</li>
-          <li><a href="https://www.amazon.com/gp/product/B07MNG496J/">This Is How You Lose the Time War</a> — Amal El-Mohtar, Max Gladstone</li>
-          <li><a href="https://www.amazon.com/gp/product/B08FMVVQGF/">Crying in H Mart</a> — Michelle Zauner</li>
-          <li><a href="https://www.amazon.com/gp/product/B08FHBV4ZX/"><em>Project Hail Mary: A Novel</em></a> — Andy Weir</li>
-          <li><a href="https://www.amazon.com/gp/product/B088173GMN/"><em>Fundamentals: Ten Keys to Reality</em></a> — Frank Wilczek</li>
-          <li><a href="https://www.amazon.com/gp/product/B00OZ0TOZI/"><em>A Beautiful Question: Finding Nature's Deep Design</em></a> — Frank Wilczek</li>
-          <li><a href="https://www.amazon.com/gp/product/B07C6H6FNN/">A Monk's Guide to a Clean House and Mind</a> — Shoukei Matsumoto</li>
-          <li><a href="https://www.amazon.com/gp/product/B07YRY461Y/">How to Avoid a Climate Disaster</a> — Bill Gates</li>
-          <li><a href="https://www.amazon.com/gp/product/B08HZ5XY7X/">The Cold Start Problem</a> — Andrew Chen</li>
-        </ul>
-
-        <h2>2020</h2>
-        <ul>
-          <li><a href="https://www.amazon.com/Pachinko-National-Book-Award-Finalist-ebook/dp/B01GZY28JA"><strong><em>Pachinko</em></strong></a> — Min Jin Lee</li>
-          <li><a href="https://www.amazon.com/gp/product/B07DC3WRKT/">The Mamba Mentality: How I Play</a> — Kobe Bryant</li>
-          <li><a href="https://www.amazon.com/Conquest-Happiness-Bertrand-Russell/dp/087140673X"><strong><em>The Conquest of Happiness</em></strong></a> — Bertrand Russell</li>
-          <li><a href="https://www.amazon.com/gp/product/B000XUBC2C/">The Hitchhiker's Guide to the Galaxy</a> — Douglas Adams</li>
-          <li><a href="https://www.amazon.com/gp/product/B003T0G9E4/">The Inner Game of Tennis</a> — W. Timothy Gallwey</li>
-          <li><a href="https://www.amazon.com/gp/product/B00TLYG24O/">Zen: The Authentic Gate</a> — Kōun Yamada</li>
-          <li><a href="https://www.amazon.com/gp/product/B006H19H3M/">The Artist's Way</a> — Julia Cameron</li>
-          <li><a href="https://www.amazon.com/gp/product/B07NJCG1XS/">Talking to Strangers</a> — Malcolm Gladwell</li>
-          <li><a href="https://www.amazon.com/gp/product/B0824B49LS/"><em>Very Important People</em></a> — Ashley Mears</li>
-          <li><a href="https://www.amazon.com/gp/product/B0048EKOP0/"><strong><em>Stories of Your Life and Others</em></strong></a> — Ted Chiang</li>
-          <li><a href="https://www.amazon.com/gp/product/B085HJQKS8/"><em>Breasts and Eggs: A Novel</em></a> — Mieko Kawakami</li>
-          <li><a href="https://www.amazon.com/gp/product/B07638M8JL/"><em>The Order of Time</em></a> — Carlo Rovelli</li>
-          <li><a href="https://www.amazon.com/gp/product/B07PF6XTD8/">The Ride of a Lifetime</a> — Robert Iger</li>
-        </ul>
-
-        <h2>2019</h2>
-        <ul>
-          <li><a href="https://www.amazon.com/gp/product/B07GD46PQZ/"><strong><em>Exhalation: Stories</em></strong></a> — Ted Chiang</li>
-          <li><a href="https://www.amazon.com/gp/product/B07D23CFGR/">Atomic Habits</a> — James Clear</li>
-          <li><a href="https://www.amazon.com/gp/product/B0B1BTJLJN/"><em>The Mind-Body Problem</em></a> — Rebecca Goldstein</li>
-          <li><a href="https://www.amazon.com/gp/product/B079WNPRL2/">The Making of a Manager</a> — Julie Zhuo</li>
-          <li><a href="https://www.amazon.com/gp/product/B07J54F9KR/">Cult of the Dead Cow</a> — Joseph Menn</li>
-          <li><a href="https://www.amazon.com/gp/product/B076GPJXWZ/">How to Change Your Mind</a> — Michael Pollan</li>
-          <li><a href="https://www.amazon.com/gp/product/B000FC2ROU/">Kafka on the Shore</a> — Haruki Murakami</li>
-          <li><a href="https://www.amazon.com/gp/product/B004LROUW2/"><strong><em>1Q84</em></strong></a> — Haruki Murakami</li>
-          <li><a href="https://www.amazon.com/gp/product/B00TBKYK60/"><strong>The Paper Menagerie and Other Stories</strong></a> — Ken Liu</li>
-          <li><a href="https://www.amazon.com/gp/product/B078VW3VM7/">Bad Blood</a> — John Carreyrou</li>
-          <li><a href="https://www.amazon.com/gp/product/B00LD1ORX6/"><em>Red Notice</em></a> — Bill Browder</li>
-          <li><a href="https://www.amazon.com/gp/product/B000FBFNL0/"><em>Masters of Doom</em></a> — David Kushner</li>
-        </ul>
-
-        <h2>2018</h2>
-        <ul>
-          <li><a href="https://www.amazon.com/gp/product/B0795DNWCF/">AI Superpowers</a> — Kai-Fu Lee</li>
-          <li><a href="https://www.amazon.com/gp/product/B01DHWACVY/">Born a Crime</a> — Trevor Noah</li>
-          <li><a href="https://www.amazon.com/gp/product/B079WVJZCH/">Billion Dollar Whale</a> — Bradley Hope, Tom Wright</li>
-          <li><a href="https://www.amazon.com/gp/product/B00AP2VQEM/">Crazy Rich Asians</a> — Kevin Kwan</li>
-          <li><a href="https://www.amazon.com/gp/product/B00MVFRUZA/">The Singapore Story</a> — Lee Kuan Yew</li>
-          <li><a href="https://www.amazon.com/gp/product/B00PS5G4MM/">The Sympathizer</a> — Viet Thanh Nguyen</li>
-          <li><a href="https://www.amazon.com/gp/product/B00G1J1D28/">Essentialism</a> — Greg Mckeown</li>
-          <li><a href="https://www.amazon.com/gp/product/B07DRPGGQ7/">High Growth Handbook</a> — Elad Gil</li>
-          <li><a href="https://www.amazon.com/gp/product/B00W DVKZY0/"><strong><em>Death's End (The Three-Body Problem Series Book 3)</em></strong></a> — Cixin Liu</li>
-          <li><a href="https://www.amazon.com/gp/product/B00R13OYU6/"><em>The Dark Forest (The Three-Body Problem Series Book 2)</em></a> — Cixin Liu</li>
-          <li><a href="https://www.amazon.com/gp/product/B00S8FCJCQ/"><em>The Three-Body Problem</em></a> — Cixin Liu</li>
-          <li><a href="https://www.amazon.com/gp/product/B075HYVP7C/">Skin in the Game</a> — Nassim Nicholas Taleb</li>
-        </ul>
-
-        <h2>2017</h2>
-        <ul>
-          <li><a href="https://www.amazon.com/gp/product/B0176M1A44/"><em>Shoe Dog</em></a> — Phil Knight</li>
-          <li><a href="https://www.amazon.com/gp/product/B071CTK28D/"><em>Principles: Life and Work</em></a> — Ray Dalio</li>
-          <li><a href="https://www.amazon.com/gp/product/B003XT603Q/"><strong><em>Norwegian Wood</em></strong></a> — Haruki Murakami</li>
-          <li><a href="https://www.amazon.com/gp/product/B000FC11A6/">Cryptonomicon</a> — Neal Stephenson</li>
-        </ul>
-
-        <h2>2016</h2>
-        <ul>
-          <li><a href="https://www.amazon.com/gp/product/0679762884/"><strong><em>High Output Management</em></strong></a> — Andrew S. Grove</li>
-        </ul>
-
-        <h2>2015</h2>
-        <ul>
-          <li><a href="https://www.amazon.com/gp/product/0060589469/">Zen and the Art of Motorcycle Maintenance</a> — Robert M. Pirsig</li>
-          <li><a href="https://www.amazon.com/gp/product/0553418025/"><em>The Martian</em></a> — Andy Weir</li>
-          <li><a href="https://www.amazon.com/gp/product/0374533555/">Thinking, Fast and Slow</a> — Daniel Kahneman</li>
-          <li><a href="https://www.amazon.com/gp/product/0385347405/">Becoming Steve Jobs</a> — Brent Schlender, Rick Tetzeli</li>
-          <li><a href="https://www.amazon.com/gp/product/1401216676/"><em>Batman: The Killing Joke</em></a> — Alan Moore</li>
-          <li><a href="https://www.amazon.com/gp/product/1401207529/">Batman: Year One</a> — Frank Miller</li>
-          <li><a href="https://www.amazon.com/gp/product/1563893428/">Batman: The Dark Knight Returns</a> — Frank Miller</li>
-        </ul>
-
-        <h2>2014</h2>
-        <ul>
-          <li><a href="https://www.amazon.com/gp/product/0062273205/">The Hard Thing About Hard Things</a> — Ben Horowitz</li>
-        </ul>
-
-        <h2>2013</h2>
-        <ul>
-          <li><a href="https://www.amazon.com/gp/product/B00CDUVSQ0/">Hatching Twitter</a> — Nick Bilton</li>
-          <li><a href="https://www.amazon.com/gp/product/B00BWQW73E/">The Everything Store</a> — Brad Stone</li>
-          <li><a href="https://www.amazon.com/gp/product/0385349947/">Lean In</a> — Sheryl Sandberg</li>
-          <li><a href="https://www.amazon.com/gp/product/B000JMKQX0/"><em>World War Z</em></a> — Max Brooks</li>
-          <li><a href="https://www.amazon.com/gp/product/0465067107/"><em>The Design of Everyday Things</em></a> — Donald A. Norman</li>
-        </ul>
-
-        <h2>2012</h2>
-        <ul>
-          <li><a href="https://www.amazon.com/gp/product/B0052REUW0/">The Better Angels of Our Nature</a> — Steven Pinker</li>
-          <li><a href="https://www.amazon.com/gp/product/B0064EHZY0/">Deng Xiaoping and the Transformation of China</a> — Ezra F. Vogel</li>
-          <li><a href="https://www.amazon.com/gp/product/B004H4XI5O/">Moonwalking with Einstein</a> — Joshua Foer</li>
-          <li><a href="https://www.amazon.com/gp/product/B006GHXB2A/">Behind the Beautiful Forevers</a> — Katherine Boo</li>
-          <li><a href="https://www.amazon.com/gp/product/B004EYT932/">This Time Is Different</a> — Carmen M. Reinhart, Kenneth Rogoff</li>
-          <li><a href="https://www.amazon.com/gp/product/0465026567/"><strong><em>Gödel, Escher, Bach</em></strong></a> — Douglas R Hofstadter</li>
-          <li><a href="https://www.amazon.com/gp/product/0881792063/"><strong><em>Guns, Germs, and Steel</em></strong></a> — Jared Diamond</li>
-        </ul>
-
-        <h2>2011</h2>
-        <ul>
-          <li><a href="https://www.amazon.com/gp/product/0307887898/">The Lean Startup</a> — Eric Ries</li>
-          <li><a href="https://www.amazon.com/gp/product/0743264746/"><em>Einstein: His Life and Universe</em></a> — Walter Isaacson</li>
-          <li><a href="https://www.amazon.com/gp/product/1451648537/"><em>Steve Jobs</em></a> — Walter Isaacson</li>
-          <li><a href="https://www.amazon.com/gp/product/1416596585/">In The Plex</a> — Steven Levy</li>
-        </ul>
-
-        <h2>2010</h2>
-        <ul>
-          <li><a href="https://www.amazon.com/gp/product/1400068924/">Decoded</a> — Jay-Z</li>
-          <li><a href="https://www.amazon.com/gp/product/0307463745/">Rework</a> — Jason Fried, David Heinemeier Hansson</li>
-          <li><a href="https://www.amazon.com/gp/product/1591842247/"><em>Talent Is Overrated</em></a> — Geoff Colvin</li>
-        </ul>
-
-        <h2>2009</h2>
-        <ul>
-          <li><a href="https://www.amazon.com/gp/product/1400067936/">Fooled by Randomness</a> — Nassim Nicholas Taleb</li>
-          <li><a href="https://www.amazon.com/gp/product/0071424911/">They Call Me Coach</a> — John Wooden</li>
-          <li><a href="https://www.amazon.com/gp/product/006135323X/">Predictably Irrational</a> — Dan Ariely</li>
-        </ul>
-
-        <h2>2008</h2>
-        <ul>
-          <li><a href="https://www.amazon.com/gp/product/1401323251/">The Last Lecture</a> — Randy Pausch</li>
-          <li><a href="https://www.amazon.com/gp/product/0312347294/">The World Without Us</a> — Alan Weisman</li>
-        </ul>
-      </article>
+      <p class="animate text-sm">
+        People often ask for book recommendations and I like seeing what other people are reading so here is a list of books I own. I've probably read 70% of them. I wouldn't recommend all of them but those I liked are in <em>italics</em> and those I'd recommend are in <em>italics</em> and <strong>bold</strong>.
+      </p>
+      <div class="space-y-10">
+        {books.map(({ year, items }) => (
+          <section class="animate space-y-3">
+            <div class="font-semibold text-black dark:text-white">
+              {year}
+            </div>
+            <ul class="flex flex-col">
+              {items.map((book) => (
+                <li class="border-b border-black/10 dark:border-white/10 last:border-none">
+                  <a href={book.href} target="_blank" rel="noopener noreferrer" class="group flex items-baseline justify-between gap-4 py-2.5 hover:text-black dark:hover:text-white transition-colors duration-200">
+                    <span class="text-sm font-medium">
+                      {book.favorite ? <strong><em>{book.title}</em></strong> : book.recommended ? <em>{book.title}</em> : book.title}
+                    </span>
+                    <span class="text-xs opacity-40 whitespace-nowrap shrink-0">{book.author}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
     </div>
   </Container>
 </PageLayout>

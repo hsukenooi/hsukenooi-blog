@@ -1,19 +1,25 @@
 ---
 import Container from "@components/Container.astro";
-import { SITE } from "@consts";
-import BackToTop from "@components/BackToTop.astro";
+import Link from "@components/Link.astro";
+import { SITE, SOCIALS } from "@consts";
 ---
 
 <footer class="animate">
   <Container>
-    <div class="relative">
-      <div class="absolute right-0 -top-20">
-        <BackToTop />
-      </div>
-    </div>
     <div class="flex justify-between items-center">
-      <div>
-        &copy; 2024 {`|`} {SITE.NAME}
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+{SOCIALS.map((SOCIAL, i) => (
+          <>
+            <Link href={SOCIAL.HREF} external aria-label={`${SITE.NAME} on ${SOCIAL.NAME}`}>
+              {SOCIAL.NAME}
+            </Link>
+            {i < SOCIALS.length - 1 && <span class="opacity-30">/</span>}
+          </>
+        ))}
+        <span class="opacity-30">/</span>
+        <Link href={`mailto:${SITE.EMAIL}`} aria-label={`Email ${SITE.NAME}`}>
+          {SITE.EMAIL}
+        </Link>
       </div>
       <div class="flex flex-wrap gap-1 items-center">
         <button
