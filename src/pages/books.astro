@@ -2,7 +2,51 @@
 import PageLayout from "@layouts/PageLayout.astro";
 import Container from "@components/Container.astro";
 
+async function fetchCover(title: string, author: string): Promise<string | null> {
+  try {
+    const firstAuthor = author.split(",")[0].trim();
+    const t = encodeURIComponent(title);
+    const a = encodeURIComponent(firstAuthor);
+    const res = await fetch(`https://openlibrary.org/search.json?title=${t}&author=${a}&limit=1&fields=cover_i`);
+    const data = await res.json();
+    const coverId = data.docs?.[0]?.cover_i;
+    if (!coverId) return null;
+    return `https://covers.openlibrary.org/b/id/${coverId}-L.jpg`;
+  } catch {
+    return null;
+  }
+}
+
 const books: { year: string; items: { title: string; author: string; href: string; recommended?: boolean; favorite?: boolean }[] }[] = [
+  {
+    year: "2026",
+    items: [
+      { title: "Tojo: The Rise and Fall of Japan's Most Controversial World War II General", author: "Peter Mauch", href: "https://www.amazon.com/gp/product/B0FJSHP142/" },
+      { title: "Radiant Black Vol. 1", author: "Kyle Higgins, Cherish Chen", href: "https://www.amazon.com/gp/product/1534319166/" },
+      { title: "Ghost in the Wires: My Adventures as the World's Most Wanted Hacker", author: "Kevin Mitnick", href: "https://www.amazon.com/gp/product/B0047Y0F0K/" },
+      { title: "Under the Eye of the Big Bird: A Novel", author: "Hiromi Kawakami", href: "https://www.amazon.com/gp/product/B0CPDSX2C1/" },
+      { title: "I Deliver Parcels in Beijing", author: "Hu Anyan", href: "https://www.amazon.com/gp/product/1662603746/" },
+    ],
+  },
+  {
+    year: "2025",
+    items: [
+      { title: "The Practicing Stoic: A Philosophical User's Manual", author: "Ward Farnsworth", href: "https://www.amazon.com/gp/product/B085H5R3JJ/" },
+      { title: "The Soccer 100", author: "Michael Cox", href: "https://www.amazon.com/gp/product/B0DXL84YM2/" },
+      { title: "All That We See or Seem", author: "Ken Liu", href: "https://www.amazon.com/gp/product/1668083175/" },
+      { title: "Babel: Or the Necessity of Violence", author: "R.F. Kuang", href: "https://www.amazon.com/gp/product/B09MD95S5V/" },
+      { title: "The Burning God (The Poppy War Book 3)", author: "R.F. Kuang", href: "https://www.amazon.com/gp/product/B084VP8KNB/" },
+      { title: "1984", author: "George Orwell", href: "https://www.amazon.com/gp/product/B003JTHWKU/" },
+      { title: "Why I Am Not a Christian", author: "Bertrand Russell", href: "https://www.amazon.com/gp/product/B0CRRCQSKZ/" },
+      { title: "In Praise of Idleness: A Timeless Essay", author: "Bertrand Russell", href: "https://www.amazon.com/gp/product/B01MRJVUU5/" },
+      { title: "The Dragon Republic (The Poppy War Book 2)", author: "R.F. Kuang", href: "https://www.amazon.com/gp/product/B07CRKXQ1Y/" },
+      { title: "Artificial Condition: The Murderbot Diaries", author: "Martha Wells", href: "https://www.amazon.com/gp/product/B0756WCG8S/" },
+      { title: "All Systems Red: The Murderbot Diaries", author: "Martha Wells", href: "https://www.amazon.com/gp/product/B01MYZ8X5C/" },
+      { title: "Dopamine Nation: Finding Balance in the Age of Indulgence", author: "Anna Lembke", href: "https://www.amazon.com/gp/product/B08J8KM96K/" },
+      { title: "This Inevitable Ruin: Dungeon Crawler Carl Book 7", author: "Matt Dinniman", href: "https://www.amazon.com/gp/product/B0DJWKWV8W/" },
+      { title: "The Eye of the Bedlam Bride: Dungeon Crawler Carl Book 6", author: "Matt Dinniman", href: "https://www.amazon.com/gp/product/B0C1R52V2J/" },
+    ],
+  },
   {
     year: "2024",
     items: [
@@ -228,38 +272,54 @@ const books: { year: string; items: { title: string; author: string; href: strin
     ],
   },
 ];
+
+const allItems = books.flatMap(({ year, items }) => items.map(item => ({ ...item, year })));
+
+// Batch requests to avoid rate limiting
+const BATCH_SIZE = 10;
+const coverUrls: (string | null)[] = [];
+for (let i = 0; i < allItems.length; i += BATCH_SIZE) {
+  const batch = allItems.slice(i, i + BATCH_SIZE);
+  const results = await Promise.all(batch.map(b => fetchCover(b.title, b.author)));
+  coverUrls.push(...results);
+}
+const coverMap = Object.fromEntries(allItems.map((b, i) => [b.title, coverUrls[i]]));
 ---
 
 <PageLayout title="Books" description="Books I've read, with recommendations highlighted.">
   <Container>
-    <div class="space-y-10">
-      <div class="animate text-2xl font-semibold text-black dark:text-white">
-        Books
-      </div>
-      <p class="animate text-sm">
-        People often ask for book recommendations and I like seeing what other people are reading so here is a list of books I own. I've probably read 70% of them. I wouldn't recommend all of them but those I liked are in <em>italics</em> and those I'd recommend are in <em>italics</em> and <strong>bold</strong>.
-      </p>
-      <div class="space-y-10">
-        {books.map(({ year, items }) => (
-          <section class="animate space-y-3">
-            <div class="font-semibold text-black dark:text-white">
-              {year}
-            </div>
-            <ul class="flex flex-col">
-              {items.map((book) => (
-                <li class="border-b border-black/10 dark:border-white/10 last:border-none">
-                  <a href={book.href} target="_blank" rel="noopener noreferrer" class="group flex items-baseline justify-between gap-4 py-2.5 hover:text-black dark:hover:text-white transition-colors duration-200">
-                    <span class="text-sm font-medium">
-                      {book.favorite ? <strong><em>{book.title}</em></strong> : book.recommended ? <em>{book.title}</em> : book.title}
-                    </span>
-                    <span class="text-xs opacity-40 whitespace-nowrap shrink-0">{book.author}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))}
-      </div>
+    <div class="animate space-y-1 mb-10">
+      <div class="text-2xl font-semibold text-black dark:text-white">Books</div>
+      <p class="text-sm opacity-50">★ = recommended</p>
     </div>
   </Container>
+  <div class="mx-auto max-w-screen-lg px-5 space-y-12">
+    {books.map(({ year, items }) => (
+      <section class="animate space-y-4">
+        <div class="font-semibold text-black dark:text-white">{year}</div>
+        <div class="grid grid-cols-4 gap-6">
+          {items.map((book) => (
+            <a href={book.href} target="_blank" rel="noopener noreferrer" class="group flex flex-col gap-2.5">
+              <div class="relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-black/5 dark:bg-white/5">
+                {coverMap[book.title] && (
+                  <img
+                    src={coverMap[book.title]}
+                    alt={book.title}
+                    class="w-full h-full object-cover transition-opacity duration-200 group-hover:opacity-80"
+                  />
+                )}
+                {(book.recommended || book.favorite) && (
+                  <span class="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full bg-black/40 text-white/90 text-xs backdrop-blur-sm">★</span>
+                )}
+              </div>
+              <div class="space-y-0.5">
+                <div class="text-[15px] font-normal tracking-[0.0025em] leading-snug text-black dark:text-white line-clamp-2">{book.title}</div>
+                <div class="text-xs opacity-50 leading-snug truncate">{book.author}</div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
 </PageLayout>
