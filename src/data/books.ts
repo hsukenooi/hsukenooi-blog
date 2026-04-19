@@ -23,7 +23,7 @@ export const books: BookYear[] = [
   {
     year: "2025",
     items: [
-      { title: "The Practicing Stoic: A Philosophical User's Manual", author: "Ward Farnsworth", href: "https://www.amazon.com/gp/product/B085H5R3JJ/", coverUrl: "https://m.media-amazon.com/images/I/81Bmfzc8FHL._SL1500_.jpg" },
+      { title: "The Practicing Stoic: A Philosophical User's Manual", author: "Ward Farnsworth", href: "https://www.amazon.com/gp/product/B085H5R3JJ/", coverUrl: "https://m.media-amazon.com/images/I/91CJzK8EzNL._SL1500_.jpg" },
       { title: "The Soccer 100", author: "Michael Cox", href: "https://www.amazon.com/gp/product/B0DXL84YM2/" },
       { title: "All That We See or Seem", author: "Ken Liu", href: "https://www.amazon.com/gp/product/1668083175/" },
       { title: "Babel: Or the Necessity of Violence", author: "R.F. Kuang", href: "https://www.amazon.com/gp/product/B09MD95S5V/", coverUrl: "https://m.media-amazon.com/images/I/A1lv97-jJoL._SL1500_.jpg" },
