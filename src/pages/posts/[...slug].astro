@@ -3,6 +3,7 @@ import { type CollectionEntry, getCollection } from "astro:content";
 import PageLayout from "@layouts/PageLayout.astro";
 import Container from "@components/Container.astro";
 import FormattedDate from "@components/FormattedDate.astro";
+import Newsletter from "@components/Newsletter.astro";
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blog"))
@@ -32,5 +33,6 @@ const { Content } = await post.render();
     <article class="animate">
       <Content />
     </article>
+    <Newsletter variant="compact" />
   </Container>
 </PageLayout>

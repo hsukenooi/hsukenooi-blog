@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Container from "@components/Container.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import Link from "@components/Link.astro";
+import Newsletter from "@components/Newsletter.astro";
 import { HOME } from "@consts";
 
 const blog = (await getCollection("blog"))
@@ -26,8 +27,9 @@ const blog = (await getCollection("blog"))
             Before Iterative, I started 2 companies Weave (YCS14, acquired by LunchClub) and Decide (<Link href="https://www.geekwire.com/2013/ebay-acquires-decidecom-shopping-research-site-shut-sept-30" external>acquired by eBay</Link>). I studied mathematics in school, played video games for money and I'm originally from Penang, Malaysia.
           </p>
           <p class="animate">
-            I typically write about startups but will occasionally write about other things. You should subscribe.
+            I typically write about startups but will occasionally write about other things.
           </p>
+          <Newsletter variant="inline" />
         </article>
       </section>
 

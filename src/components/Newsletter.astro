@@ -1,0 +1,46 @@
+---
+import { BUTTONDOWN_USERNAME } from "@consts";
+
+type Props = {
+  variant?: "inline" | "compact";
+};
+
+const { variant = "inline" } = Astro.props;
+const action = `https://buttondown.com/api/emails/embed-subscribe/${BUTTONDOWN_USERNAME}`;
+const popupUrl = `https://buttondown.com/${BUTTONDOWN_USERNAME}`;
+---
+
+<div class:list={["animate", variant === "inline" ? "pt-4" : "border-t border-black/10 dark:border-white/10 pt-8 mt-12"]}>
+  {variant === "inline" && (
+    <p class="text-sm mb-3 opacity-60">
+      Get new posts by email. No spam, unsubscribe anytime.
+    </p>
+  )}
+  {variant === "compact" && (
+    <p class="text-sm mb-4 font-semibold text-black dark:text-white">
+      Enjoyed this? Get new posts by email.
+    </p>
+  )}
+  <form
+    method="post"
+    action={action}
+    target="popupwindow"
+    onsubmit={`window.open('${popupUrl}', 'popupwindow')`}
+    class="flex flex-col sm:flex-row gap-2"
+  >
+    <input type="hidden" name="embed" value="1" />
+    <input
+      type="email"
+      name="email"
+      required
+      placeholder="you@example.com"
+      class="flex-1 bg-transparent border border-black/15 dark:border-white/20 rounded-md px-3 py-2 text-sm placeholder:opacity-40 focus:outline-none focus:border-black/40 dark:focus:border-white/40 transition-colors duration-200"
+    />
+    <button
+      type="submit"
+      class="px-4 py-2 rounded-md text-sm font-medium bg-black dark:bg-white text-white dark:text-black hover:opacity-80 transition-opacity duration-200 whitespace-nowrap"
+    >
+      Subscribe
+    </button>
+  </form>
+</div>

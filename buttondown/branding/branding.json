@@ -1,0 +1,11 @@
+{
+  "name": "Hsu Ken Ooi",
+  "description": "I write about startups, investing, and occasionally other things. This is the email version of my blog at hsukenooi.com.",
+  "username": "hsukenooi",
+  "branding": {
+    "tint_color": "#000000",
+    "header": null,
+    "footer": null,
+    "from_name": "Hsu Ken Ooi"
+  }
+}
