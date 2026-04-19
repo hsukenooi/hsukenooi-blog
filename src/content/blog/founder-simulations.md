@@ -1,7 +1,7 @@
 ---
-title: "Founder Simulations"
+title: Founder Simulations
 description: "Great founders have this uncanny ability to run highly accurate, localized simulations about their business in their heads. What's surprising is none of them co"
-date: "Jul 06, 2022"
+pubDate: 2022-07-06
 ---
 
 Great founders have this uncanny ability to run highly accurate, localized simulations about their business in their heads. What's surprising is none of them could do this when they started.

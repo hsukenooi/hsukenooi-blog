@@ -1,7 +1,7 @@
 ---
 title: "Increasing a Startup's Chances of Being Successful"
 description: "For a startup to win, it needs a sufficient number of successes along the way. The obvious question then becomes: how does a startup generate the maximum number"
-date: "Jul 06, 2022"
+pubDate: 2022-07-06
 ---
 
 For a startup to win, it needs a sufficient number of successes along the way. The obvious question then becomes: how does a startup generate the maximum number of successes?  

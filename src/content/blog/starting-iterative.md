@@ -1,7 +1,7 @@
 ---
-title: "Starting Iterative"
+title: Starting Iterative
 description: "Brian , Hsu Han , and I are starting a YC-style accelerator called Iterative, focused exclusively on Southeast Asia. The first batch starts on 1 June 2020. If y"
-date: "Mar 27, 2020"
+pubDate: 2020-03-27
 ---
 
 [Brian](https://www.linkedin.com/in/zealoustiger/), [Hsu Han](https://www.linkedin.com/in/hsuhanooi/), and [I](https://www.linkedin.com/in/hsukenooi/) are starting a YC-style accelerator called Iterative, focused exclusively on Southeast Asia. The first batch starts on 1 June 2020. If you’re working on something, you should [apply](https://iterative.vc/apply).

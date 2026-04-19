@@ -1,7 +1,7 @@
 ---
-title: "What Iterative Looks for When Investing in Founders"
+title: What Iterative Looks for When Investing in Founders
 description: "Maybe the most common question I get is what do we look for when deciding to invest in startups? The answer is surprisingly simple at high level but exceedingly"
-date: "May 25, 2023"
+pubDate: 2023-05-25
 ---
 
 Maybe the most common question I get is what do we look for when deciding to invest in startups? The answer is surprisingly simple at high level but exceedingly nuanced in practice. At a high level, we (and I suspect every investors) wants to invest (1) in a startup working on an important problem and (2) in founders who can solve that problem. The question then becomes how do you assess each of those things? This is the first part of a two part series answering that. I'll start by discussing how we look for in founders.

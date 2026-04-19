@@ -1,7 +1,7 @@
 ---
 title: "Convincing People to Work at Your Startup"
 description: "A significant portion of a founder’s time and energy is spent convincing people of things. They could be investors, potential users or prospective hires. I’ve t"
-date: "Sep 11, 2023"
+pubDate: 2023-09-11
 ---
 
 A significant portion of a founder’s time and energy is spent convincing people of things. They could be investors, potential users or prospective hires. I’ve talked a fair bit about the first two so I thought I’d spend some time talking about the last one.

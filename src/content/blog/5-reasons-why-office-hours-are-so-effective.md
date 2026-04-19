@@ -1,7 +1,7 @@
 ---
-title: "Why Office Hours Are Effective"
+title: Why Office Hours Are Effective
 description: "At the end of every batch, we ask founders \"What was the most valuable part of the program?\" The answer is always Office Hours. If you've experienced it, it's o"
-date: "May 02, 2024"
+pubDate: 2024-05-02
 ---
 
 At the end of every batch, we ask founders "What was the most valuable part of the program?" The answer is always Office Hours. If you've experienced it, it's obvious why but I wanted to see if I could explain it to people who haven't experienced it.

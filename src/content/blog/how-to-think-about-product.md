@@ -1,7 +1,7 @@
 ---
-title: "How to Think About Product"
+title: How to Think About Product
 description: "For many, being a founder is the first time they've had to think about product strategy. Here's how I think about it. All products can be broken down into growt"
-date: "May 06, 2022"
+pubDate: 2022-05-06
 ---
 
 For many, being a founder is the first time they've had to think about product strategy.

@@ -1,7 +1,7 @@
 ---
-title: "Should You Continue Working on Your Startup?"
+title: Should You Continue Working on Your Startup?
 description: "[Update] I wrote a new post on this topic here . A persistent question founders ask themselves and probably the most difficult to answer. Here are the 3 questio"
-date: "Mar 06, 2023"
+pubDate: 2023-03-06
 ---
 
 \[Update\] I wrote a new post on this topic [here](/blog/p/a6b4faec-f4f7-412e-b7b6-3e541fae5a9f/).

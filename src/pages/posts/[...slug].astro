@@ -7,7 +7,7 @@ import FormattedDate from "@components/FormattedDate.astro";
 export async function getStaticPaths() {
   const posts = (await getCollection("blog"))
     .filter(post => !post.data.draft)
-    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: post,
@@ -26,7 +26,7 @@ const { Content } = await post.render();
         {post.data.title}
       </div>
       <div class="animate text-sm opacity-40">
-        <FormattedDate date={post.data.date} />
+        <FormattedDate date={post.data.pubDate} />
       </div>
     </div>
     <article class="animate">

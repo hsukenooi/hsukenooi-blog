@@ -1,7 +1,7 @@
 ---
-title: "Does Story or Traction Matter More When Fundraising?"
+title: Does Story or Traction Matter More When Fundraising?
 description: "Fundraising is one of the most difficult things a founder has to do. And I suspect, given the current market conditions, it’s even more difficult now than in th"
-date: "Aug 11, 2022"
+pubDate: 2022-08-11
 ---
 
 Fundraising is one of the most difficult things a founder has to do. And I suspect, given the current market conditions, it’s even more difficult now than in the previous seven to 10 years.

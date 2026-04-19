@@ -1,7 +1,7 @@
 ---
-title: "Origin of a Venture-Backed, Acquired Startup"
+title: Origin of a Venture-Backed, Acquired Startup
 description: "Decide.com was acquired by eBay on September 6, 2013. For those unfamiliar with Decide, we invented technology that predicted the future price of consumer goods"
-date: "Jan 14, 2014"
+pubDate: 2014-01-14
 ---
 
 Decide.com was acquired by eBay on September 6, 2013. For those unfamiliar with Decide, we invented technology that predicted the future price of consumer goods. Thinking about buying a Samsung television? We’d tell you whether the price would drop in the next two weeks. We helped you decide when to buy.

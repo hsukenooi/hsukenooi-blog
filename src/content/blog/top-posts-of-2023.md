@@ -1,7 +1,7 @@
 ---
-title: "Top Posts and Book Recommendations of 2023"
+title: Top Posts and Book Recommendations of 2023
 description: "It's the end of the year and everyone's doing it so I thought I'd share my top 10 posts of 2023 and my top 5 book recommendations. Top 10 Posts I wrote roughly"
-date: "Jan 02, 2024"
+pubDate: 2024-01-02
 ---
 
 It's the end of the year and everyone's doing it so I thought I'd share my top 10 posts of 2023 and my top 5 book recommendations.

@@ -6,14 +6,14 @@ import { BLOG } from "@consts";
 
 const data = (await getCollection("blog"))
   .filter(post => !post.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
   
 type Acc = {
   [year: string]: CollectionEntry<"blog">[];
 }
 
 const posts = data.reduce((acc: Acc, post) => {
-    const year = post.data.date.getFullYear().toString();
+    const year = post.data.pubDate.getFullYear().toString();
     if (!acc[year]) {
       acc[year] = [];
     }
@@ -42,7 +42,7 @@ const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a));
                   <a href={`/posts/${post.slug}`} class="group flex items-baseline justify-between gap-4 py-3 hover:text-black dark:hover:text-white transition-colors duration-200">
                     <span class="text-[15px] font-normal tracking-[0.0025em] leading-[1.4]">{post.data.title}</span>
                     <span class="text-xs opacity-35 whitespace-nowrap shrink-0 tabular-nums tracking-[0.02em]">
-                      {post.data.date.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                      {post.data.pubDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                     </span>
                   </a>
                 </li>

@@ -1,7 +1,7 @@
 ---
-title: "The Importance of Slope"
+title: The Importance of Slope
 description: "A benefit of studying mathematics is, you learn how to describe things and their relationship relative to each other. For example, if you want to describe a lin"
-date: "Nov 13, 2021"
+pubDate: 2021-11-13
 ---
 
 A benefit of studying mathematics is, you learn how to describe things and their relationship relative to each other. For example, if you want to describe a line, you can with the equation y = mx + b, where b is the y-intercept and m is the slope.

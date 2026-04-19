@@ -1,7 +1,7 @@
 ---
 title: "5 Most Common Startup Pitch Mistakes and What to Do"
 description: "Iterative Winter 2024 is having its Demo Day on tomorrow (Wednesday, 8 May). To help companies prepare, we've hosted pitch practices every few days where compani"
-date: "Apr 25, 2024"
+pubDate: 2024-04-25
 ---
 
 Iterative Winter 2024 is having its Demo Day on tomorrow (Wednesday, 8 May). To help companies prepare, we've hosted pitch practices every few days where companies pitch to other founders, Brian and I. They get immediate feedback, learn from each other's pitches, iterate over a few days and pitch again. You'd be surprised how much pitches improve by doing this.  

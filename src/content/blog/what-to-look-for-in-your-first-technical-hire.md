@@ -1,7 +1,7 @@
 ---
-title: "What to Look for in Your First Technical Hire"
+title: What to Look for in Your First Technical Hire
 description: "I’m looking for a technical co-founder or hiring my first engineer. Since I’m not technical, I don’t know what qualities to look for. Any advice?"
-date: "Feb 05, 2024"
+pubDate: 2024-02-05
 ---
 
 > I’m looking for a technical co-founder or hiring my first engineer. Since I’m not technical, I don’t know what qualities to look for. Any advice?

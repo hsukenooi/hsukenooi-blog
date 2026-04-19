@@ -1,7 +1,7 @@
 ---
-title: "The Difference Between Bad, Good, and Great Startup Engineers"
+title: The Difference Between Bad, Good, and Great Startup Engineers
 description: "Given something that needs to be built.. A bad startup engineer will immediately start to build it. There’s very little consideration for how it should be built"
-date: "Apr 28, 2023"
+pubDate: 2023-04-28
 ---
 
 Given something that needs to be built.

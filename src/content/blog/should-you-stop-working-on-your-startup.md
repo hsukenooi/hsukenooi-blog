@@ -1,7 +1,7 @@
 ---
-title: "Should You Stop Working on Your Startup?"
+title: Should You Stop Working on Your Startup?
 description: "This is the toughest question founders face, and given the current funding environment, I'm being asked it a lot. When I was a founder, I never had a good way t"
-date: "Nov 06, 2025"
+pubDate: 2025-11-06
 ---
 
 This is the toughest question founders face, and given the current funding environment, I'm being asked it a lot.
