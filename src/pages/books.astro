@@ -20,34 +20,33 @@ type RenderItem =
   | { kind: "book"; book: Book }
   | { kind: "series"; name: string; volumes: Book[] };
 
+function flushCurrent(
+  current: { name: string; volumes: Book[] } | null,
+  out: RenderItem[]
+): void {
+  if (!current) return;
+  if (current.volumes.length === 1) {
+    out.push({ kind: "book", book: current.volumes[0] });
+  } else {
+    out.push({ kind: "series", name: current.name, volumes: current.volumes });
+  }
+}
+
 function groupItems(items: Book[]): RenderItem[] {
   const out: RenderItem[] = [];
   let current: { name: string; volumes: Book[] } | null = null;
 
-  const flush = () => {
-    if (!current) return;
-    if (current.volumes.length === 1) {
-      out.push({ kind: "book", book: current.volumes[0] });
-    } else {
-      out.push({ kind: "series", name: current.name, volumes: current.volumes });
-    }
-    current = null;
-  };
-
   for (const book of items) {
     const seriesName = detectSeriesName(book.title);
-    if (seriesName && current?.name === seriesName) {
+    if (seriesName !== null && current !== null && current.name === seriesName) {
       current.volumes.push(book);
     } else {
-      flush();
-      if (seriesName) {
-        current = { name: seriesName, volumes: [book] };
-      } else {
-        out.push({ kind: "book", book });
-      }
+      flushCurrent(current, out);
+      current = seriesName !== null ? { name: seriesName, volumes: [book] } : null;
+      if (current === null) out.push({ kind: "book", book });
     }
   }
-  flush();
+  flushCurrent(current, out);
   return out;
 }
 ---
