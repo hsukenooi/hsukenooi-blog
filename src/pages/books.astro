@@ -1,311 +1,54 @@
 ---
 import PageLayout from "@layouts/PageLayout.astro";
 import Container from "@components/Container.astro";
+import { books, type Book } from "@data/books";
+import coversRaw from "@data/covers.json";
 
-async function fetchCover(title: string, author: string): Promise<string | null> {
-  try {
-    const firstAuthor = author.split(",")[0].trim();
-    const t = encodeURIComponent(title);
-    const a = encodeURIComponent(firstAuthor);
-    const res = await fetch(`https://openlibrary.org/search.json?title=${t}&author=${a}&limit=1&fields=cover_i`);
-    const data = await res.json();
-    const coverId = data.docs?.[0]?.cover_i;
-    if (!coverId) return null;
-    return `https://covers.openlibrary.org/b/id/${coverId}-L.jpg`;
-  } catch {
-    return null;
+const covers = coversRaw as Record<string, string | null>;
+
+function getCover(book: Book): string | null {
+  if (book.coverUrl) return book.coverUrl;
+  return covers[book.title] ?? null;
+}
+
+function detectSeriesName(title: string): string | null {
+  const m = title.match(/^(.+?),\s+Vol\.\s+\d+/i);
+  return m ? m[1].trim() : null;
+}
+
+type RenderItem =
+  | { kind: "book"; book: Book }
+  | { kind: "series"; name: string; volumes: Book[] };
+
+function flushCurrent(
+  current: { name: string; volumes: Book[] } | null,
+  out: RenderItem[]
+): void {
+  if (!current) return;
+  if (current.volumes.length === 1) {
+    out.push({ kind: "book", book: current.volumes[0] });
+  } else {
+    out.push({ kind: "series", name: current.name, volumes: current.volumes });
   }
 }
 
-const books: { year: string; items: { title: string; author: string; href: string; recommended?: boolean; favorite?: boolean }[] }[] = [
-  {
-    year: "2026",
-    items: [
-      { title: "Tojo: The Rise and Fall of Japan's Most Controversial World War II General", author: "Peter Mauch", href: "https://www.amazon.com/gp/product/B0FJSHP142/" },
-      { title: "Ghost in the Wires: My Adventures as the World's Most Wanted Hacker", author: "Kevin Mitnick", href: "https://www.amazon.com/gp/product/B0047Y0F0K/" },
-      { title: "Under the Eye of the Big Bird: A Novel", author: "Hiromi Kawakami", href: "https://www.amazon.com/gp/product/B0CPDSX2C1/" },
-      { title: "I Deliver Parcels in Beijing", author: "Hu Anyan", href: "https://www.amazon.com/gp/product/1662603746/" },
-      { title: "20th Century Boys: The Perfect Edition Complete Manga Box Set", author: "Naoki Urasawa", href: "https://www.amazon.sg/dp/B0B3DB4Q3C/" },
-      { title: "The Power Fantasy, Vol. 1: The Superpowers", author: "Kieron Gillen", href: "https://www.amazon.sg/dp/1534395563/" },
-      { title: "The Power Fantasy, Vol. 2: Mutually Reassuring Destruction", author: "Kieron Gillen", href: "https://www.amazon.sg/dp/153433310X/" },
-      { title: "Dawnrunner", author: "Ram V", href: "https://www.amazon.sg/dp/1506726356/" },
-      { title: "Radiant Black, Vol. 1", author: "Kyle Higgins, Cherish Chen", href: "https://www.amazon.sg/dp/1534319166/" },
-      { title: "Radiant Black, Vol. 2", author: "Kyle Higgins", href: "https://www.amazon.sg/dp/1534321098/" },
-      { title: "Radiant Black, Vol. 3", author: "Kyle Higgins", href: "https://www.amazon.sg/dp/1534323287/" },
-      { title: "Radiant Black, Vol. 4", author: "Kyle Higgins", href: "https://www.amazon.sg/dp/1534324771/" },
-      { title: "Radiant Black, Vol. 5: Catalyst War, Part 1", author: "Kyle Higgins", href: "https://www.amazon.sg/dp/1534397256/" },
-      { title: "Radiant Black, Vol. 6: The Catalyst War", author: "Kyle Higgins", href: "https://www.amazon.sg/dp/1534397248/" },
-      { title: "Radiant Black, Vol. 7", author: "Kyle Higgins", href: "https://www.amazon.sg/dp/1534332278/" },
-      { title: "Complete Invincible Library, Vol. 1", author: "Robert Kirkman", href: "https://www.amazon.sg/dp/1582407185/" },
-      { title: "Complete Invincible Library, Vol. 2", author: "Robert Kirkman", href: "https://www.amazon.sg/dp/1607061120/" },
-      { title: "Complete Invincible Library, Vol. 3", author: "Robert Kirkman", href: "https://www.amazon.sg/dp/1607064219/" },
-      { title: "Complete Invincible Library, Vol. 4", author: "Robert Kirkman", href: "https://www.amazon.sg/dp/1534399062/" },
-      { title: "Complete Invincible Library, Vol. 5", author: "Robert Kirkman", href: "https://www.amazon.sg/dp/1534397701/" },
-      { title: "Complete Invincible Library, Vol. 6", author: "Robert Kirkman", href: "https://www.amazon.sg/dp/1534327762/" },
-    ],
-  },
-  {
-    year: "2025",
-    items: [
-      { title: "The Practicing Stoic: A Philosophical User's Manual", author: "Ward Farnsworth", href: "https://www.amazon.com/gp/product/B085H5R3JJ/" },
-      { title: "The Soccer 100", author: "Michael Cox", href: "https://www.amazon.com/gp/product/B0DXL84YM2/" },
-      { title: "All That We See or Seem", author: "Ken Liu", href: "https://www.amazon.com/gp/product/1668083175/" },
-      { title: "Babel: Or the Necessity of Violence", author: "R.F. Kuang", href: "https://www.amazon.com/gp/product/B09MD95S5V/" },
-      { title: "The Burning God (The Poppy War Book 3)", author: "R.F. Kuang", href: "https://www.amazon.com/gp/product/B084VP8KNB/" },
-      { title: "1984", author: "George Orwell", href: "https://www.amazon.com/gp/product/B003JTHWKU/" },
-      { title: "Why I Am Not a Christian", author: "Bertrand Russell", href: "https://www.amazon.com/gp/product/B0CRRCQSKZ/" },
-      { title: "In Praise of Idleness: A Timeless Essay", author: "Bertrand Russell", href: "https://www.amazon.com/gp/product/B01MRJVUU5/" },
-      { title: "The Dragon Republic (The Poppy War Book 2)", author: "R.F. Kuang", href: "https://www.amazon.com/gp/product/B07CRKXQ1Y/" },
-      { title: "Artificial Condition: The Murderbot Diaries", author: "Martha Wells", href: "https://www.amazon.com/gp/product/B0756WCG8S/" },
-      { title: "All Systems Red: The Murderbot Diaries", author: "Martha Wells", href: "https://www.amazon.com/gp/product/B01MYZ8X5C/" },
-      { title: "Dopamine Nation: Finding Balance in the Age of Indulgence", author: "Anna Lembke", href: "https://www.amazon.com/gp/product/B08J8KM96K/" },
-      { title: "This Inevitable Ruin: Dungeon Crawler Carl Book 7", author: "Matt Dinniman", href: "https://www.amazon.com/gp/product/B0DJWKWV8W/" },
-      { title: "The Eye of the Bedlam Bride: Dungeon Crawler Carl Book 6", author: "Matt Dinniman", href: "https://www.amazon.com/gp/product/B0C1R52V2J/" },
-      { title: "The Socratic Method: A Practitioner's Handbook", author: "Ward Farnsworth", href: "https://www.amazon.sg/dp/1567926851/" },
-      { title: "The Three-Body Problem: The Graphic Novel Boxset", author: "Liu Cixin", href: "https://www.amazon.sg/dp/1035912422/" },
-      { title: "Batman by Grant Morrison Omnibus, Vol. 1", author: "Grant Morrison", href: "https://www.amazon.sg/dp/1401282997/" },
-      { title: "Bears Discover Fire and Other Stories", author: "Terry Bisson", href: "https://www.amazon.sg/dp/0312890354/" },
-    ],
-  },
-  {
-    year: "2024",
-    items: [
-      { title: "Foundation and Earth", author: "Isaac Asimov", href: "https://www.amazon.com/gp/product/B003EY7IHM/", recommended: true },
-      { title: "Foundation's Edge", author: "Isaac Asimov", href: "https://www.amazon.com/gp/product/B003EY7JC6/", recommended: true },
-      { title: "Second Foundation", author: "Isaac Asimov", href: "https://www.amazon.com/gp/product/B000FC1PWU/" },
-      { title: "Invitation to a Banquet: The Story of Chinese Food", author: "Fuchsia Dunlop", href: "https://www.amazon.com/gp/product/B0BWGKNK7G/", recommended: true },
-      { title: "The Hitchhiker's Guide to the Galaxy", author: "Douglas Adams", href: "https://www.amazon.com/gp/product/B0009JKV9W/" },
-      { title: "\"What Do You Care What Other People Think?\": Further Adventures of a Curious Character", author: "Richard P. Feynman", href: "https://www.amazon.sg/dp/0393355640/" },
-    ],
-  },
-  {
-    year: "2023",
-    items: [
-      { title: "Klara and the Sun", author: "Kazuo Ishiguro", href: "https://www.amazon.com/Klara-Sun-novel-Kazuo-Ishiguro-ebook/dp/B08B7V6CQ8/", favorite: true },
-      { title: "Pluto: Urasawa x Tezuka, Vol. 1", author: "Naoki Urasawa", href: "https://www.amazon.sg/dp/1421519186/" },
-      { title: "I, Robot", author: "Isaac Asimov", href: "https://www.amazon.com/gp/product/B000FC1PW0/", recommended: true },
-      { title: "Foundation and Empire", author: "Isaac Asimov", href: "https://www.amazon.com/gp/product/B000FC1PWK/" },
-      { title: "Seven Brief Lessons on Physics", author: "Carlo Rovelli", href: "https://www.amazon.com/gp/product/B00Z8VTMYG/", recommended: true },
-      { title: "Foundation", author: "Isaac Asimov", href: "https://www.amazon.com/gp/product/B000FC1PWA/", recommended: true },
-      { title: "Why We Sleep", author: "Matthew Walker", href: "https://www.amazon.com/gp/product/B06ZZ1YGJ5/" },
-      { title: "The Thrawn Trilogy 3-Book Bundle", author: "Timothy Zahn", href: "https://www.amazon.com/gp/product/B09F5NLH1Z/" },
-      { title: "MCU: The Reign of Marvel Studios", author: "Joanna Robinson, Dave Gonzales, Gavin Edwards", href: "https://www.amazon.com/gp/product/B0BWKR3H4F/" },
-      { title: "American Prometheus", author: "Kai Bird, Martin J. Sherwin", href: "https://www.amazon.com/gp/product/B000XUBEYS/", recommended: true },
-      { title: "When We Cease to Understand the World", author: "Benjamín Labatut", href: "https://www.amazon.com/gp/product/B08QM8VHRT/" },
-      { title: "Tomorrow, and Tomorrow, and Tomorrow", author: "Gabrielle Zevin", href: "https://www.amazon.com/gp/product/B09JBCGQB8/", favorite: true },
-      { title: "Genghis Khan and the Making of the Modern World", author: "Jack Weatherford", href: "https://www.amazon.com/Genghis-Khan-Making-Modern-World-ebook/dp/B000FCK206/", recommended: true },
-      { title: "What's Our Problem?: A Self-Help Book for Societies", author: "Tim Urban", href: "https://www.amazon.com/gp/product/B0BTJCTR58/", recommended: true },
-      { title: "The Stress Prescription", author: "Dr. Elissa Epel", href: "https://www.amazon.com/gp/product/B09WMBSPLT/" },
-      { title: "Dynasty of Evil: A Novel of the Old Republic", author: "Drew Karpyshyn", href: "https://www.amazon.com/gp/product/B009YQ78AQ/" },
-      { title: "Rule of Two: Star Wars Legends (Darth Bane)", author: "Drew Karpyshyn", href: "https://www.amazon.com/gp/product/B009WTTPCY/" },
-      { title: "Star Wars: Thrawn Ascendancy (Book III: Lesser Evil)", author: "Timothy Zahn", href: "https://www.amazon.com/gp/product/B08ZCP1Z2W/" },
-      { title: "Star Wars: Thrawn Ascendancy (Book I: Chaos Rising)", author: "Timothy Zahn", href: "https://www.amazon.com/gp/product/B07YK1JM4S/" },
-      { title: "Star Wars: Thrawn Ascendancy (Book II: Greater Good)", author: "Timothy Zahn", href: "https://www.amazon.com/gp/product/B08KPJW7L9/" },
-      { title: "Revan: Star Wars Legends (The Old Republic)", author: "Drew Karpyshyn", href: "https://www.amazon.com/gp/product/B0051AMYTO/" },
-      { title: "Chip War", author: "Chris Miller", href: "https://www.amazon.com/gp/product/B09RX5F238/" },
-      { title: "Thrawn: Treason", author: "Timothy Zahn", href: "https://www.amazon.com/gp/product/B07L7SSJ5K/" },
-      { title: "Star Wars: Darth Plagueis", author: "James Luceno", href: "https://www.amazon.com/gp/product/B006VPAUYE/" },
-      { title: "Scaling People", author: "Claire Hughes Johnson", href: "https://www.amazon.com/gp/product/B0BRYQJ49K/" },
-      { title: "Thrawn: Alliances", author: "Timothy Zahn", href: "https://www.amazon.com/gp/product/B07692QXW3/" },
-      { title: "Path of Destruction: A Novel of the Old Republic", author: "Drew Karpyshyn", href: "https://www.amazon.com/gp/product/B009YQ791Y/" },
-      { title: "Star Wars: Dark Force Rising", author: "Timothy Zahn", href: "https://www.amazon.com/gp/product/B008EPMER0/" },
-      { title: "Star Wars: Heir to the Empire", author: "Timothy Zahn", href: "https://www.amazon.com/gp/product/B005LEV2V6/" },
-      { title: "Star Wars: The Old Republic: Fatal Alliance", author: "Sean Williams", href: "https://www.amazon.com/gp/product/B003X4PKZ0/" },
-      { title: "Children of Dune", author: "Frank Herbert", href: "https://www.amazon.com/gp/product/B0013O8X60/" },
-      { title: "The Creative Act: A Way of Being", author: "Rick Rubin", href: "https://www.amazon.com/Creative-Act-Way-Being-ebook/dp/B09Z7MH5C3/", favorite: true },
-      { title: '"Surely You\'re Joking, Mr. Feynman!"', author: "Richard P. Feynman", href: "https://www.amazon.com/gp/product/B003V1WXKU/" },
-    ],
-  },
-  {
-    year: "2022",
-    items: [
-      { title: "The Silk Roads: A New History of the World", author: "Peter Frankopan", href: "https://www.amazon.com/Silk-Roads-New-History-World-ebook/dp/B00XST7IX2/", recommended: true },
-      { title: "Norse Mythology", author: "Neil Gaiman", href: "https://www.amazon.com/gp/product/B01HQA6EOC/", recommended: true },
-      { title: "Sphere", author: "Michael Crichton", href: "https://www.amazon.com/gp/product/B007UH4G9C/" },
-      { title: "Star Wars: Thrawn", author: "Timothy Zahn", href: "https://www.amazon.com/gp/product/B01ILZO30S/" },
-      { title: "Outlive: The Science and Art of Longevity", author: "Peter Attia MD", href: "https://www.amazon.com/gp/product/B0B1BTJLJN/" },
-      { title: "Four Thousand Weeks", author: "Oliver Burkeman", href: "https://www.amazon.com/gp/product/B08FGV64B1/" },
-      { title: "The Silmarillion", author: "J.R.R. Tolkien", href: "https://www.amazon.com/gp/product/B007978PGI/" },
-      { title: "Food Rules: An Eater's Manual", author: "Michael Pollan", href: "https://www.amazon.com/gp/product/B085FV622C/" },
-      { title: "The Metaverse", author: "Matthew Ball", href: "https://www.amazon.com/gp/product/B09KMWYHX8/" },
-      { title: "Principles for Dealing with the Changing World Order", author: "Ray Dalio", href: "https://www.amazon.com/gp/product/B0881Y73YG/" },
-      { title: "The Network State", author: "Balaji Srinivasan", href: "https://www.amazon.com/gp/product/B09VPKZR3G/" },
-      { title: "Gödel, Escher, Bach: An Eternal Golden Braid", author: "Douglas R Hofstadter", href: "https://www.amazon.com/gp/product/0465026567/" },
-      { title: "The Midnight Library", author: "Matt Haig", href: "https://www.amazon.com/Midnight-Library-Novel-Matt-Haig/dp/0525559477", recommended: true },
-      { title: "Founders at Work: Stories of Startups' Early Days", author: "Jessica Livingston", href: "https://www.amazon.com/gp/product/B009IXMK4O/", favorite: true },
-      { title: "Dune", author: "Frank Herbert", href: "https://www.amazon.com/gp/product/B00B7NPRY8/", favorite: true },
-      { title: "Children of Dune", author: "Frank Herbert", href: "https://www.amazon.com/gp/product/B0015DTW50/" },
-      { title: "Heretics of Dune", author: "Frank Herbert", href: "https://www.amazon.com/gp/product/B001L10ZIO/" },
-      { title: "Chapterhouse: Dune", author: "Frank Herbert", href: "https://www.amazon.com/gp/product/B001O1O6IQ/" },
-    ],
-  },
-  {
-    year: "2021",
-    items: [
-      { title: "The Daily Stoic", author: "Ryan Holiday", href: "https://www.amazon.com/gp/product/B01HNJIJB2/" },
-      { title: "Hackers & Painters", author: "Paul Graham", href: "https://www.amazon.com/gp/product/B0026OR2NQ/" },
-      { title: "This Is How You Lose the Time War", author: "Amal El-Mohtar, Max Gladstone", href: "https://www.amazon.com/gp/product/B07MNG496J/" },
-      { title: "Crying in H Mart", author: "Michelle Zauner", href: "https://www.amazon.com/gp/product/B08FMVVQGF/" },
-      { title: "Project Hail Mary", author: "Andy Weir", href: "https://www.amazon.com/gp/product/B08FHBV4ZX/", recommended: true },
-      { title: "Fundamentals: Ten Keys to Reality", author: "Frank Wilczek", href: "https://www.amazon.com/gp/product/B088173GMN/", recommended: true },
-      { title: "A Beautiful Question: Finding Nature's Deep Design", author: "Frank Wilczek", href: "https://www.amazon.com/gp/product/B00OZ0TOZI/", recommended: true },
-      { title: "A Monk's Guide to a Clean House and Mind", author: "Shoukei Matsumoto", href: "https://www.amazon.com/gp/product/B07C6H6FNN/" },
-      { title: "How to Avoid a Climate Disaster", author: "Bill Gates", href: "https://www.amazon.com/gp/product/B07YRY461Y/" },
-      { title: "The Cold Start Problem", author: "Andrew Chen", href: "https://www.amazon.com/gp/product/B08HZ5XY7X/" },
-    ],
-  },
-  {
-    year: "2020",
-    items: [
-      { title: "Pachinko", author: "Min Jin Lee", href: "https://www.amazon.com/Pachinko-National-Book-Award-Finalist-ebook/dp/B01GZY28JA", favorite: true },
-      { title: "The Mamba Mentality: How I Play", author: "Kobe Bryant", href: "https://www.amazon.com/gp/product/B07DC3WRKT/" },
-      { title: "The Conquest of Happiness", author: "Bertrand Russell", href: "https://www.amazon.com/Conquest-Happiness-Bertrand-Russell/dp/087140673X", favorite: true },
-      { title: "The Hitchhiker's Guide to the Galaxy", author: "Douglas Adams", href: "https://www.amazon.com/gp/product/B000XUBC2C/" },
-      { title: "The Inner Game of Tennis", author: "W. Timothy Gallwey", href: "https://www.amazon.com/gp/product/B003T0G9E4/" },
-      { title: "Zen: The Authentic Gate", author: "Kōun Yamada", href: "https://www.amazon.com/gp/product/B00TLYG24O/" },
-      { title: "The Artist's Way", author: "Julia Cameron", href: "https://www.amazon.com/gp/product/B006H19H3M/" },
-      { title: "Talking to Strangers", author: "Malcolm Gladwell", href: "https://www.amazon.com/gp/product/B07NJCG1XS/" },
-      { title: "Very Important People", author: "Ashley Mears", href: "https://www.amazon.com/gp/product/B0824B49LS/", recommended: true },
-      { title: "Stories of Your Life and Others", author: "Ted Chiang", href: "https://www.amazon.com/gp/product/B0048EKOP0/", favorite: true },
-      { title: "Breasts and Eggs", author: "Mieko Kawakami", href: "https://www.amazon.com/gp/product/B085HJQKS8/", recommended: true },
-      { title: "The Order of Time", author: "Carlo Rovelli", href: "https://www.amazon.com/gp/product/B07638M8JL/", recommended: true },
-      { title: "The Ride of a Lifetime", author: "Robert Iger", href: "https://www.amazon.com/gp/product/B07PF6XTD8/" },
-    ],
-  },
-  {
-    year: "2019",
-    items: [
-      { title: "Exhalation: Stories", author: "Ted Chiang", href: "https://www.amazon.com/gp/product/B07GD46PQZ/", favorite: true },
-      { title: "Atomic Habits", author: "James Clear", href: "https://www.amazon.com/gp/product/B07D23CFGR/" },
-      { title: "The Mind-Body Problem", author: "Rebecca Goldstein", href: "https://www.amazon.com/gp/product/B0B1BTJLJN/", recommended: true },
-      { title: "The Making of a Manager", author: "Julie Zhuo", href: "https://www.amazon.com/gp/product/B079WNPRL2/" },
-      { title: "Cult of the Dead Cow", author: "Joseph Menn", href: "https://www.amazon.com/gp/product/B07J54F9KR/" },
-      { title: "How to Change Your Mind", author: "Michael Pollan", href: "https://www.amazon.com/gp/product/B076GPJXWZ/" },
-      { title: "Kafka on the Shore", author: "Haruki Murakami", href: "https://www.amazon.com/gp/product/B000FC2ROU/" },
-      { title: "1Q84", author: "Haruki Murakami", href: "https://www.amazon.com/gp/product/B004LROUW2/", favorite: true },
-      { title: "The Paper Menagerie and Other Stories", author: "Ken Liu", href: "https://www.amazon.com/gp/product/B00TBKYK60/", favorite: true },
-      { title: "Bad Blood", author: "John Carreyrou", href: "https://www.amazon.com/gp/product/B078VW3VM7/" },
-      { title: "Red Notice", author: "Bill Browder", href: "https://www.amazon.com/gp/product/B00LD1ORX6/", recommended: true },
-      { title: "Masters of Doom", author: "David Kushner", href: "https://www.amazon.com/gp/product/B000FBFNL0/", recommended: true },
-    ],
-  },
-  {
-    year: "2018",
-    items: [
-      { title: "AI Superpowers", author: "Kai-Fu Lee", href: "https://www.amazon.com/gp/product/B0795DNWCF/" },
-      { title: "Born a Crime", author: "Trevor Noah", href: "https://www.amazon.com/gp/product/B01DHWACVY/" },
-      { title: "Billion Dollar Whale", author: "Bradley Hope, Tom Wright", href: "https://www.amazon.com/gp/product/B079WVJZCH/" },
-      { title: "Crazy Rich Asians", author: "Kevin Kwan", href: "https://www.amazon.com/gp/product/B00AP2VQEM/" },
-      { title: "The Singapore Story", author: "Lee Kuan Yew", href: "https://www.amazon.com/gp/product/B00MVFRUZA/" },
-      { title: "The Sympathizer", author: "Viet Thanh Nguyen", href: "https://www.amazon.com/gp/product/B00PS5G4MM/" },
-      { title: "Essentialism", author: "Greg Mckeown", href: "https://www.amazon.com/gp/product/B00G1J1D28/" },
-      { title: "High Growth Handbook", author: "Elad Gil", href: "https://www.amazon.com/gp/product/B07DRPGGQ7/" },
-      { title: "Death's End (The Three-Body Problem Series Book 3)", author: "Cixin Liu", href: "https://www.amazon.com/gp/product/B00WDVKZY0/", favorite: true },
-      { title: "The Dark Forest (The Three-Body Problem Series Book 2)", author: "Cixin Liu", href: "https://www.amazon.com/gp/product/B00R13OYU6/", recommended: true },
-      { title: "The Three-Body Problem", author: "Cixin Liu", href: "https://www.amazon.com/gp/product/B00S8FCJCQ/", recommended: true },
-      { title: "Skin in the Game", author: "Nassim Nicholas Taleb", href: "https://www.amazon.com/gp/product/B075HYVP7C/" },
-    ],
-  },
-  {
-    year: "2017",
-    items: [
-      { title: "Shoe Dog", author: "Phil Knight", href: "https://www.amazon.com/gp/product/B0176M1A44/", recommended: true },
-      { title: "Principles: Life and Work", author: "Ray Dalio", href: "https://www.amazon.com/gp/product/B071CTK28D/", recommended: true },
-      { title: "Norwegian Wood", author: "Haruki Murakami", href: "https://www.amazon.com/gp/product/B003XT603Q/", favorite: true },
-      { title: "Cryptonomicon", author: "Neal Stephenson", href: "https://www.amazon.com/gp/product/B000FC11A6/" },
-    ],
-  },
-  {
-    year: "2016",
-    items: [
-      { title: "High Output Management", author: "Andrew S. Grove", href: "https://www.amazon.com/gp/product/0679762884/", favorite: true },
-    ],
-  },
-  {
-    year: "2015",
-    items: [
-      { title: "Zen and the Art of Motorcycle Maintenance", author: "Robert M. Pirsig", href: "https://www.amazon.com/gp/product/0060589469/" },
-      { title: "The Martian", author: "Andy Weir", href: "https://www.amazon.com/gp/product/0553418025/", recommended: true },
-      { title: "Thinking, Fast and Slow", author: "Daniel Kahneman", href: "https://www.amazon.com/gp/product/0374533555/" },
-      { title: "Becoming Steve Jobs", author: "Brent Schlender, Rick Tetzeli", href: "https://www.amazon.com/gp/product/0385347405/" },
-      { title: "Batman: The Killing Joke", author: "Alan Moore", href: "https://www.amazon.com/gp/product/1401216676/", recommended: true },
-      { title: "Batman: Year One", author: "Frank Miller", href: "https://www.amazon.com/gp/product/1401207529/" },
-      { title: "Batman: The Dark Knight Returns", author: "Frank Miller", href: "https://www.amazon.com/gp/product/1563893428/" },
-    ],
-  },
-  {
-    year: "2014",
-    items: [
-      { title: "The Hard Thing About Hard Things", author: "Ben Horowitz", href: "https://www.amazon.com/gp/product/0062273205/" },
-    ],
-  },
-  {
-    year: "2013",
-    items: [
-      { title: "Hatching Twitter", author: "Nick Bilton", href: "https://www.amazon.com/gp/product/B00CDUVSQ0/" },
-      { title: "The Everything Store", author: "Brad Stone", href: "https://www.amazon.com/gp/product/B00BWQW73E/" },
-      { title: "Lean In", author: "Sheryl Sandberg", href: "https://www.amazon.com/gp/product/0385349947/" },
-      { title: "World War Z", author: "Max Brooks", href: "https://www.amazon.com/gp/product/B000JMKQX0/", recommended: true },
-      { title: "The Design of Everyday Things", author: "Donald A. Norman", href: "https://www.amazon.com/gp/product/0465067107/", recommended: true },
-    ],
-  },
-  {
-    year: "2012",
-    items: [
-      { title: "The Better Angels of Our Nature", author: "Steven Pinker", href: "https://www.amazon.com/gp/product/B0052REUW0/" },
-      { title: "Deng Xiaoping and the Transformation of China", author: "Ezra F. Vogel", href: "https://www.amazon.com/gp/product/B0064EHZY0/" },
-      { title: "Moonwalking with Einstein", author: "Joshua Foer", href: "https://www.amazon.com/gp/product/B004H4XI5O/" },
-      { title: "Behind the Beautiful Forevers", author: "Katherine Boo", href: "https://www.amazon.com/gp/product/B006GHXB2A/" },
-      { title: "This Time Is Different", author: "Carmen M. Reinhart, Kenneth Rogoff", href: "https://www.amazon.com/gp/product/B004EYT932/" },
-      { title: "Gödel, Escher, Bach", author: "Douglas R Hofstadter", href: "https://www.amazon.com/gp/product/0465026567/", favorite: true },
-      { title: "Guns, Germs, and Steel", author: "Jared Diamond", href: "https://www.amazon.com/gp/product/0881792063/", favorite: true },
-    ],
-  },
-  {
-    year: "2011",
-    items: [
-      { title: "The Lean Startup", author: "Eric Ries", href: "https://www.amazon.com/gp/product/0307887898/" },
-      { title: "Einstein: His Life and Universe", author: "Walter Isaacson", href: "https://www.amazon.com/gp/product/0743264746/", recommended: true },
-      { title: "Steve Jobs", author: "Walter Isaacson", href: "https://www.amazon.com/gp/product/1451648537/", recommended: true },
-      { title: "In The Plex", author: "Steven Levy", href: "https://www.amazon.com/gp/product/1416596585/" },
-    ],
-  },
-  {
-    year: "2010",
-    items: [
-      { title: "Decoded", author: "Jay-Z", href: "https://www.amazon.com/gp/product/1400068924/" },
-      { title: "Rework", author: "Jason Fried, David Heinemeier Hansson", href: "https://www.amazon.com/gp/product/0307463745/" },
-      { title: "Talent Is Overrated", author: "Geoff Colvin", href: "https://www.amazon.com/gp/product/1591842247/", recommended: true },
-    ],
-  },
-  {
-    year: "2009",
-    items: [
-      { title: "Fooled by Randomness", author: "Nassim Nicholas Taleb", href: "https://www.amazon.com/gp/product/1400067936/" },
-      { title: "They Call Me Coach", author: "John Wooden", href: "https://www.amazon.com/gp/product/0071424911/" },
-      { title: "Predictably Irrational", author: "Dan Ariely", href: "https://www.amazon.com/gp/product/006135323X/" },
-    ],
-  },
-  {
-    year: "2008",
-    items: [
-      { title: "The Last Lecture", author: "Randy Pausch", href: "https://www.amazon.com/gp/product/1401323251/" },
-      { title: "The World Without Us", author: "Alan Weisman", href: "https://www.amazon.com/gp/product/0312347294/" },
-    ],
-  },
-];
+function groupItems(items: Book[]): RenderItem[] {
+  const out: RenderItem[] = [];
+  let current: { name: string; volumes: Book[] } | null = null;
 
-const allItems = books.flatMap(({ year, items }) => items.map(item => ({ ...item, year })));
-
-// Batch requests to avoid rate limiting
-const BATCH_SIZE = 10;
-const coverUrls: (string | null)[] = [];
-for (let i = 0; i < allItems.length; i += BATCH_SIZE) {
-  const batch = allItems.slice(i, i + BATCH_SIZE);
-  const results = await Promise.all(batch.map(b => fetchCover(b.title, b.author)));
-  coverUrls.push(...results);
+  for (const book of items) {
+    const seriesName = detectSeriesName(book.title);
+    if (seriesName !== null && current !== null && current.name === seriesName) {
+      current.volumes.push(book);
+    } else {
+      flushCurrent(current, out);
+      current = seriesName !== null ? { name: seriesName, volumes: [book] } : null;
+      if (current === null) out.push({ kind: "book", book });
+    }
+  }
+  flushCurrent(current, out);
+  return out;
 }
-const coverMap = Object.fromEntries(allItems.map((b, i) => [b.title, coverUrls[i]]));
 ---
 
 <PageLayout title="Books" description="Books I've read, with recommendations highlighted.">
@@ -316,32 +59,81 @@ const coverMap = Object.fromEntries(allItems.map((b, i) => [b.title, coverUrls[i
     </div>
   </Container>
   <div class="mx-auto max-w-screen-lg px-5 space-y-12">
-    {books.map(({ year, items }) => (
-      <section class="animate space-y-4">
-        <div class="font-semibold text-black dark:text-white">{year}</div>
-        <div class="grid grid-cols-4 gap-6">
-          {items.map((book) => (
-            <a href={book.href} target="_blank" rel="noopener noreferrer" class="group flex flex-col gap-2.5">
-              <div class="relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-black/5 dark:bg-white/5">
-                {coverMap[book.title] && (
-                  <img
-                    src={coverMap[book.title]}
-                    alt={book.title}
-                    class="w-full h-full object-cover transition-opacity duration-200 group-hover:opacity-80"
-                  />
-                )}
-                {(book.recommended || book.favorite) && (
-                  <span class="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full bg-black/40 text-white/90 text-xs backdrop-blur-sm">★</span>
-                )}
-              </div>
-              <div class="space-y-0.5">
-                <div class="text-[15px] font-normal tracking-[0.0025em] leading-snug text-black dark:text-white line-clamp-2">{book.title}</div>
-                <div class="text-xs opacity-50 leading-snug truncate">{book.author}</div>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-    ))}
+    {books.map(({ year, items }) => {
+      const rendered = groupItems(items);
+      return (
+        <section class="animate space-y-4">
+          <div class="font-semibold text-black dark:text-white">{year}</div>
+          <div class="grid grid-cols-4 gap-6">
+            {rendered.map((entry) => {
+              if (entry.kind === "book") {
+                const book = entry.book;
+                const cover = getCover(book);
+                return (
+                  <a href={book.href} target="_blank" rel="noopener noreferrer" class="group flex flex-col gap-2.5">
+                    <div class="relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-black/5 dark:bg-white/5">
+                      {cover ? (
+                        <img
+                          src={cover}
+                          alt={book.title}
+                          class="w-full h-full object-cover transition-opacity duration-200 group-hover:opacity-80"
+                        />
+                      ) : (
+                        <div class="w-full h-full flex items-center justify-center p-3">
+                          <span class="text-[11px] text-center leading-snug opacity-40 line-clamp-6">{book.title}</span>
+                        </div>
+                      )}
+                      {(book.recommended || book.favorite) && (
+                        <span class="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full bg-black/40 text-white/90 text-xs backdrop-blur-sm">★</span>
+                      )}
+                    </div>
+                    <div class="space-y-0.5">
+                      <div class="text-[15px] font-normal tracking-[0.0025em] leading-snug text-black dark:text-white line-clamp-2">{book.title}</div>
+                      <div class="text-xs opacity-50 leading-snug truncate">{book.author}</div>
+                    </div>
+                  </a>
+                );
+              }
+
+              const first = entry.volumes[0];
+              const cover = getCover(first);
+              const count = entry.volumes.length;
+              const starred = entry.volumes.some(v => v.recommended || v.favorite);
+              return (
+                <a href={first.href} target="_blank" rel="noopener noreferrer" class="group flex flex-col gap-2.5">
+                  <div class="relative aspect-[2/3] w-full">
+                    <div class="absolute inset-0 rounded-lg bg-neutral-300 dark:bg-neutral-700 translate-x-[6px] translate-y-[6px] shadow-sm"></div>
+                    <div class="absolute inset-0 rounded-lg bg-neutral-200 dark:bg-neutral-800 translate-x-[3px] translate-y-[3px] shadow-sm"></div>
+                    <div class="absolute inset-0 overflow-hidden rounded-lg bg-black/5 dark:bg-white/5">
+                      {cover ? (
+                        <img
+                          src={cover}
+                          alt={entry.name}
+                          class="w-full h-full object-cover transition-opacity duration-200 group-hover:opacity-80"
+                        />
+                      ) : (
+                        <div class="w-full h-full flex items-center justify-center p-3">
+                          <span class="text-[11px] text-center leading-snug opacity-40 line-clamp-6">{entry.name}</span>
+                        </div>
+                      )}
+                    </div>
+                    <div class="absolute top-2 right-2 flex items-center gap-1 z-10">
+                      {starred && (
+                        <span class="w-6 h-6 flex items-center justify-center rounded-full bg-black/60 text-white text-xs backdrop-blur-sm">★</span>
+                      )}
+                      <span class="h-6 px-2 flex items-center rounded-full bg-black/60 text-white text-[11px] font-medium backdrop-blur-sm">×{count}</span>
+                    </div>
+                  </div>
+                  <div class="space-y-0.5">
+                    <div class="text-[15px] font-normal tracking-[0.0025em] leading-snug text-black dark:text-white line-clamp-2">{entry.name}</div>
+                    <div class="text-xs opacity-50 leading-snug truncate">{first.author}</div>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        </section>
+      );
+    })}
   </div>
 </PageLayout>
