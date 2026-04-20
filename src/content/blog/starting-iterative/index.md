@@ -52,7 +52,7 @@ Unlike other programs in the region, we will invest our full amount (USD $150K) 
 
 ### 3\. Learn from Your Batchmates
 
-Early stage startups face the same types of problems (not growing fast enough, can’t raising funding, not sure what to prioritize, etc.). The solution to these problems are almost always specific to the startup but often it’s helpful to be around startups facing similar problems and hear how they are solving them.
+Early stage startups face the same types of problems (not growing fast enough, can’t raise funding, not sure what to prioritize, etc.). The solution to these problems are almost always specific to the startup but often it’s helpful to be around startups facing similar problems and hear how they are solving them.
 
 That’s why we have weekly group office hours where each of the startups will share their goals, challenges, progress, plans and priorities with the rest of the batch. There’s an additional element of accountability that comes from wanting to report good news to the batch.
 

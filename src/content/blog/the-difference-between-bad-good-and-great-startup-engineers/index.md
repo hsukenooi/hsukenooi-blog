@@ -4,7 +4,7 @@ description: "Given something that needs to be built.. A bad startup engineer wi
 date: "Apr 28, 2023"
 ---
 
-Given something that needs to be built..
+Given something that needs to be built.
 
 A bad startup engineer will immediately start to build it. There’s very little consideration for how it should be built, ways it could be built and what the trade-offs are. You say make a button that when pressed does X. They make a button that when pressed does X. No questions asked. The project will get done in a week but it’ll be buggy. You will probably spend the next 3 weeks fixing bugs. In 3 months, they will tell you that they need to re-write the entire thing. At some point, another engineer will tell you a non-trivial amount of the code they wrote is copy and pasted from Stack Overflow. Your very promising startup will feel like it’s stuck in the mud. Constantly slipping and falling over itself.
 
