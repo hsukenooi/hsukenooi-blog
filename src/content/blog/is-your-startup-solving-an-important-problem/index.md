@@ -6,7 +6,7 @@ date: "Jul 18, 2023"
 
 A startup exists to solve a problem. In fact, the problem the startup is trying to solve is the most important thing about the startup. It dictates the market size, the product, the type of people the startup needs, etc. Therefore, for a startup to be successful, it needs to be solving an important problem.
 
-**How to tell if a problem is important?**
+## How to tell if a problem is important?
 
 A simple but effective test of whether a startup is solving an important problem is to ask the following 2 questions.
 
@@ -27,7 +27,7 @@ Obviously the most important problems are Type 1 problems and the least importan
 
 What’s not obvious is whether Type 2 or Type 3 problems are more valuable. Personally, I’d rather be working on a Type 3 problem than a Type 2 problem for a few reasons. First, it’s easier to solve a problem for a small group of people that care about the problem being solved than a large group of people that don’t really care about it. The latter doesn’t care about the problem enough to talk to you, haven’t thought about it that deeply so their feedback isn’t as useful, etc. Second, it’s easier to find more people that care about something than it is to convince people they should care about something more.
 
-**What type of companies typically work on which type of problem?**
+## What type of companies typically work on which type of problem?
 
 All of the huge tech companies (Google, Apple, Amazon, etc.) work on Type 1 problems. What’s interesting is it wasn’t obvious to them (or others) that they were working on Type 1 problems when they started. When Google and Amazon started, it wasn’t obvious that the internet was going to be something that was used by everyone. When Apple started, it wasn’t obvious that everyone needed a computer. In fact, you could argue that it wasn’t until Apple started making phones that they were working on a Type 1 problem.
 
