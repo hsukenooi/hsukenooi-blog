@@ -10,6 +10,46 @@ function getCover(book: Book): string | null {
   if (book.coverUrl) return book.coverUrl;
   return covers[book.title] ?? null;
 }
+
+function detectSeriesName(title: string): string | null {
+  const m = title.match(/^(.+?),\s+Vol\.\s+\d+/i);
+  return m ? m[1].trim() : null;
+}
+
+type RenderItem =
+  | { kind: "book"; book: Book }
+  | { kind: "series"; name: string; volumes: Book[] };
+
+function groupItems(items: Book[]): RenderItem[] {
+  const out: RenderItem[] = [];
+  let current: { name: string; volumes: Book[] } | null = null;
+
+  const flush = () => {
+    if (!current) return;
+    if (current.volumes.length === 1) {
+      out.push({ kind: "book", book: current.volumes[0] });
+    } else {
+      out.push({ kind: "series", name: current.name, volumes: current.volumes });
+    }
+    current = null;
+  };
+
+  for (const book of items) {
+    const seriesName = detectSeriesName(book.title);
+    if (seriesName && current?.name === seriesName) {
+      current.volumes.push(book);
+    } else {
+      flush();
+      if (seriesName) {
+        current = { name: seriesName, volumes: [book] };
+      } else {
+        out.push({ kind: "book", book });
+      }
+    }
+  }
+  flush();
+  return out;
+}
 ---
 
 <PageLayout title="Books" description="Books I've read, with recommendations highlighted.">
@@ -20,39 +60,81 @@ function getCover(book: Book): string | null {
     </div>
   </Container>
   <div class="mx-auto max-w-screen-lg px-5 space-y-12">
-    {books.map(({ year, items }) => (
-      <section class="animate space-y-4">
-        <div class="font-semibold text-black dark:text-white">{year}</div>
-        <div class="grid grid-cols-4 gap-6">
-          {items.map((book) => {
-            const cover = getCover(book);
-            return (
-              <a href={book.href} target="_blank" rel="noopener noreferrer" class="group flex flex-col gap-2.5">
-                <div class="relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-black/5 dark:bg-white/5">
-                  {cover ? (
-                    <img
-                      src={cover}
-                      alt={book.title}
-                      class="w-full h-full object-cover transition-opacity duration-200 group-hover:opacity-80"
-                    />
-                  ) : (
-                    <div class="w-full h-full flex items-center justify-center p-3">
-                      <span class="text-[11px] text-center leading-snug opacity-40 line-clamp-6">{book.title}</span>
+    {books.map(({ year, items }) => {
+      const rendered = groupItems(items);
+      return (
+        <section class="animate space-y-4">
+          <div class="font-semibold text-black dark:text-white">{year}</div>
+          <div class="grid grid-cols-4 gap-6">
+            {rendered.map((entry) => {
+              if (entry.kind === "book") {
+                const book = entry.book;
+                const cover = getCover(book);
+                return (
+                  <a href={book.href} target="_blank" rel="noopener noreferrer" class="group flex flex-col gap-2.5">
+                    <div class="relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-black/5 dark:bg-white/5">
+                      {cover ? (
+                        <img
+                          src={cover}
+                          alt={book.title}
+                          class="w-full h-full object-cover transition-opacity duration-200 group-hover:opacity-80"
+                        />
+                      ) : (
+                        <div class="w-full h-full flex items-center justify-center p-3">
+                          <span class="text-[11px] text-center leading-snug opacity-40 line-clamp-6">{book.title}</span>
+                        </div>
+                      )}
+                      {(book.recommended || book.favorite) && (
+                        <span class="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full bg-black/40 text-white/90 text-xs backdrop-blur-sm">★</span>
+                      )}
                     </div>
-                  )}
-                  {(book.recommended || book.favorite) && (
-                    <span class="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full bg-black/40 text-white/90 text-xs backdrop-blur-sm">★</span>
-                  )}
-                </div>
-                <div class="space-y-0.5">
-                  <div class="text-[15px] font-normal tracking-[0.0025em] leading-snug text-black dark:text-white line-clamp-2">{book.title}</div>
-                  <div class="text-xs opacity-50 leading-snug truncate">{book.author}</div>
-                </div>
-              </a>
-            );
-          })}
-        </div>
-      </section>
-    ))}
+                    <div class="space-y-0.5">
+                      <div class="text-[15px] font-normal tracking-[0.0025em] leading-snug text-black dark:text-white line-clamp-2">{book.title}</div>
+                      <div class="text-xs opacity-50 leading-snug truncate">{book.author}</div>
+                    </div>
+                  </a>
+                );
+              }
+
+              const first = entry.volumes[0];
+              const cover = getCover(first);
+              const count = entry.volumes.length;
+              const starred = entry.volumes.some(v => v.recommended || v.favorite);
+              return (
+                <a href={first.href} target="_blank" rel="noopener noreferrer" class="group flex flex-col gap-2.5">
+                  <div class="relative aspect-[2/3] w-full">
+                    <div class="absolute inset-0 rounded-lg bg-neutral-300 dark:bg-neutral-700 translate-x-[6px] translate-y-[6px] shadow-sm"></div>
+                    <div class="absolute inset-0 rounded-lg bg-neutral-200 dark:bg-neutral-800 translate-x-[3px] translate-y-[3px] shadow-sm"></div>
+                    <div class="absolute inset-0 overflow-hidden rounded-lg bg-black/5 dark:bg-white/5">
+                      {cover ? (
+                        <img
+                          src={cover}
+                          alt={entry.name}
+                          class="w-full h-full object-cover transition-opacity duration-200 group-hover:opacity-80"
+                        />
+                      ) : (
+                        <div class="w-full h-full flex items-center justify-center p-3">
+                          <span class="text-[11px] text-center leading-snug opacity-40 line-clamp-6">{entry.name}</span>
+                        </div>
+                      )}
+                    </div>
+                    <div class="absolute top-2 right-2 flex items-center gap-1 z-10">
+                      {starred && (
+                        <span class="w-6 h-6 flex items-center justify-center rounded-full bg-black/60 text-white text-xs backdrop-blur-sm">★</span>
+                      )}
+                      <span class="h-6 px-2 flex items-center rounded-full bg-black/60 text-white text-[11px] font-medium backdrop-blur-sm">×{count}</span>
+                    </div>
+                  </div>
+                  <div class="space-y-0.5">
+                    <div class="text-[15px] font-normal tracking-[0.0025em] leading-snug text-black dark:text-white line-clamp-2">{entry.name}</div>
+                    <div class="text-xs opacity-50 leading-snug truncate">{first.author}</div>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        </section>
+      );
+    })}
   </div>
 </PageLayout>
