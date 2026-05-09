@@ -19,7 +19,7 @@ Take the following 2 startups:
 
 Plotting the lines for both yields this plot.
 
-![](https://uploads-ssl.webflow.com/60b1bd0542d31f694712f8ec/619fa202cc847f6a26f6a9e1_2021-03-16-startup-growth-graph.png)
+![](/images/blog/the-importance-of-slope/startup-growth-graph.png)
 
 * Week 0 – Startup A is 100 times larger than Startup B
 * Week 52 – Startup B surpasses Startup A in size
@@ -84,7 +84,7 @@ The thing to remember about non-linear lines is they can grow significantly fast
 
 Given these growth rates, here's how big each of these startups will be in the coming years.
 
-![](https://uploads-ssl.webflow.com/60b1bd0542d31f694712f8ec/619fa20284ed5f483bef0eaa_2021-03-16-non-linear.png)
+![](/images/blog/the-importance-of-slope/non-linear.png)
 
 Startup C will be orders of magnitude larger than Startup A or Startup B. Remember, if you're growing by the same number of users every week, your growth is actually slowing as a % of your user base (Startup A and Startup B). If you can maintain growth as a % of your user base, you're growing exponentially (Startup C). That's why success in our program is growing 5% to 7% weekly for the duration of the program. If they grow 7% for the duration of the program (12 weeks), they will be 2.25x larger. If they grow 7% for an entire year, they will be 33.7x larger.
 
