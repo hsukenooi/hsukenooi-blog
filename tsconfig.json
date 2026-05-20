@@ -5,6 +5,16 @@
     "baseUrl": ".",
     "paths": {
       "@*": ["./src/*"]
-    }
-  }
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.astro",
+    "emails/**/*.tsx",
+    "api/**/*.ts",
+    "scripts/**/*.ts"
+  ]
 }
