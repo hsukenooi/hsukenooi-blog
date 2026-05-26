@@ -29,7 +29,8 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
       data-callback="onTurnstileSuccess"
     ></div>
 
-    <p class="font-serif text-sm font-semibold mb-2">{NEWSLETTER.SECTION_HEADING}</p>
+    <p class="font-serif text-sm font-semibold mb-1">{NEWSLETTER.SECTION_HEADING}</p>
+    <p class="text-sm mb-2 opacity-70">{NEWSLETTER.PROMISE}</p>
     <div class="flex gap-2">
       <input
         type="email"
