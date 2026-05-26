@@ -1,8 +1,11 @@
+import type { APIRoute } from "astro";
 import { Resend } from "resend";
 import { z } from "zod";
 import { createElement } from "react";
 import { render } from "@react-email/render";
-import Welcome from "../emails/Welcome";
+import Welcome from "../../../emails/Welcome";
+
+export const prerender = false;
 
 const ALLOWED_ORIGIN = "https://hsukenooi.com";
 const TURNSTILE_VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
@@ -32,13 +35,13 @@ function log(failure_class: string, detail?: unknown) {
   console.log(JSON.stringify({ failure_class, detail }));
 }
 
-export async function OPTIONS(): Promise<Response> {
+export const OPTIONS: APIRoute = async () => {
   return new Response(null, { status: 204, headers: corsHeaders });
-}
+};
 
-export async function POST(req: Request): Promise<Response> {
+export const POST: APIRoute = async ({ request }) => {
   // CORS origin check
-  const origin = req.headers.get("origin");
+  const origin = request.headers.get("origin");
   if (origin && origin !== ALLOWED_ORIGIN) {
     log("cors_rejected", { origin });
     return new Response(JSON.stringify({ ok: true }), {
@@ -50,7 +53,7 @@ export async function POST(req: Request): Promise<Response> {
   // Parse body
   let raw: unknown;
   try {
-    raw = await req.json();
+    raw = await request.json();
   } catch {
     log("parse_error");
     return uniformOk();
@@ -72,7 +75,7 @@ export async function POST(req: Request): Promise<Response> {
   }
 
   // Log IP for observability
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
 
   // Turnstile verification
   const turnstileRes = await fetch(TURNSTILE_VERIFY_URL, {
@@ -132,4 +135,4 @@ export async function POST(req: Request): Promise<Response> {
   }
 
   return uniformOk();
-}
+};
