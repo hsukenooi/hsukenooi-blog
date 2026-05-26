@@ -19,6 +19,10 @@ pnpm-debug.log*
 .env.local
 .env.production
 
+# direnv local overrides (committed .envrc carries no secret)
+.envrc.local
+.direnv/
+
 # macOS-specific files
 .DS_Store
 .vercel
