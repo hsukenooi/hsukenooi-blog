@@ -1,9 +1,7 @@
 import type { APIRoute } from "astro";
 import { Resend } from "resend";
 import { z } from "zod";
-import { createElement } from "react";
-import { render } from "@react-email/render";
-import Welcome from "../../../emails/Welcome";
+import { welcomeHtml } from "./_welcome-html.js";
 
 export const prerender = false;
 
@@ -122,7 +120,6 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   // Send welcome email
-  const welcomeHtml = await render(createElement(Welcome));
   const { error: emailError } = await resend.emails.send({
     from: process.env.NEWSLETTER_FROM!,
     to: email,
