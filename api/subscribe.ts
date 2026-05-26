@@ -2,7 +2,7 @@ import { Resend } from "resend";
 import { z } from "zod";
 import { createElement } from "react";
 import { render } from "@react-email/render";
-import Welcome from "../emails/Welcome.js";
+import Welcome from "../emails/Welcome";
 
 const ALLOWED_ORIGIN = "https://hsukenooi.com";
 const TURNSTILE_VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
