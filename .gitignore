@@ -27,3 +27,6 @@ pnpm-debug.log*
 .DS_Store
 .vercel
 .playwright-mcp/
+
+# generated build artifacts
+src/pages/api/_welcome-html.ts
