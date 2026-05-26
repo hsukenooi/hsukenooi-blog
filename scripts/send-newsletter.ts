@@ -87,14 +87,15 @@ async function main() {
 
   const apiKey = requireEnv("RESEND_API_KEY");
   const from = requireEnv("NEWSLETTER_FROM");
-  const audienceId = requireEnv("RESEND_AUDIENCE_ID");
+  const segmentId = requireEnv("RESEND_SEGMENT_ID");
+  const topicId = requireEnv("RESEND_TOPIC_ID");
 
   const { subject, scheduledAt: frontmatterScheduledAt, html, text, slug } =
     await compose(path);
 
   const resend = new Resend(apiKey);
 
-  // --test-to: transactional send, bypasses audience
+  // --test-to: transactional send, bypasses the segment
   if (testTo) {
     console.log(
       "Note: {{{RESEND_UNSUBSCRIBE_URL}}} will appear literally in test emails — this is expected."
@@ -117,7 +118,8 @@ async function main() {
   // --draft: create without sending (send: false)
   if (draft) {
     const { data, error } = await resend.broadcasts.create({
-      audienceId,
+      segmentId,
+      topicId,
       from,
       subject,
       html,
@@ -139,7 +141,8 @@ async function main() {
 
   if (resolvedScheduledAt) {
     const { data, error } = await resend.broadcasts.create({
-      audienceId,
+      segmentId,
+      topicId,
       from,
       subject,
       html,
@@ -155,7 +158,8 @@ async function main() {
     console.log(`Broadcast scheduled — id: ${data?.id}`);
   } else {
     const { data, error } = await resend.broadcasts.create({
-      audienceId,
+      segmentId,
+      topicId,
       from,
       subject,
       html,

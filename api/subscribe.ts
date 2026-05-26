@@ -94,11 +94,13 @@ export async function POST(req: Request): Promise<Response> {
     return uniformOk();
   }
 
-  // Create contact
+  // Create contact in the global pool, opted into the Newsletter topic and added to the
+  // broadcast segment in a single call (Resend v6 contacts.create accepts both).
   const { error: contactError } = await resend.contacts.create({
     email,
-    audienceId: process.env.RESEND_AUDIENCE_ID!,
     unsubscribed: false,
+    segments: [{ id: process.env.RESEND_SEGMENT_ID! }],
+    topics: [{ id: process.env.RESEND_TOPIC_ID!, subscription: "opt_in" }],
   });
 
   const isDuplicate =

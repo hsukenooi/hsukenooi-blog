@@ -56,15 +56,20 @@ async function main() {
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  const audienceId = process.env.RESEND_AUDIENCE_ID;
+  const topicId = process.env.RESEND_TOPIC_ID;
+  const segmentId = process.env.RESEND_SEGMENT_ID;
 
   if (!dryRun) {
     if (!apiKey) {
       console.error("Missing RESEND_API_KEY — set it in .env");
       process.exit(1);
     }
-    if (!audienceId) {
-      console.error("Missing RESEND_AUDIENCE_ID — set it in .env");
+    if (!topicId) {
+      console.error("Missing RESEND_TOPIC_ID — set it in .env");
+      process.exit(1);
+    }
+    if (!segmentId) {
+      console.error("Missing RESEND_SEGMENT_ID — set it in .env");
       process.exit(1);
     }
   }
@@ -110,8 +115,9 @@ async function main() {
     try {
       const { error } = await resend.contacts.create({
         email,
-        audienceId: audienceId!,
         unsubscribed: false,
+        segments: [{ id: segmentId! }],
+        topics: [{ id: topicId!, subscription: "opt_in" }],
       });
 
       if (error) {
