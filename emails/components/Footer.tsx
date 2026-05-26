@@ -24,6 +24,17 @@ export function Footer({ transactional = false }: FooterProps) {
           fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
         }}
       >
+        New essays from hsukenooi.com, mostly about startups and occasionally about other things.
+      </Text>
+      <Text
+        style={{
+          color: "#6b6b6b",
+          fontSize: "13px",
+          lineHeight: "1.5",
+          margin: "0 0 8px",
+          fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
+        }}
+      >
         You&apos;re receiving this because you signed up at{" "}
         <Link
           href={SITE_URL}

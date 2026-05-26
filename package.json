@@ -16,7 +16,7 @@
     "import-subscribers": "tsx scripts/import-subscribers.ts"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.4",
+    "@astrojs/check": "^0.9.9",
     "@astrojs/mdx": "^4.0.2",
     "@astrojs/rss": "^4.0.10",
     "@astrojs/sitemap": "^3.2.1",
@@ -49,7 +49,7 @@
     "tailwind-merge": "^2.2.2",
     "tailwindcss": "^3.4.1",
     "turndown": "^7.2.4",
-    "typescript": "^5.4.2",
+    "typescript": "^5.9.3",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.1.0",
     "zod": "^4.4.3"
