@@ -126,7 +126,7 @@ export const POST: APIRoute = async ({ request }) => {
   const { error: emailError } = await resend.emails.send({
     from: process.env.NEWSLETTER_FROM!,
     to: email,
-    subject: "TBD_COPY_WELCOME_SUBJECT",
+    subject: "Thanks for Subscribing",
     html: welcomeHtml,
   });
 
