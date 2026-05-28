@@ -12,6 +12,15 @@ export default {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],
         serif: ["Lora", ...defaultTheme.fontFamily.serif],
       },
+      colors: {
+        brand: {
+          bg: "#f7f6f4",
+          border: "#e5e3df",
+          text: "#1a1a1a",
+          muted: "#6b6b6b",
+          link: "#1a1a1a",
+        },
+      },
     },
   },
   plugins: [require("@tailwindcss/typography")],

@@ -1,0 +1,161 @@
+---
+import { NEWSLETTER } from "@consts/newsletter";
+
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
+---
+
+<div id="signup-wrapper">
+  <form id="signup-form" novalidate>
+    <!-- honeypot: hidden from sighted users and screen readers -->
+    <div
+      aria-hidden="true"
+      style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;"
+    >
+      <input
+        type="text"
+        name="company"
+        tabindex="-1"
+        autocomplete="off"
+      />
+    </div>
+
+    <!-- Turnstile invisible widget -->
+    <div
+      id="cf-turnstile-widget"
+      class="cf-turnstile"
+      data-sitekey={siteKey}
+      data-action="newsletter-subscribe"
+      data-size="invisible"
+      data-callback="onTurnstileSuccess"
+    ></div>
+
+    <p class="font-serif text-sm font-semibold mb-1">{NEWSLETTER.SECTION_HEADING}</p>
+    <p class="text-sm mb-2 opacity-70">{NEWSLETTER.PROMISE}</p>
+    <div class="flex gap-2">
+      <input
+        type="email"
+        id="email-input"
+        name="email"
+        placeholder={NEWSLETTER.PLACEHOLDER}
+        aria-label="Email address"
+        autocomplete="email"
+        class="flex-1 min-w-0 px-3 py-2 text-sm border border-black/20 dark:border-white/20 rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-black/40 dark:focus:ring-white/40"
+      />
+      <button
+        id="signup-submit"
+        type="submit"
+        class="px-4 py-2 text-sm border border-black/20 dark:border-white/20 rounded hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {NEWSLETTER.BUTTON_SUBSCRIBE}
+      </button>
+    </div>
+    <p
+      id="signup-error"
+      class="hidden text-xs mt-1 text-red-600 dark:text-red-400"
+      role="alert"
+    ></p>
+    <p class="text-xs mt-2 opacity-50">{NEWSLETTER.PRIVACY_DISCLOSURE}</p>
+  </form>
+
+  <div
+    id="signup-success"
+    class="hidden text-sm"
+    role="status"
+    aria-live="polite"
+  >
+    {NEWSLETTER.SUCCESS_MESSAGE}
+  </div>
+</div>
+
+<script>
+  import { NEWSLETTER } from "@consts/newsletter";
+
+  interface Turnstile {
+    execute(container: string): void;
+    reset(container: string): void;
+  }
+  const w = window as Window & { turnstile?: Turnstile; onTurnstileSuccess?: unknown };
+
+  const wrapper = document.getElementById("signup-wrapper")!;
+  const form = document.getElementById("signup-form") as HTMLFormElement;
+  const emailInput = document.getElementById("email-input") as HTMLInputElement;
+  const submitBtn = document.getElementById("signup-submit") as HTMLButtonElement;
+  const errorEl = document.getElementById("signup-error")!;
+  const successEl = document.getElementById("signup-success")!;
+
+  let pendingEmail: string | null = null;
+
+  function showError(msg: string) {
+    errorEl.textContent = msg;
+    errorEl.classList.remove("hidden");
+    submitBtn.disabled = false;
+    submitBtn.textContent = NEWSLETTER.BUTTON_SUBSCRIBE;
+    pendingEmail = null;
+    // Reset Turnstile so the next submit can re-execute
+    if (w.turnstile) w.turnstile.reset("#cf-turnstile-widget");
+  }
+
+  function setLoading(loading: boolean) {
+    submitBtn.disabled = loading;
+    submitBtn.textContent = loading
+      ? NEWSLETTER.BUTTON_SUBSCRIBING
+      : NEWSLETTER.BUTTON_SUBSCRIBE;
+  }
+
+  function showSuccess() {
+    form.classList.add("hidden");
+    successEl.classList.remove("hidden");
+    successEl.focus();
+  }
+
+  // Called by Turnstile when the invisible challenge resolves
+  w.onTurnstileSuccess = async function (token: string) {
+    if (!pendingEmail) return;
+    const email = pendingEmail;
+    pendingEmail = null;
+
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          "cf-turnstile-response": token,
+        }),
+      });
+
+      if (!res.ok) {
+        showError(NEWSLETTER.ERROR_SERVER);
+        return;
+      }
+
+      showSuccess();
+    } catch {
+      showError(NEWSLETTER.ERROR_SERVER);
+    }
+  };
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    errorEl.classList.add("hidden");
+
+    const email = emailInput.value.trim();
+
+    // Client-side email validation
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showError(NEWSLETTER.ERROR_INVALID_EMAIL);
+      emailInput.focus();
+      return;
+    }
+
+    pendingEmail = email;
+    setLoading(true);
+
+    if (w.turnstile) {
+      w.turnstile.execute("#cf-turnstile-widget");
+    } else {
+      // Turnstile not loaded — treat as server error
+      showError(NEWSLETTER.ERROR_SERVER);
+    }
+  });
+</script>
