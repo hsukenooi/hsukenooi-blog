@@ -26,6 +26,7 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
       data-sitekey={siteKey}
       data-action="newsletter-subscribe"
       data-size="invisible"
+      data-execution="execute"
       data-callback="onTurnstileSuccess"
     ></div>
 
@@ -152,7 +153,11 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
     setLoading(true);
 
     if (w.turnstile) {
-      w.turnstile.execute("#cf-turnstile-widget");
+      try {
+        w.turnstile.execute("#cf-turnstile-widget");
+      } catch {
+        showError(NEWSLETTER.ERROR_SERVER);
+      }
     } else {
       // Turnstile not loaded — treat as server error
       showError(NEWSLETTER.ERROR_SERVER);
