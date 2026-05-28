@@ -2,6 +2,7 @@ import type { APIRoute } from "astro";
 import { Resend } from "resend";
 import { z } from "zod";
 import { welcomeHtml } from "./_welcome-html.js";
+import { buildUnsubscribeUrl } from "../../lib/unsubscribe-token.js";
 
 export const prerender = false;
 
@@ -119,12 +120,18 @@ export const POST: APIRoute = async ({ request }) => {
     return uniformOk();
   }
 
-  // Send welcome email
+  // Send welcome email. Resend doesn't auto-add List-Unsubscribe for transactional
+  // sends (only broadcasts), so wire it in manually for Gmail bulk-sender compliance.
+  const unsubscribeUrl = buildUnsubscribeUrl(email);
   const { error: emailError } = await resend.emails.send({
     from: process.env.NEWSLETTER_FROM!,
     to: email,
     subject: "Thanks for Subscribing",
     html: welcomeHtml,
+    headers: {
+      "List-Unsubscribe": `<${unsubscribeUrl}>`,
+      "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+    },
   });
 
   if (emailError) {
