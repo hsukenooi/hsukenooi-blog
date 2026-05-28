@@ -28,6 +28,9 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
       data-size="invisible"
       data-execution="execute"
       data-callback="onTurnstileSuccess"
+      data-error-callback="onTurnstileError"
+      data-expired-callback="onTurnstileExpired"
+      data-timeout-callback="onTurnstileTimeout"
     ></div>
 
     <p class="font-serif text-sm font-semibold mb-1">{NEWSLETTER.SECTION_HEADING}</p>
@@ -75,7 +78,17 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
     execute(container: string): void;
     reset(container: string): void;
   }
-  const w = window as Window & { turnstile?: Turnstile; onTurnstileSuccess?: unknown };
+  const w = window as Window & {
+    turnstile?: Turnstile;
+    onTurnstileSuccess?: unknown;
+    onTurnstileError?: unknown;
+    onTurnstileExpired?: unknown;
+    onTurnstileTimeout?: unknown;
+  };
+
+  // Belt-and-suspenders watchdog: if Turnstile fires no callback within this
+  // window, surface a retryable error instead of leaving the button stuck.
+  const TURNSTILE_WATCHDOG_MS = 15000;
 
   const wrapper = document.getElementById("signup-wrapper")!;
   const form = document.getElementById("signup-form") as HTMLFormElement;
@@ -85,8 +98,17 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
   const successEl = document.getElementById("signup-success")!;
 
   let pendingEmail: string | null = null;
+  let watchdogTimer: ReturnType<typeof setTimeout> | null = null;
+
+  function clearWatchdog() {
+    if (watchdogTimer !== null) {
+      clearTimeout(watchdogTimer);
+      watchdogTimer = null;
+    }
+  }
 
   function showError(msg: string) {
+    clearWatchdog();
     errorEl.textContent = msg;
     errorEl.classList.remove("hidden");
     submitBtn.disabled = false;
@@ -111,6 +133,7 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
 
   // Called by Turnstile when the invisible challenge resolves
   w.onTurnstileSuccess = async function (token: string) {
+    clearWatchdog();
     if (!pendingEmail) return;
     const email = pendingEmail;
     pendingEmail = null;
@@ -136,6 +159,18 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
     }
   };
 
+  w.onTurnstileError = function () {
+    showError(NEWSLETTER.ERROR_TRY_AGAIN);
+  };
+
+  w.onTurnstileExpired = function () {
+    showError(NEWSLETTER.ERROR_TRY_AGAIN);
+  };
+
+  w.onTurnstileTimeout = function () {
+    showError(NEWSLETTER.ERROR_TRY_AGAIN);
+  };
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     errorEl.classList.add("hidden");
@@ -155,6 +190,11 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
     if (w.turnstile) {
       try {
         w.turnstile.execute("#cf-turnstile-widget");
+        // Guard against any failure mode where Turnstile fires no callback.
+        clearWatchdog();
+        watchdogTimer = setTimeout(() => {
+          showError(NEWSLETTER.ERROR_TRY_AGAIN);
+        }, TURNSTILE_WATCHDOG_MS);
       } catch {
         showError(NEWSLETTER.ERROR_SERVER);
       }

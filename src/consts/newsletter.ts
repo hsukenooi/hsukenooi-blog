@@ -7,5 +7,6 @@ export const NEWSLETTER = {
   SUCCESS_MESSAGE: "You're subscribed. Talk soon.",
   ERROR_INVALID_EMAIL: "That doesn't look like a valid email address.",
   ERROR_SERVER: "Something went wrong. Try again.",
+  ERROR_TRY_AGAIN: "Couldn't verify — please try again.",
   PRIVACY_DISCLOSURE: "No spam. Unsubscribe anytime.",
 };
