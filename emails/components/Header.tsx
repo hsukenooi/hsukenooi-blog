@@ -6,9 +6,8 @@ export function Header() {
   return (
     <Section
       style={{
-        borderBottom: "1px solid #e5e3df",
         marginBottom: "32px",
-        paddingBottom: "16px",
+        paddingBottom: "20px",
       }}
     >
       <Link
@@ -16,9 +15,9 @@ export function Header() {
         style={{
           color: "#1a1a1a",
           textDecoration: "none",
-          fontFamily: "Lora, Georgia, serif",
-          fontSize: "20px",
-          fontWeight: "600",
+          fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
+          fontSize: "17px",
+          fontWeight: "700",
         }}
       >
         Hsu Ken Ooi

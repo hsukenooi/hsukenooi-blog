@@ -31,7 +31,8 @@ export function Layout({ preheader, children }: LayoutProps) {
         <Body
           style={{
             backgroundColor: "#ffffff",
-            fontFamily: tokens.fontFamily.sans.join(", "),
+            fontFamily: "Lora, Georgia, serif",
+            color: "#1a1a1a",
             margin: "0",
             padding: "0",
           }}
@@ -40,7 +41,7 @@ export function Layout({ preheader, children }: LayoutProps) {
             style={{
               maxWidth: "600px",
               margin: "0 auto",
-              padding: "24px 16px",
+              padding: "32px 20px",
             }}
           >
             {children}

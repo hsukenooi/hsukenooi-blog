@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { Resend } from "resend";
 import { z } from "zod";
 import { compose } from "../src/lib/email/compose.js";
