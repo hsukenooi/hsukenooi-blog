@@ -3,6 +3,7 @@ import { resolve, join } from "path";
 import matter from "gray-matter";
 import { createElement } from "react";
 import { render } from "@react-email/render";
+import juice from "juice";
 import { z } from "zod";
 import { renderMarkdownToEmailHtml } from "./render-markdown.js";
 import Newsletter from "../../../emails/Newsletter.js";
@@ -35,11 +36,13 @@ export async function compose(newsletterPath: string): Promise<ComposeResult> {
   // Slug derived from filename (e.g. "2026-06-01-intro.md" → "2026-06-01-intro")
   const slug = newsletterPath.split("/").pop()!.replace(/\.md$/, "");
 
-  const introHtml = await renderMarkdownToEmailHtml(introMarkdown, SITE_URL);
+  const introHtml = introMarkdown.trim()
+    ? await renderMarkdownToEmailHtml(introMarkdown, SITE_URL)
+    : undefined;
 
   let postHtml: string | undefined;
   if (postSlug) {
-    const postPath = resolve(join("src", "content", "blog", postSlug, "index.md"));
+    const postPath = resolve(join("src", "content", "blog", `${postSlug}.md`));
     const postRaw = readFileSync(postPath, "utf-8");
     const { data: postData, content: postMarkdown } = matter(postRaw);
     const postTitle = (postData.title as string | undefined) ?? "";
@@ -49,7 +52,10 @@ export async function compose(newsletterPath: string): Promise<ComposeResult> {
   }
 
   const element = createElement(Newsletter, { preheader, introHtml, postHtml });
-  const html = await render(element);
+  const rawHtml = await render(element);
+  // Inline <style> blocks so class-based selectors apply in Gmail and other
+  // clients that strip body-located <style> tags. Outlook also requires inline.
+  const html = juice(rawHtml, { preserveImportant: true });
   const text = await render(element, { plainText: true });
 
   return { subject, preheader, scheduledAt, html, text, slug };

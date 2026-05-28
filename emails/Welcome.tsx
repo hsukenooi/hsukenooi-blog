@@ -6,24 +6,24 @@ import { Layout } from "./components/Layout";
 const SITE_URL = "https://hsukenooi.com";
 
 const bodyStyle = {
-  fontSize: "16px" as const,
-  lineHeight: "1.7",
+  fontSize: "17px" as const,
+  lineHeight: "1.4",
   color: "#1a1a1a",
-  fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
-  margin: "0 0 16px" as const,
+  fontFamily: "Lora, Georgia, serif",
+  margin: "0 0 1em" as const,
 };
 
 const listStyle = {
-  fontSize: "16px" as const,
-  lineHeight: "1.7",
+  fontSize: "17px" as const,
+  lineHeight: "1.4",
   color: "#1a1a1a",
-  fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
-  margin: "0 0 16px" as const,
+  fontFamily: "Lora, Georgia, serif",
+  margin: "0 0 1em" as const,
   paddingLeft: "24px" as const,
 };
 
 const linkStyle = {
-  color: "#1a1a1a",
+  color: "#005a9c" as const,
   textDecoration: "underline" as const,
 };
 
