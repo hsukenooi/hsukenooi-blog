@@ -131,6 +131,18 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
     successEl.focus();
   }
 
+  // Fire-and-forget report so we can observe client-side Turnstile failures in
+  // Vercel logs. Vercel never sees these otherwise — by definition they never
+  // reach /api/subscribe.
+  function reportClientError(reason: string) {
+    fetch("/api/client-error", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ reason }),
+      keepalive: true,
+    }).catch(() => {});
+  }
+
   // Called by Turnstile when the invisible challenge resolves
   w.onTurnstileSuccess = async function (token: string) {
     clearWatchdog();
@@ -160,14 +172,17 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
   };
 
   w.onTurnstileError = function () {
+    reportClientError("turnstile_error");
     showError(NEWSLETTER.ERROR_TRY_AGAIN);
   };
 
   w.onTurnstileExpired = function () {
+    reportClientError("turnstile_expired");
     showError(NEWSLETTER.ERROR_TRY_AGAIN);
   };
 
   w.onTurnstileTimeout = function () {
+    reportClientError("turnstile_timeout");
     showError(NEWSLETTER.ERROR_TRY_AGAIN);
   };
 
@@ -193,6 +208,7 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
         // Guard against any failure mode where Turnstile fires no callback.
         clearWatchdog();
         watchdogTimer = setTimeout(() => {
+          reportClientError("turnstile_watchdog");
           showError(NEWSLETTER.ERROR_TRY_AGAIN);
         }, TURNSTILE_WATCHDOG_MS);
       } catch {
