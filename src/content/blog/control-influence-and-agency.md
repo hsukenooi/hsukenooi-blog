@@ -4,8 +4,6 @@ description: "You control almost nothing that matters. You influence far more th
 pubDate: 2026-05-30
 ---
 
-# Control, Influence and Agency
-
 Something clicked recently when thinking about the difference between control, influence and agency. People think a lot about the first two. Almost nobody thinks clearly about agency.
 
 ## Control

@@ -4,8 +4,6 @@ description: 'Being an "AI company" has two dimensions, not one, and the most in
 pubDate: 2026-05-30
 ---
 
-# Non-AI, AI Companies
-
 For every sufficiently promising technology, companies will claim to be focused on it whether they are or not. It happened with internet companies, social companies, crypto companies. It's happening with AI right now. That isn't particularly interesting. What's interesting is AI is the first of these technologies to change how companies operate.
 
 If you time travelled 26 years into the past (2000), to work at a company, you might snicker at how bad the software was and how slow the hardware was, but how you worked (e-mail, taking notes in meetings, etc.) and how the company operated (individual contributors, layers of management, etc.) would be very familiar.
