@@ -1,6 +1,6 @@
 ---
 title: "Non-AI, AI Companies"
-description: "Being an "AI company" has two dimensions, not one, and the most interesting companies are the ones nobody would call AI companies at all."
+description: 'Being an "AI company" has two dimensions, not one, and the most interesting companies are the ones nobody would call AI companies at all.'
 pubDate: 2026-05-30
 ---
 
