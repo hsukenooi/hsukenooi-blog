@@ -1,6 +1,6 @@
 ---
 title: "Convincing People to Work at Your Startup"
-description: "A significant portion of a founder’s time and energy is spent convincing people of things. They could be investors, potential users or prospective hires. I’ve t"
+description: "In Southeast Asia, you have to convince people to work at a startup at all, then at yours. Start by refusing to compete where you can't win."
 pubDate: 2023-09-11
 ---
 

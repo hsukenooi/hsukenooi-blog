@@ -1,6 +1,6 @@
 ---
 title: The AI-Pilled Advantage
-description: "At the moment, being AI-pilled is the biggest competitive advantage a founder can have. Someone could be 2x better at making decisions about their startup but i"
+description: "The biggest competitive advantage a founder can have right now. Someone 2x better at decisions still loses to someone who can do 10x more."
 pubDate: 2026-04-16
 ---
 

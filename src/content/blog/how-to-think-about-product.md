@@ -1,6 +1,6 @@
 ---
 title: How to Think About Product
-description: "For many, being a founder is the first time they've had to think about product strategy. Here's how I think about it. All products can be broken down into growt"
+description: "Being a founder is often your first brush with product strategy. Every product breaks down into the same four pieces. The job is knowing which one to work on."
 pubDate: 2022-05-06
 ---
 

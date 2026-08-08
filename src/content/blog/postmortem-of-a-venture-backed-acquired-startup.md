@@ -1,6 +1,6 @@
 ---
 title: Postmortem of a Venture-Backed, Acquired Startup
-description: "Decide.com was acquired by eBay on September 6, 2013. For those unfamiliar with Decide, we invented technology that predicted the future price of consumer goods"
+description: "We raised $16.5M, hired 30 people and sold to eBay. A good outcome. The lessons worth writing down are the things we got wrong along the way."
 pubDate: 2013-10-17
 ---
 

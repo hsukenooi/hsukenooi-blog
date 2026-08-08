@@ -1,6 +1,6 @@
 ---
 title: Should You Continue Working on Your Startup?
-description: "[Update] I wrote a new post on this topic here . A persistent question founders ask themselves and probably the most difficult to answer. Here are the 3 questio"
+description: "Founders ask themselves this constantly and it might be the hardest question to answer. I break it into three smaller ones."
 pubDate: 2023-03-06
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: "Learnings Compound, Money Doesn't"
-description: "Things that compound are significantly more valuable than things that don't. For startups, when you learn something about your users, that learning helps you ev"
+description: "Things that compound are worth far more than things that don't. The money you raised is in one category. What you learn about your users is in the other."
 pubDate: 2022-08-06
 ---
 

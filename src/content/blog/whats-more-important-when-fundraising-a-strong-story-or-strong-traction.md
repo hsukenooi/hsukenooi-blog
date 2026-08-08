@@ -1,6 +1,6 @@
 ---
 title: Does Story or Traction Matter More When Fundraising?
-description: "Fundraising is one of the most difficult things a founder has to do. And I suspect, given the current market conditions, it’s even more difficult now than in th"
+description: "Founders ask us this all the time: strong story or strong traction? The answer surprised me, and the builder in me hates it."
 pubDate: 2022-08-11
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Top Posts and Book Recommendations of 2023
-description: "It's the end of the year and everyone's doing it so I thought I'd share my top 10 posts of 2023 and my top 5 book recommendations. Top 10 Posts I wrote roughly"
+description: "My top 10 posts and top 5 books of 2023. Turns out the posts that took the least effort to write were the ones people read the most."
 pubDate: 2024-01-02
 ---
 

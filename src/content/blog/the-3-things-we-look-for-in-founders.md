@@ -1,6 +1,6 @@
 ---
 title: What Iterative Looks for When Investing in Founders
-description: "Maybe the most common question I get is what do we look for when deciding to invest in startups? The answer is surprisingly simple at a high level but exceedingly"
+description: "The question I get most: what does Iterative look for when investing? For founders, it comes down to three things. None of them is charisma."
 pubDate: 2023-05-25
 ---
 

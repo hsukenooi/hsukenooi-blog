@@ -1,6 +1,6 @@
 ---
 title: Founder Simulations
-description: "Great founders have this uncanny ability to run highly accurate, localized simulations about their business in their heads. What's surprising is none of them co"
+description: "Great founders can simulate their business in their heads and predict what will work. None of them could when they started."
 pubDate: 2022-07-06
 ---
 

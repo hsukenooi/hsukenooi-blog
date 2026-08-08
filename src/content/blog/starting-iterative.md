@@ -1,6 +1,6 @@
 ---
 title: Starting Iterative
-description: "Brian , Hsu Han , and I are starting a YC-style accelerator called Iterative, focused exclusively on Southeast Asia. The first batch starts on 1 June 2020. If y"
+description: "Brian, Hsu Han and I are starting a YC-style accelerator for Southeast Asia. Does the region need another one? No. It needs a different type."
 pubDate: 2020-03-27
 ---
 

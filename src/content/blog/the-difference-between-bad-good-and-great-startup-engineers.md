@@ -1,6 +1,6 @@
 ---
 title: The Difference Between Bad, Good, and Great Startup Engineers
-description: "Given something that needs to be built.. A bad startup engineer will immediately start to build it. There’s very little consideration for how it should be built"
+description: "You can tell a lot about an engineer by what they do when handed something to build. Bad engineers start immediately. Great ones don't."
 pubDate: 2023-04-28
 ---
 
