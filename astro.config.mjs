@@ -1,3 +1,4 @@
+import { readdirSync, readFileSync } from "node:fs";
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
@@ -59,11 +60,63 @@ const redirects = {
   "/blog/[...slug]": "/posts/[...slug]",
 };
 
+// astro.config.mjs can't import the content collection (that API isn't available
+// at config time), so to give the sitemap a lastmod per post we read each post's
+// frontmatter straight off disk here and build a slug -> lastmod date map.
+// gray-matter isn't a dependency, so this is a minimal hand-rolled parse of just
+// the two date fields we need, rather than pulling in a full YAML parser.
+function readBlogLastmods() {
+  const blogDir = new URL("./src/content/blog/", import.meta.url);
+  const lastmodBySlug = new Map();
+
+  for (const filename of readdirSync(blogDir)) {
+    if (!filename.endsWith(".md")) continue;
+
+    const raw = readFileSync(new URL(filename, blogDir), "utf-8");
+    const frontmatterMatch = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+    if (!frontmatterMatch) continue;
+    const frontmatter = frontmatterMatch[1];
+
+    const extractDate = (key) => {
+      const match = frontmatter.match(
+        new RegExp(`^${key}:\\s*"?(\\d{4}-\\d{2}-\\d{2})"?\\s*$`, "m"),
+      );
+      return match?.[1];
+    };
+
+    const pubDate = extractDate("pubDate");
+    if (!pubDate) continue;
+    const updatedDate = extractDate("updatedDate");
+
+    const slug = filename.replace(/\.md$/, "");
+    lastmodBySlug.set(slug, updatedDate ?? pubDate);
+  }
+
+  return lastmodBySlug;
+}
+
+const blogLastmods = readBlogLastmods();
+
 export default defineConfig({
   site: "https://hsukenooi.com",
   output: "static",
   trailingSlash: "never",
   adapter: vercel(),
   redirects,
-  integrations: [mdx(), sitemap(), tailwind()],
+  integrations: [
+    mdx(),
+    sitemap({
+      // BUI-691: keep the WIP /preview page out of the public sitemap.
+      filter: (page) => page !== "https://hsukenooi.com/preview",
+      // BUI-690: stamp /posts/* entries with a lastmod so crawlers can tell
+      // fresh posts from stale ones.
+      serialize(item) {
+        const { pathname } = new URL(item.url);
+        const match = pathname.match(/^\/posts\/([^/]+)$/);
+        const lastmod = match && blogLastmods.get(match[1]);
+        return lastmod ? { ...item, lastmod } : item;
+      },
+    }),
+    tailwind(),
+  ],
 });
