@@ -12,17 +12,24 @@ import lora600 from "@fontsource/lora/files/lora-latin-600-normal.woff2";
 import { ClientRouter } from "astro:transitions";
 import { SITE } from "@consts";
 
+type JsonLdData = Record<string, unknown>;
+
 interface Props {
   title: string;
   description: string;
   image?: string;
   pubDate?: Date;
   noindex?: boolean;
+  /** Post slug — when set, emits a text/markdown alternate link for that post. */
+  slug?: string;
+  /** One or more JSON-LD objects to embed as <script type="application/ld+json">. */
+  jsonLd?: JsonLdData | JsonLdData[];
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = "/og-default.png", pubDate, noindex = false } = Astro.props;
+const { title, description, image = "/og-default.png", pubDate, noindex = false, slug, jsonLd } = Astro.props;
+const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
 
 <!-- Global Metadata -->
@@ -43,6 +50,7 @@ const { title, description, image = "/og-default.png", pubDate, noindex = false 
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
+{slug && <link rel="alternate" type="text/markdown" title={`${title} (Markdown)`} href={`/posts/${slug}.md`} />}
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
@@ -71,6 +79,11 @@ const { title, description, image = "/og-default.png", pubDate, noindex = false 
 
 <!-- RSS Link -->
 <link rel="alternate" type="application/rss+xml" title={SITE.NAME} href={new URL("rss.xml", Astro.site)} />
+
+<!-- JSON-LD Structured Data -->
+{jsonLdItems.map((item) => (
+  <script type="application/ld+json" set:html={JSON.stringify(item)} is:inline />
+))}
 
 <script>
   import type { TransitionBeforeSwapEvent } from "astro:transitions/client";
