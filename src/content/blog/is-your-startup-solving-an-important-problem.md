@@ -1,6 +1,6 @@
 ---
 title: Is Your Startup Solving an Important Problem?
-description: "A startup exists to solve a problem. The problem the startup is trying to solve is the most important thing about the startup. It dictates the market size, the"
+description: "The problem dictates everything about a startup: market size, product, team. Two questions tell you whether the one you picked is important."
 pubDate: 2023-07-18
 ---
 

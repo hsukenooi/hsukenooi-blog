@@ -1,6 +1,6 @@
 ---
 title: Dogmatic vs Scientific Founders
-description: "All founders are optimists. If you don't think things can improve, you wouldn't build anything new. Unfortunately, optimism is necessary but insufficient to be"
+description: "All founders are optimists. You can't build anything new without it. What separates the ones who succeed is where the optimism comes from."
 pubDate: 2025-10-29
 ---
 

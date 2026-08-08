@@ -1,6 +1,6 @@
 ---
 title: Invest in Slope
-description: "A benefit of studying mathematics is that you learn how to describe things and their relationships. For example, if you want to describe a line, you can with the"
+description: "One startup has 10,000 users. Another has 1,000. A year from now, the second one is bigger. The reason is in an equation you learned in school."
 pubDate: 2021-11-13
 ---
 

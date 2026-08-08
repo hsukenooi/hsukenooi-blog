@@ -1,6 +1,6 @@
 ---
 title: Why Office Hours Are Effective
-description: "At the end of every batch, we ask founders \"What was the most valuable part of the program?\" The answer is always Office Hours. If you've experienced it, it's o"
+description: "Founders always say Office Hours are the most valuable part of our program. If you've been in one, it's obvious why. I tried to explain it to everyone else."
 pubDate: 2024-05-02
 ---
 
