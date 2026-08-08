@@ -7,13 +7,13 @@ export const SITE: Site = {
 };
 
 export const HOME: Metadata = {
-  TITLE: "Home",
-  DESCRIPTION: "Astro Nano is a minimal and lightweight blog and portfolio.",
+  TITLE: "Hsu Ken Ooi — Co-Founder & Managing Partner at Iterative",
+  DESCRIPTION: "Essays on startups, AI, and product from Hsu Ken Ooi, Co-Founder & Managing Partner at Iterative.",
 };
 
 export const BLOG: Metadata = {
   TITLE: "Posts",
-  DESCRIPTION: "A collection of articles on topics I am passionate about.",
+  DESCRIPTION: "Essays on startups, AI, and product from Hsu Ken Ooi.",
 };
 
 export const SOCIALS: Socials = [

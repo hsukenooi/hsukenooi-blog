@@ -12,12 +12,19 @@ type Props = {
 };
 
 const { title, description } = Astro.props;
+
+// Pages that already carry the site identity in their title (e.g. the
+// homepage) shouldn't get "| Hsu Ken Ooi" appended a second time.
+const pageTitle =
+  title === SITE.NAME || title.startsWith(SITE.NAME)
+    ? title
+    : `${title} | ${SITE.NAME}`;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <Head title={`${title} | ${SITE.NAME}`} description={description} />
+    <Head title={pageTitle} description={description} />
   </head>
   <body>
     <Header />
