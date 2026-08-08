@@ -6,14 +6,19 @@ import { SITE } from "@consts";
 import Analytics from "@vercel/analytics/astro";
 import SpeedInsights from "@vercel/speed-insights/astro";
 
+type JsonLdData = Record<string, unknown>;
+
 type Props = {
   title: string;
   description: string;
+  image?: string;
   pubDate?: Date;
   noindex?: boolean;
+  slug?: string;
+  jsonLd?: JsonLdData | JsonLdData[];
 };
 
-const { title, description, pubDate, noindex } = Astro.props;
+const { title, description, image, pubDate, noindex, slug, jsonLd } = Astro.props;
 
 // Pages that already carry the site identity in their title (e.g. the
 // homepage) shouldn't get "| Hsu Ken Ooi" appended a second time.
@@ -29,8 +34,11 @@ const pageTitle =
     <Head
       title={pageTitle}
       description={description}
+      image={image}
       pubDate={pubDate}
       noindex={noindex}
+      slug={slug}
+      jsonLd={jsonLd}
     />
   </head>
   <body>
