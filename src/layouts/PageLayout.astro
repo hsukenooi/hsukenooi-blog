@@ -9,9 +9,11 @@ import SpeedInsights from "@vercel/speed-insights/astro";
 type Props = {
   title: string;
   description: string;
+  pubDate?: Date;
+  noindex?: boolean;
 };
 
-const { title, description } = Astro.props;
+const { title, description, pubDate, noindex } = Astro.props;
 
 // Pages that already carry the site identity in their title (e.g. the
 // homepage) shouldn't get "| Hsu Ken Ooi" appended a second time.
@@ -24,7 +26,12 @@ const pageTitle =
 <!doctype html>
 <html lang="en">
   <head>
-    <Head title={pageTitle} description={description} />
+    <Head
+      title={pageTitle}
+      description={description}
+      pubDate={pubDate}
+      noindex={noindex}
+    />
   </head>
   <body>
     <Header />
