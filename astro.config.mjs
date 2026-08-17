@@ -31,6 +31,18 @@ const ghostPostSlugs = [
   "whats-more-important-when-fundraising-a-strong-story-or-strong-traction",
 ];
 
+// NOTE on trailing-slash twins (BUI-795): a "/x/" -> dest entry added
+// alongside "/x" -> dest here is NOT viable. Verified empirically: with
+// trailingSlash: "never", Astro strips the trailing slash off every
+// redirect-source key before compiling it to a Vercel route regex, so "/x/"
+// and "/x" both compile to the identical `^/x$` pattern. The build logs it
+// as a duplicate-route "conflict" (dropping one) and warns it "will result
+// in a hard error in following versions of Astro." Same result for the
+// dynamic "/blog/[...slug]/" pattern: it compiles to the exact same regex as
+// "/blog/[...slug]" (`^/blog(?:/(...))?$`), which structurally can never
+// match a trailing slash anyway. Trailing-slash coverage for every entry
+// below is instead handled in the root vercel.json (see BUI-795 there),
+// which is not run through Astro's route compiler.
 const redirects = {
   ...Object.fromEntries(
     ghostPostSlugs.map((slug) => [`/${slug}`, `/posts/${slug}`]),
@@ -40,15 +52,24 @@ const redirects = {
   "/untitled": "/posts/starting-iterative",
   "/making-your-first-technical-hire":
     "/posts/what-to-look-for-in-your-first-technical-hire",
+  // BUI-795: indexed by Google at the root (pre-dates the /posts/ URL
+  // structure, or a stray backlink) even though the post itself never lived
+  // anywhere but /posts/.
+  "/the-ai-pilled-advantage": "/posts/the-ai-pilled-advantage",
   // Never migrated off Ghost — the writing only survives as a LinkedIn post,
   // so send readers to the index rather than a dead end.
   "/how-to-engineer-investor-fomo": "/posts",
+  // BUI-796: same situation as /how-to-engineer-investor-fomo above — never
+  // migrated off Ghost, so send readers to the index.
+  "/beginner-mistakes": "/posts",
 
   // Ghost's index and feed URLs.
   "/archive": "/posts",
   "/author/hsu": "/about",
   "/author/hsu-ken-ooi": "/about",
   "/blog/rss": "/rss.xml",
+  // BUI-796: Ghost's actual feed URL — distinct from /blog/rss above.
+  "/rss": "/rss.xml",
   "/feed": "/rss.xml",
   "/feed.xml": "/rss.xml",
   "/index.xml": "/rss.xml",
@@ -58,6 +79,20 @@ const redirects = {
   // The short-lived /blog/ structure between Ghost and today.
   "/blog": "/posts",
   "/blog/[...slug]": "/posts/[...slug]",
+
+  // BUI-796: old homepage alias.
+  "/home": "/",
+  // BUI-796: pre-Ghost, date-based permalink.
+  "/public/2020/03/27/starting-iterative": "/posts/starting-iterative",
+
+  // BUI-796 (optional): Ghost preview links, e.g.
+  // /blog/p/a6b4faec-f4f7-412e-b7b6-3e541fae5a9f. NOT included here: Astro's
+  // redirect matcher treats a single dynamic segment like [uuid] as a real
+  // route requiring getStaticPaths (unlike the [...slug] rest param above),
+  // so `"/blog/p/[uuid]": "/posts"` fails the build with
+  // GetStaticPathsRequired (verified). Not "cleanly expressible" as an Astro
+  // redirect per the ticket, so it's handled in vercel.json instead, where a
+  // plain `:uuid` path segment is just a redirect rule, not a route.
 };
 
 // astro.config.mjs can't import the content collection (that API isn't available

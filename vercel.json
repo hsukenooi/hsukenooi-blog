@@ -1,0 +1,295 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/5-reasons-why-office-hours-are-so-effective/",
+      "destination": "/posts/5-reasons-why-office-hours-are-so-effective",
+      "statusCode": 301
+    },
+    {
+      "source": "/convincing-people-to-work-at-your-startup/",
+      "destination": "/posts/convincing-people-to-work-at-your-startup",
+      "statusCode": 301
+    },
+    {
+      "source": "/dogmatic-vs-scientific-founders/",
+      "destination": "/posts/dogmatic-vs-scientific-founders",
+      "statusCode": 301
+    },
+    {
+      "source": "/founder-simulations/",
+      "destination": "/posts/founder-simulations",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-think-about-product/",
+      "destination": "/posts/how-to-think-about-product",
+      "statusCode": 301
+    },
+    {
+      "source": "/increasing-a-startups-chances-of-being-successful/",
+      "destination": "/posts/increasing-a-startups-chances-of-being-successful",
+      "statusCode": 301
+    },
+    {
+      "source": "/is-your-startup-solving-an-important-problem/",
+      "destination": "/posts/is-your-startup-solving-an-important-problem",
+      "statusCode": 301
+    },
+    {
+      "source": "/learnings/",
+      "destination": "/posts/learnings",
+      "statusCode": 301
+    },
+    {
+      "source": "/origin-story-of-a-venture-backed-acquired-startup/",
+      "destination": "/posts/origin-story-of-a-venture-backed-acquired-startup",
+      "statusCode": 301
+    },
+    {
+      "source": "/postmortem-of-a-venture-backed-acquired-startup/",
+      "destination": "/posts/postmortem-of-a-venture-backed-acquired-startup",
+      "statusCode": 301
+    },
+    {
+      "source": "/should-you-continue-working-on-your-startup/",
+      "destination": "/posts/should-you-continue-working-on-your-startup",
+      "statusCode": 301
+    },
+    {
+      "source": "/should-you-stop-working-on-your-startup/",
+      "destination": "/posts/should-you-stop-working-on-your-startup",
+      "statusCode": 301
+    },
+    {
+      "source": "/the-3-things-we-look-for-in-founders/",
+      "destination": "/posts/the-3-things-we-look-for-in-founders",
+      "statusCode": 301
+    },
+    {
+      "source": "/the-5-most-common-startup-pitch-mistakes-and-what-to-do/",
+      "destination": "/posts/the-5-most-common-startup-pitch-mistakes-and-what-to-do",
+      "statusCode": 301
+    },
+    {
+      "source": "/the-difference-between-bad-good-and-great-startup-engineers/",
+      "destination": "/posts/the-difference-between-bad-good-and-great-startup-engineers",
+      "statusCode": 301
+    },
+    {
+      "source": "/the-importance-of-slope/",
+      "destination": "/posts/the-importance-of-slope",
+      "statusCode": 301
+    },
+    {
+      "source": "/top-posts-of-2023/",
+      "destination": "/posts/top-posts-of-2023",
+      "statusCode": 301
+    },
+    {
+      "source": "/what-to-look-for-in-your-first-technical-hire/",
+      "destination": "/posts/what-to-look-for-in-your-first-technical-hire",
+      "statusCode": 301
+    },
+    {
+      "source": "/whats-more-important-when-fundraising-a-strong-story-or-strong-traction/",
+      "destination": "/posts/whats-more-important-when-fundraising-a-strong-story-or-strong-traction",
+      "statusCode": 301
+    },
+    {
+      "source": "/untitled/",
+      "destination": "/posts/starting-iterative",
+      "statusCode": 301
+    },
+    {
+      "source": "/making-your-first-technical-hire/",
+      "destination": "/posts/what-to-look-for-in-your-first-technical-hire",
+      "statusCode": 301
+    },
+    {
+      "source": "/the-ai-pilled-advantage/",
+      "destination": "/posts/the-ai-pilled-advantage",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-engineer-investor-fomo/",
+      "destination": "/posts",
+      "statusCode": 301
+    },
+    {
+      "source": "/beginner-mistakes/",
+      "destination": "/posts",
+      "statusCode": 301
+    },
+    {
+      "source": "/archive/",
+      "destination": "/posts",
+      "statusCode": 301
+    },
+    {
+      "source": "/author/hsu/",
+      "destination": "/about",
+      "statusCode": 301
+    },
+    {
+      "source": "/author/hsu-ken-ooi/",
+      "destination": "/about",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/rss/",
+      "destination": "/rss.xml",
+      "statusCode": 301
+    },
+    {
+      "source": "/rss/",
+      "destination": "/rss.xml",
+      "statusCode": 301
+    },
+    {
+      "source": "/feed/",
+      "destination": "/rss.xml",
+      "statusCode": 301
+    },
+    {
+      "source": "/feed.xml/",
+      "destination": "/rss.xml",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.xml/",
+      "destination": "/rss.xml",
+      "statusCode": 301
+    },
+    {
+      "source": "/atom.xml/",
+      "destination": "/rss.xml",
+      "statusCode": 301
+    },
+    {
+      "source": "/feeds/all.atom.xml/",
+      "destination": "/rss.xml",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/",
+      "destination": "/posts",
+      "statusCode": 301
+    },
+    {
+      "source": "/home/",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/public/2020/03/27/starting-iterative/",
+      "destination": "/posts/starting-iterative",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/5-reasons-why-office-hours-are-so-effective/",
+      "destination": "/posts/5-reasons-why-office-hours-are-so-effective",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/convincing-people-to-work-at-your-startup/",
+      "destination": "/posts/convincing-people-to-work-at-your-startup",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/dogmatic-vs-scientific-founders/",
+      "destination": "/posts/dogmatic-vs-scientific-founders",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/founder-simulations/",
+      "destination": "/posts/founder-simulations",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-to-think-about-product/",
+      "destination": "/posts/how-to-think-about-product",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/increasing-a-startups-chances-of-being-successful/",
+      "destination": "/posts/increasing-a-startups-chances-of-being-successful",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/is-your-startup-solving-an-important-problem/",
+      "destination": "/posts/is-your-startup-solving-an-important-problem",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/learnings/",
+      "destination": "/posts/learnings",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/origin-story-of-a-venture-backed-acquired-startup/",
+      "destination": "/posts/origin-story-of-a-venture-backed-acquired-startup",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/postmortem-of-a-venture-backed-acquired-startup/",
+      "destination": "/posts/postmortem-of-a-venture-backed-acquired-startup",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/should-you-continue-working-on-your-startup/",
+      "destination": "/posts/should-you-continue-working-on-your-startup",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/should-you-stop-working-on-your-startup/",
+      "destination": "/posts/should-you-stop-working-on-your-startup",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/the-3-things-we-look-for-in-founders/",
+      "destination": "/posts/the-3-things-we-look-for-in-founders",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/the-5-most-common-startup-pitch-mistakes-and-what-to-do/",
+      "destination": "/posts/the-5-most-common-startup-pitch-mistakes-and-what-to-do",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/the-difference-between-bad-good-and-great-startup-engineers/",
+      "destination": "/posts/the-difference-between-bad-good-and-great-startup-engineers",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/the-importance-of-slope/",
+      "destination": "/posts/the-importance-of-slope",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/top-posts-of-2023/",
+      "destination": "/posts/top-posts-of-2023",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/what-to-look-for-in-your-first-technical-hire/",
+      "destination": "/posts/what-to-look-for-in-your-first-technical-hire",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/whats-more-important-when-fundraising-a-strong-story-or-strong-traction/",
+      "destination": "/posts/whats-more-important-when-fundraising-a-strong-story-or-strong-traction",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/p/:uuid",
+      "destination": "/posts",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/p/:uuid/",
+      "destination": "/posts",
+      "statusCode": 301
+    }
+  ]
+}
