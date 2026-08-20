@@ -20,15 +20,15 @@ import { SITE, SOCIALS } from "@consts";
             </>
           ))}
           <span class="opacity-30">/</span>
-          <Link href={`mailto:${SITE.EMAIL}`} aria-label={`Email ${SITE.NAME}`}>
+          <Link href={`mailto:${SITE.EMAIL}`} aria-label={`Email ${SITE.NAME}`} class="break-words">
             {SITE.EMAIL}
           </Link>
         </div>
-        <div class="flex flex-wrap gap-1 items-center">
+        <div class="flex flex-wrap gap-2 items-center">
           <button
             id="light-theme-button"
             aria-label="Light theme"
-            class="group size-8 flex items-center justify-center rounded-full"
+            class="group size-10 flex items-center justify-center rounded-full"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +56,7 @@ import { SITE, SOCIALS } from "@consts";
           <button
             id="dark-theme-button"
             aria-label="Dark theme"
-            class="group size-8 flex items-center justify-center rounded-full"
+            class="group size-10 flex items-center justify-center rounded-full"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +76,7 @@ import { SITE, SOCIALS } from "@consts";
           <button
             id="system-theme-button"
             aria-label="System theme"
-            class="group size-8 flex items-center justify-center rounded-full"
+            class="group size-10 flex items-center justify-center rounded-full"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
