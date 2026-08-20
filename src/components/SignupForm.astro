@@ -44,19 +44,19 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
         placeholder={NEWSLETTER.PLACEHOLDER}
         inputmode="email"
         autocomplete="email"
-        class="flex-1 min-w-0 px-3 py-2 text-sm border border-black/20 dark:border-white/20 rounded bg-transparent focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black/40 dark:focus-visible:ring-white/40"
+        class="flex-1 min-w-0 px-3 py-2 text-sm border border-control rounded bg-transparent focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus"
       />
       <button
         id="signup-submit"
         type="submit"
-        class="px-4 py-2 text-sm border border-black/20 dark:border-white/20 rounded hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+        class="px-4 py-2 text-sm border border-control rounded hover:bg-surface-hover transition-colors duration-200 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {NEWSLETTER.BUTTON_SUBSCRIBE}
       </button>
     </div>
     <p
       id="signup-error"
-      class="hidden text-xs mt-1 text-red-600 dark:text-red-400"
+      class="hidden text-xs mt-1 text-danger"
       role="alert"
     ></p>
     <p class="text-xs mt-2 opacity-50">{NEWSLETTER.PRIVACY_DISCLOSURE}</p>

@@ -35,7 +35,7 @@ const jsonLd = [
 
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION} jsonLd={jsonLd}>
   <Container>
-    <h4 class="animate font-semibold text-black dark:text-white">
+    <h4 class="animate font-semibold text-strong">
       Hi, I'm Hsu Ken <span class="text-xl">👋🏻</span>
     </h4>
     <div class="space-y-16">
@@ -55,16 +55,16 @@ const jsonLd = [
 
       <section class="animate space-y-6">
         <div class="flex flex-wrap gap-y-2 items-center justify-between">
-          <h5 class="font-semibold text-black dark:text-white">
+          <h5 class="font-semibold text-strong">
             Writing
           </h5>
         </div>
         <ul class="flex flex-col">
           {blog.map(post => (
-            <li class="border-b border-black/10 dark:border-white/10 last:border-none">
-              <a href={`/posts/${post.slug}`} class="group flex items-baseline justify-between gap-4 py-3 hover:text-black dark:hover:text-white">
+            <li class="border-b border-divider last:border-none">
+              <a href={`/posts/${post.slug}`} class="group flex items-baseline justify-between gap-4 py-3 hover:text-strong">
                 <span class="text-[15px] font-normal tracking-[0.0025em] leading-[1.4] text-balance">{post.data.title}</span>
-                <span class="text-xs text-black/55 dark:text-white/50 whitespace-nowrap shrink-0 tabular-nums tracking-[0.02em]">
+                <span class="text-xs text-muted whitespace-nowrap shrink-0 tabular-nums tracking-[0.02em]">
                   {post.data.pubDate.toLocaleDateString("en-US", { month: "short", year: "numeric" })}
                 </span>
               </a>
