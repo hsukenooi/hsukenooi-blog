@@ -55,7 +55,7 @@ function groupItems(items: Book[]): RenderItem[] {
   <Container>
     <div class="animate space-y-1 mb-10">
       <h1 class="text-2xl font-semibold text-black dark:text-white">Books</h1>
-      <p class="text-sm opacity-50">★ = recommended</p>
+      <p class="text-sm text-black/55 dark:text-white/50">★ = recommended</p>
     </div>
   </Container>
   <div class="mx-auto max-w-screen-lg px-5 space-y-12">
@@ -89,7 +89,7 @@ function groupItems(items: Book[]): RenderItem[] {
                     </div>
                     <div class="space-y-0.5">
                       <div class="text-[15px] font-normal tracking-[0.0025em] leading-snug text-black dark:text-white line-clamp-2">{book.title}</div>
-                      <div class="text-xs opacity-50 leading-snug truncate">{book.author}</div>
+                      <div class="text-xs text-black/55 dark:text-white/50 leading-snug truncate">{book.author}</div>
                     </div>
                   </a>
                 );
@@ -126,7 +126,7 @@ function groupItems(items: Book[]): RenderItem[] {
                   </div>
                   <div class="space-y-0.5">
                     <div class="text-[15px] font-normal tracking-[0.0025em] leading-snug text-black dark:text-white line-clamp-2">{entry.name}</div>
-                    <div class="text-xs opacity-50 leading-snug truncate">{first.author}</div>
+                    <div class="text-xs text-black/55 dark:text-white/50 leading-snug truncate">{first.author}</div>
                   </div>
                 </a>
               );
