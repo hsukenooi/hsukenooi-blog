@@ -54,7 +54,7 @@ function groupItems(items: Book[]): RenderItem[] {
 <PageLayout title="Books" description="Books I've read, with recommendations highlighted.">
   <Container>
     <div class="animate space-y-1 mb-10">
-      <h1 class="text-2xl font-semibold text-black dark:text-white">Books</h1>
+      <h1 class="text-2xl font-semibold text-balance text-black dark:text-white">Books</h1>
       <p class="text-sm text-black/55 dark:text-white/50">★ = recommended</p>
     </div>
   </Container>
@@ -75,8 +75,8 @@ function groupItems(items: Book[]): RenderItem[] {
                       {cover ? (
                         <img
                           src={cover}
-                          alt={book.title}
-                          class="w-full h-full object-cover transition-opacity duration-200 group-hover:opacity-80"
+                          alt=""
+                          class="w-full h-full object-cover outline outline-1 -outline-offset-1 outline-black/8 dark:outline-white/8 transition-opacity duration-200 group-hover:opacity-80"
                         />
                       ) : (
                         <div class="w-full h-full flex items-center justify-center p-3">
@@ -88,8 +88,8 @@ function groupItems(items: Book[]): RenderItem[] {
                       )}
                     </div>
                     <div class="space-y-0.5">
-                      <div class="text-[15px] font-normal tracking-[0.0025em] leading-snug text-black dark:text-white line-clamp-2">{book.title}</div>
-                      <div class="text-xs text-black/55 dark:text-white/50 leading-snug truncate">{book.author}</div>
+                      <div title={book.title} class="text-[15px] font-normal tracking-[0.0025em] leading-snug text-black dark:text-white line-clamp-2">{book.title}</div>
+                      <div title={book.author} class="text-xs text-black/55 dark:text-white/50 leading-snug truncate">{book.author}</div>
                     </div>
                   </a>
                 );
@@ -108,8 +108,8 @@ function groupItems(items: Book[]): RenderItem[] {
                       {cover ? (
                         <img
                           src={cover}
-                          alt={entry.name}
-                          class="w-full h-full object-cover transition-opacity duration-200 group-hover:opacity-80"
+                          alt=""
+                          class="w-full h-full object-cover outline outline-1 -outline-offset-1 outline-black/8 dark:outline-white/8 transition-opacity duration-200 group-hover:opacity-80"
                         />
                       ) : (
                         <div class="w-full h-full flex items-center justify-center p-3">
@@ -125,8 +125,8 @@ function groupItems(items: Book[]): RenderItem[] {
                     </div>
                   </div>
                   <div class="space-y-0.5">
-                    <div class="text-[15px] font-normal tracking-[0.0025em] leading-snug text-black dark:text-white line-clamp-2">{entry.name}</div>
-                    <div class="text-xs text-black/55 dark:text-white/50 leading-snug truncate">{first.author}</div>
+                    <div title={entry.name} class="text-[15px] font-normal tracking-[0.0025em] leading-snug text-black dark:text-white line-clamp-2">{entry.name}</div>
+                    <div title={first.author} class="text-xs text-black/55 dark:text-white/50 leading-snug truncate">{first.author}</div>
                   </div>
                 </a>
               );

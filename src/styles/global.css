@@ -41,13 +41,26 @@ article {
   @apply max-w-full prose dark:prose-invert prose-img:mx-auto prose-img:my-auto;
   @apply prose-headings:font-semibold prose-p:font-serif prose-li:font-serif;
   @apply prose-headings:text-black prose-headings:dark:text-white;
+  @apply prose-headings:scroll-mt-24;
+  @apply break-words;
+}
+
+article img {
+  outline: 1px solid rgb(0 0 0 / 0.08);
+  outline-offset: -1px;
+}
+
+html.dark article img {
+  outline-color: rgb(255 255 255 / 0.08);
 }
 
 @layer utilities {
   article a {
-    @apply font-serif text-current underline underline-offset-2;
+    @apply font-serif text-current underline;
     @apply decoration-black/15 dark:decoration-white/30;
     @apply transition-colors duration-300 ease-in-out;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: auto;
   }
   article a:hover {
     @apply text-black dark:text-white;
