@@ -13,13 +13,13 @@ I wrote roughly 15 posts in 2023. Mostly on Linkedin and a few made it to my blo
 Below are the top 10 posts by views. Collectively they've been viewed around 500K times, mainly on Linkedin, which came as quite a surprise to me.
 
 1.  [The Problem with Accelerators Charging Program Fees](https://www.linkedin.com/posts/hsukenooi_i-hate-that-some-accelerators-charge-program-activity-7061563409883938816-tph0)
-2.  [The Difference Between Bad, Good and Great Startup Engineers](/blog/the-difference-between-bad-good-and-great-startup-engineers/)
-3.  [Convincing People to Work at Your Startup](/blog/convincing-people-to-work-at-your-startup/)
+2.  [The Difference Between Bad, Good and Great Startup Engineers](/posts/the-difference-between-bad-good-and-great-startup-engineers)
+3.  [Convincing People to Work at Your Startup](/posts/convincing-people-to-work-at-your-startup)
 4.  [How Iterative is Different From Other Programs in Southeast Asia](https://www.linkedin.com/posts/hsukenooi_how-iterative-is-different-from-other-activity-7071720177490399232-N_nZ)
 5.  [The Problem with Product Market Fit as a Term](https://www.linkedin.com/posts/hsukenooi_interestingly-enough-product-market-fit-activity-7031796824801755136-PSmC)
-6.  [Should You Continue Working on Your Startup?](/blog/should-you-continue-working-on-your-startup/)
+6.  [Should You Continue Working on Your Startup?](/posts/should-you-continue-working-on-your-startup)
 7.  [How to Engineer Investor FOMO](https://www.linkedin.com/posts/hsukenooi_how-to-engineer-investor-fomo-investors-activity-7104274372223266816-X0x3)
-8.  [Is Your Startup Solving an Important Problem?](/blog/is-your-startup-solving-an-important-problem/)
+8.  [Is Your Startup Solving an Important Problem?](/posts/is-your-startup-solving-an-important-problem)
 9.  [Debugging Your Startup](https://www.linkedin.com/posts/hsukenooi_debugging-your-startup-if-a-startup-solves-activity-7140150802706251776-8_89)
 10.  [Agency and Control](https://www.linkedin.com/posts/hsukenooi_high-agency-is-a-strong-predictor-of-whether-activity-7029260104579371008-I5sO)
 
@@ -27,7 +27,7 @@ What's interesting about this list, at least to me, is it's roughly in reverse o
 
 ## Top 5 Books
 
-I bought 34 books this year (see the [full list](/books/)). Of those, these are the 5 that I recommend.
+I bought 34 books this year (see the [full list](/books)). Of those, these are the 5 that I recommend.
 
 [**Klara and the Sun**](https://www.amazon.com/Klara-Sun-novel-Kazuo-Ishiguro-ebook/dp/B08B7V6CQ8/ref=tmm_kin_swatch_0?_encoding=UTF8&qid=&sr=) **Kazuo Ishiguro**  
 It might be a little silly to recommend a book that won a Nobel Prize but it's not like everyone (including me) reads everything that wins awards. You should read this one.
