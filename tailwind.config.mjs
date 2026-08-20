@@ -31,10 +31,29 @@ export default {
         "image-edge": "var(--color-image-edge)",
         "stack-back": "var(--color-stack-back)",
         "stack-mid": "var(--color-stack-mid)",
+        "prose-body": "var(--color-prose-body)",
+        "prose-strong": "var(--color-prose-strong)",
       },
       fontFamily: {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],
         serif: ["Lora", ...defaultTheme.fontFamily.serif],
+      },
+      // Routes the typography plugin's body/bold text color through the
+      // semantic tokens above instead of its stock raw grays. --tw-prose-body
+      // and its -invert- counterpart both resolve to the same custom
+      // property because --color-prose-body already swaps value under
+      // `.dark` — see src/styles/global.css. That keeps `.dark` the single
+      // theme switch while letting `dark:prose-invert` on <article> keep
+      // driving every other (unmigrated) prose role exactly as before.
+      typography: {
+        DEFAULT: {
+          css: {
+            "--tw-prose-body": "var(--color-prose-body)",
+            "--tw-prose-invert-body": "var(--color-prose-body)",
+            "--tw-prose-bold": "var(--color-prose-strong)",
+            "--tw-prose-invert-bold": "var(--color-prose-strong)",
+          },
+        },
       },
     },
   },

@@ -39,7 +39,7 @@ const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a));
             <ul class="flex flex-col">
               {posts[year].map((post) => (
                 <li class="border-b border-divider last:border-none">
-                  <a href={`/posts/${post.slug}`} class="group flex items-baseline justify-between gap-4 py-3 hover:text-strong transition-colors duration-200">
+                  <a href={`/posts/${post.slug}`} class="group flex items-baseline justify-between gap-4 py-3 hover:text-strong">
                     <span class="text-[15px] font-normal tracking-[0.0025em] leading-[1.4] text-balance">{post.data.title}</span>
                     <span class="text-xs text-muted whitespace-nowrap shrink-0 tabular-nums tracking-[0.02em]">
                       {post.data.pubDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })}

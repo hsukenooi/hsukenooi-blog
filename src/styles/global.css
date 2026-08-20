@@ -32,6 +32,13 @@
   --color-strong: rgb(0 0 0);
   --color-danger: rgb(220 38 38);
 
+  /* Prose (article body copy). The typography plugin's own gray-700/gray-900
+   * reading palette is a deliberate role distinct from --color-body /
+   * --color-strong (deeper contrast for long-form copy), so these hold the
+   * plugin's stock values verbatim rather than reusing the UI-chrome tokens. */
+  --color-prose-body: rgb(55 65 81);
+  --color-prose-strong: rgb(17 24 39);
+
   /* Lines */
   --color-divider: rgb(0 0 0 / 0.1);
   --color-control: rgb(0 0 0 / 0.2);
@@ -57,6 +64,10 @@
   --color-muted: rgb(255 255 255 / 0.5);
   --color-strong: rgb(255 255 255);
   --color-danger: rgb(248 113 113);
+
+  /* Prose (article body copy) — see :root for rationale. */
+  --color-prose-body: rgb(209 213 219);
+  --color-prose-strong: rgb(255 255 255);
 
   /* Lines */
   --color-divider: rgb(255 255 255 / 0.1);
@@ -145,12 +156,4 @@ article img {
 
 .animate.show {
   @apply opacity-100 translate-y-0;
-}
-
-html #back-to-top {
-  @apply opacity-0 pointer-events-none;
-}
-
-html.scrolled #back-to-top {
-  @apply opacity-100 pointer-events-auto;
 }
