@@ -174,7 +174,7 @@ async function main() {
   );
 
   await searchAndPatch(
-    '"Surely You\'re Joking, Mr. Feynman!"',
+    "\"Surely You're Joking, Mr. Feynman!\"",
     "Surely Joking Mr Feynman Richard Feynman Norton"
   );
 
