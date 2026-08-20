@@ -22,7 +22,10 @@ If we then enumerate the possible configurations, and give them labels for easy 
 
 In table form it's..
 
-![](https://hsukenooi.com/content/images/2023/07/0d05ba86-7434-423c-a757-aea61fb5df31.png)
+| | Many people have the problem | Few people have the problem |
+| --- | --- | --- |
+| **Pain is acute** | Type 1 | Type 3 |
+| **Pain is mildly annoying** | Type 2 | Type 4 |
 
 Obviously the most important problems are Type 1 problems and the least important problems are Type 4 problems. Unfortunately, Type 1 problems are exceedingly rare and Type 4 problems are abundant.
 

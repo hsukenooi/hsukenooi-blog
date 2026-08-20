@@ -4,7 +4,7 @@ description: "Founders ask themselves this constantly and it might be the hardes
 pubDate: 2023-03-06
 ---
 
-\[Update\] I wrote a new post on this topic [here](/blog/p/a6b4faec-f4f7-412e-b7b6-3e541fae5a9f/).
+\[Update\] I wrote a new post on this topic [here](/posts/should-you-stop-working-on-your-startup).
 
 A persistent question founders ask themselves and probably the most difficult to answer. Here are the 3 questions I ask myself when trying to answer this question and what to do about it.  
   
