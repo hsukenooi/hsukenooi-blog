@@ -34,7 +34,7 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
     ></div>
 
     <p class="font-serif text-sm font-semibold mb-1">{NEWSLETTER.SECTION_HEADING}</p>
-    <p class="text-sm mb-2 opacity-70 text-pretty">{NEWSLETTER.PROMISE}</p>
+    <p class="text-sm mb-2 text-muted text-pretty">{NEWSLETTER.PROMISE}</p>
     <div class="flex gap-2">
       <label for="email-input" class="sr-only">Email address</label>
       <input
@@ -59,7 +59,7 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
       class="hidden text-xs mt-1 text-danger"
       role="alert"
     ></p>
-    <p class="text-xs mt-2 opacity-50">{NEWSLETTER.PRIVACY_DISCLOSURE}</p>
+    <p class="text-xs mt-2 text-muted">{NEWSLETTER.PRIVACY_DISCLOSURE}</p>
   </form>
 
   <div
@@ -91,7 +91,6 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
   // window, surface a retryable error instead of leaving the button stuck.
   const TURNSTILE_WATCHDOG_MS = 15000;
 
-  const wrapper = document.getElementById("signup-wrapper")!;
   const form = document.getElementById("signup-form") as HTMLFormElement;
   const emailInput = document.getElementById("email-input") as HTMLInputElement;
   const submitBtn = document.getElementById("signup-submit") as HTMLButtonElement;
@@ -114,6 +113,7 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
     errorEl.classList.remove("hidden");
     emailInput.setAttribute("aria-invalid", "true");
     emailInput.setAttribute("aria-describedby", "signup-error");
+    emailInput.focus();
     submitBtn.disabled = false;
     submitBtn.textContent = NEWSLETTER.BUTTON_SUBSCRIBE;
     pendingEmail = null;
@@ -200,7 +200,6 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
     // Client-side email validation
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       showError(NEWSLETTER.ERROR_INVALID_EMAIL);
-      emailInput.focus();
       return;
     }
 
