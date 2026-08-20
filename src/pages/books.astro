@@ -85,7 +85,7 @@ function groupItems(items: Book[]): RenderItem[] {
                         />
                       ) : (
                         <div class="w-full h-full flex items-center justify-center p-3">
-                          <span class="text-[11px] text-center leading-snug opacity-40 line-clamp-6">{book.title}</span>
+                          <span class="text-[11px] text-center leading-snug text-muted line-clamp-6">{book.title}</span>
                         </div>
                       )}
                       {(book.recommended || book.favorite) && (
@@ -118,7 +118,7 @@ function groupItems(items: Book[]): RenderItem[] {
                         />
                       ) : (
                         <div class="w-full h-full flex items-center justify-center p-3">
-                          <span class="text-[11px] text-center leading-snug opacity-40 line-clamp-6">{entry.name}</span>
+                          <span class="text-[11px] text-center leading-snug text-muted line-clamp-6">{entry.name}</span>
                         </div>
                       )}
                     </div>
