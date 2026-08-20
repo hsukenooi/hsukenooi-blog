@@ -2,6 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---------------------------------------------------------------------------
+ * Semantic color tokens
+ *
+ * Every themed color role is defined once here and mapped into the Tailwind
+ * theme in tailwind.config.mjs, so components write `text-muted` instead of
+ * `text-black/55 dark:text-white/50`. The `.dark` class on <html> is the single
+ * theme switch — it re-points these variables, so no component needs a `dark:`
+ * variant for a color. Tokens are named for their role, never their appearance,
+ * and each maps to the Tailwind key of the same name (`border-divider`).
+ *
+ * Each token holds a complete color, alpha included, because alpha is part of
+ * the role: body text is translucent ink so it composites correctly over the
+ * blurred header and over image tiles. The tradeoff is that Tailwind's opacity
+ * modifier does not apply to these tokens — `text-muted/50` silently renders at
+ * the token's own alpha. A role needing a second alpha gets its own token, the
+ * way `surface` and `surface-overlay` are split.
+ * ------------------------------------------------------------------------- */
+:root {
+  /* Surfaces */
+  --color-surface: rgb(245 245 244);
+  --color-surface-overlay: rgb(245 245 244 / 0.75);
+  --color-surface-hover: rgb(0 0 0 / 0.05);
+  --color-surface-sunken: rgb(0 0 0 / 0.05);
+
+  /* Text */
+  --color-body: rgb(0 0 0 / 0.6);
+  --color-muted: rgb(0 0 0 / 0.55);
+  --color-strong: rgb(0 0 0);
+  --color-danger: rgb(220 38 38);
+
+  /* Lines */
+  --color-divider: rgb(0 0 0 / 0.1);
+  --color-control: rgb(0 0 0 / 0.2);
+  --color-link: rgb(0 0 0 / 0.15);
+  --color-link-hover: rgb(0 0 0 / 0.25);
+  --color-focus: rgb(0 0 0 / 0.4);
+  --color-image-edge: rgb(0 0 0 / 0.08);
+
+  /* Stacked book spines, back-to-front */
+  --color-stack-back: rgb(212 212 212);
+  --color-stack-mid: rgb(229 229 229);
+}
+
+.dark {
+  /* Surfaces */
+  --color-surface: rgb(9 9 11);
+  --color-surface-overlay: rgb(9 9 11 / 0.6);
+  --color-surface-hover: rgb(255 255 255 / 0.05);
+  --color-surface-sunken: rgb(255 255 255 / 0.05);
+
+  /* Text */
+  --color-body: rgb(255 255 255 / 0.85);
+  --color-muted: rgb(255 255 255 / 0.5);
+  --color-strong: rgb(255 255 255);
+  --color-danger: rgb(248 113 113);
+
+  /* Lines */
+  --color-divider: rgb(255 255 255 / 0.1);
+  --color-control: rgb(255 255 255 / 0.2);
+  --color-link: rgb(255 255 255 / 0.3);
+  --color-link-hover: rgb(255 255 255 / 0.5);
+  --color-focus: rgb(255 255 255 / 0.4);
+  --color-image-edge: rgb(255 255 255 / 0.08);
+
+  /* Stacked book spines, back-to-front */
+  --color-stack-back: rgb(64 64 64);
+  --color-stack-mid: rgb(38 38 38);
+}
+
 html {
   overflow-y: scroll;
   color-scheme: light;
@@ -19,13 +88,12 @@ body {
 body {
   @apply font-sans antialiased;
   @apply flex flex-col;
-  @apply bg-stone-100 dark:bg-zinc-950;
-  @apply text-black/60 dark:text-white/85;
+  @apply bg-surface text-body;
 }
 
 header {
   @apply fixed top-0 left-0 right-0 z-50 py-5;
-  @apply bg-stone-100/75 dark:bg-zinc-950/60;
+  @apply bg-surface-overlay;
   @apply backdrop-blur-sm saturate-200;
 }
 
@@ -40,31 +108,26 @@ footer {
 article {
   @apply max-w-full prose dark:prose-invert prose-img:mx-auto prose-img:my-auto;
   @apply prose-headings:font-semibold prose-p:font-serif prose-li:font-serif;
-  @apply prose-headings:text-black prose-headings:dark:text-white;
+  @apply prose-headings:text-strong;
   @apply prose-headings:scroll-mt-24;
   @apply break-words;
 }
 
 article img {
-  outline: 1px solid rgb(0 0 0 / 0.08);
+  outline: 1px solid var(--color-image-edge);
   outline-offset: -1px;
-}
-
-html.dark article img {
-  outline-color: rgb(255 255 255 / 0.08);
 }
 
 @layer utilities {
   article a {
     @apply font-serif text-current underline;
-    @apply decoration-black/15 dark:decoration-white/30;
+    @apply decoration-link;
     @apply transition-colors duration-300 ease-in-out;
     text-underline-position: from-font;
     text-decoration-skip-ink: auto;
   }
   article a:hover {
-    @apply text-black dark:text-white;
-    @apply decoration-black/25 dark:decoration-white/50;
+    @apply text-strong decoration-link-hover;
   }
 }
 

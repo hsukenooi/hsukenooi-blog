@@ -6,6 +6,11 @@ import coversRaw from "@data/covers.json";
 
 const covers = coversRaw as Record<string, string | null>;
 
+// The ★ and ×N badges below keep raw black/white utilities on purpose: they sit
+// on top of arbitrary cover artwork, not on the page surface, so they must stay
+// identical in both themes. They are scrims, not a themed role, and giving them
+// semantic tokens would imply a theme dependency they must not have.
+
 function getCover(book: Book): string | null {
   if (book.coverUrl) return book.coverUrl;
   return covers[book.title] ?? null;
@@ -54,8 +59,8 @@ function groupItems(items: Book[]): RenderItem[] {
 <PageLayout title="Books" description="Books I've read, with recommendations highlighted.">
   <Container>
     <div class="animate space-y-1 mb-10">
-      <h1 class="text-2xl font-semibold text-balance text-black dark:text-white">Books</h1>
-      <p class="text-sm text-black/55 dark:text-white/50">★ = recommended</p>
+      <h1 class="text-2xl font-semibold text-balance text-strong">Books</h1>
+      <p class="text-sm text-muted">★ = recommended</p>
     </div>
   </Container>
   <div class="mx-auto max-w-screen-lg px-5 space-y-12">
@@ -63,7 +68,7 @@ function groupItems(items: Book[]): RenderItem[] {
       const rendered = groupItems(items);
       return (
         <section class="animate space-y-4">
-          <h2 class="font-semibold text-black dark:text-white">{year}</h2>
+          <h2 class="font-semibold text-strong">{year}</h2>
           <div class="grid grid-cols-4 gap-6">
             {rendered.map((entry) => {
               if (entry.kind === "book") {
@@ -71,12 +76,12 @@ function groupItems(items: Book[]): RenderItem[] {
                 const cover = getCover(book);
                 return (
                   <a href={book.href} target="_blank" rel="noopener noreferrer" class="group flex flex-col gap-2.5">
-                    <div class="relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-black/5 dark:bg-white/5">
+                    <div class="relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-surface-sunken">
                       {cover ? (
                         <img
                           src={cover}
                           alt=""
-                          class="w-full h-full object-cover outline outline-1 -outline-offset-1 outline-black/8 dark:outline-white/8 transition-opacity duration-200 group-hover:opacity-80"
+                          class="w-full h-full object-cover outline outline-1 -outline-offset-1 outline-image-edge transition-opacity duration-200 group-hover:opacity-80"
                         />
                       ) : (
                         <div class="w-full h-full flex items-center justify-center p-3">
@@ -88,8 +93,8 @@ function groupItems(items: Book[]): RenderItem[] {
                       )}
                     </div>
                     <div class="space-y-0.5">
-                      <div title={book.title} class="text-[15px] font-normal tracking-[0.0025em] leading-snug text-black dark:text-white line-clamp-2">{book.title}</div>
-                      <div title={book.author} class="text-xs text-black/55 dark:text-white/50 leading-snug truncate">{book.author}</div>
+                      <div title={book.title} class="text-[15px] font-normal tracking-[0.0025em] leading-snug text-strong line-clamp-2">{book.title}</div>
+                      <div title={book.author} class="text-xs text-muted leading-snug truncate">{book.author}</div>
                     </div>
                   </a>
                 );
@@ -102,14 +107,14 @@ function groupItems(items: Book[]): RenderItem[] {
               return (
                 <a href={first.href} target="_blank" rel="noopener noreferrer" class="group flex flex-col gap-2.5">
                   <div class="relative aspect-[2/3] w-full">
-                    <div class="absolute inset-0 rounded-lg bg-neutral-300 dark:bg-neutral-700 translate-x-[6px] translate-y-[6px] shadow-sm"></div>
-                    <div class="absolute inset-0 rounded-lg bg-neutral-200 dark:bg-neutral-800 translate-x-[3px] translate-y-[3px] shadow-sm"></div>
-                    <div class="absolute inset-0 overflow-hidden rounded-lg bg-black/5 dark:bg-white/5">
+                    <div class="absolute inset-0 rounded-lg bg-stack-back translate-x-[6px] translate-y-[6px] shadow-sm"></div>
+                    <div class="absolute inset-0 rounded-lg bg-stack-mid translate-x-[3px] translate-y-[3px] shadow-sm"></div>
+                    <div class="absolute inset-0 overflow-hidden rounded-lg bg-surface-sunken">
                       {cover ? (
                         <img
                           src={cover}
                           alt=""
-                          class="w-full h-full object-cover outline outline-1 -outline-offset-1 outline-black/8 dark:outline-white/8 transition-opacity duration-200 group-hover:opacity-80"
+                          class="w-full h-full object-cover outline outline-1 -outline-offset-1 outline-image-edge transition-opacity duration-200 group-hover:opacity-80"
                         />
                       ) : (
                         <div class="w-full h-full flex items-center justify-center p-3">
@@ -125,8 +130,8 @@ function groupItems(items: Book[]): RenderItem[] {
                     </div>
                   </div>
                   <div class="space-y-0.5">
-                    <div title={entry.name} class="text-[15px] font-normal tracking-[0.0025em] leading-snug text-black dark:text-white line-clamp-2">{entry.name}</div>
-                    <div title={first.author} class="text-xs text-black/55 dark:text-white/50 leading-snug truncate">{first.author}</div>
+                    <div title={entry.name} class="text-[15px] font-normal tracking-[0.0025em] leading-snug text-strong line-clamp-2">{entry.name}</div>
+                    <div title={first.author} class="text-xs text-muted leading-snug truncate">{first.author}</div>
                   </div>
                 </a>
               );
