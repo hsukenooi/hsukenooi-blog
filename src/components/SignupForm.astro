@@ -36,14 +36,15 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
     <p class="font-serif text-sm font-semibold mb-1">{NEWSLETTER.SECTION_HEADING}</p>
     <p class="text-sm mb-2 opacity-70">{NEWSLETTER.PROMISE}</p>
     <div class="flex gap-2">
+      <label for="email-input" class="sr-only">Email address</label>
       <input
         type="email"
         id="email-input"
         name="email"
         placeholder={NEWSLETTER.PLACEHOLDER}
-        aria-label="Email address"
+        inputmode="email"
         autocomplete="email"
-        class="flex-1 min-w-0 px-3 py-2 text-sm border border-black/20 dark:border-white/20 rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-black/40 dark:focus:ring-white/40"
+        class="flex-1 min-w-0 px-3 py-2 text-sm border border-black/20 dark:border-white/20 rounded bg-transparent focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black/40 dark:focus-visible:ring-white/40"
       />
       <button
         id="signup-submit"
@@ -111,6 +112,8 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
     clearWatchdog();
     errorEl.textContent = msg;
     errorEl.classList.remove("hidden");
+    emailInput.setAttribute("aria-invalid", "true");
+    emailInput.setAttribute("aria-describedby", "signup-error");
     submitBtn.disabled = false;
     submitBtn.textContent = NEWSLETTER.BUTTON_SUBSCRIBE;
     pendingEmail = null;
@@ -189,6 +192,8 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     errorEl.classList.add("hidden");
+    emailInput.removeAttribute("aria-invalid");
+    emailInput.removeAttribute("aria-describedby");
 
     const email = emailInput.value.trim();
 
