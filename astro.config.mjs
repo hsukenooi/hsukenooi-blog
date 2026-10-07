@@ -76,6 +76,14 @@ const redirects = {
   "/atom.xml": "/rss.xml",
   "/feeds/all.atom.xml": "/rss.xml",
 
+  // BUI-989: Ghost served its sitemap at /sitemap.xml (an index of
+  // sitemap-posts.xml and sitemap-pages.xml). @astrojs/sitemap writes
+  // /sitemap-index.xml and /sitemap-0.xml instead, so the Ghost-era URLs,
+  // which Search Console may still have on file, returned 404.
+  "/sitemap.xml": "/sitemap-index.xml",
+  "/sitemap-posts.xml": "/sitemap-0.xml",
+  "/sitemap-pages.xml": "/sitemap-0.xml",
+
   // The short-lived /blog/ structure between Ghost and today.
   "/blog": "/posts",
   "/blog/[...slug]": "/posts/[...slug]",
